@@ -1,0 +1,36 @@
+This plugin is part of the hypeJunction plugin bundle.
+
+Copyright (c) 2011  Ismayil Khayredinov
+Coypright (c) 2011  hypeJunction
+
+Distributed under GNU GPL v2 Lincense, unless otherwise stated within individual files of this plugin.
+
+============
+www.hypeJunction.com
+
+hypeJunction is here for you to connect, innovate, integrate, collaborate and indulge.
+
+hypeJunction is a bundle of plugins that will help you kick start your Elgg-based social network and spice it up with cool features and functionalities.
+
+
+For best performance of the individual plugins within the hypeJunction bundle you require hypeFramework plugin that builds a visual framework around the functionality of the bundled plugins. Standalone plugins contain the functional code, but will not always render properly for visual interaction without the hypeFramework.
+
+hypeFramework may be obtained at www.elgg.org or www.hypeJunction.com. I request you to kindly consider a donation to help me maintain the demo servers and continue GPL development.
+Technical Support will only be available at commercial rates. I will only respond to how-to questions and feature requests that come from the members of the hypeJunction Club (see below).
+
+Alternatively, you can obtain hypeJunction Club Membership for a one-time membership fee of 250 Euro (the fee will be raising with the new plugins being added). For now, no annual renewal fees.
+Club membership entitles you to:
+- Access to all publicly released GPL and premium plugins within the hypeJunction
+- Multi-site license for premium plugins
+- Access to unreleased plugins within the hypeJunction
+- Access to all new GPL and premium plugins to be released within the hypeJunction
+- 2 hours of free technical support to help you set-up and customize the hypeJunction Bundle on your site
+- Discounted rates for paid technical support
+- Ability to request features (your voice will be heard)
+- Access to a how-to section and user manuals (to be set up)
+
+To report bugs or issues:
+www.hypeJunction.com/trac
+
+To view demos:
+www.hypeJunction.com/demo
