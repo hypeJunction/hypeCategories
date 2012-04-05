@@ -11,7 +11,7 @@
 <?php
 
 // Initialize hypeFramework
-elgg_register_event_handler('init', 'system', 'hj_categories_init');
+elgg_register_event_handler('init', 'system', 'hj_categories_init', 504);
 
 function hj_categories_init() {
 

@@ -63,7 +63,8 @@ if ($category && $category->canEdit() && elgg_get_context() == 'category' && !el
 		'entity' => $category,
 		//'handler' => 'hjcategory',
 		'sort_by' => 'priority',
-		'params' => $params
+		'params' => $params,
+		'has_full_view' => false
 			));
 }
 echo "<li id=\"$item_id\" class=\"elgg-item $item_class elgg-state-draggable clearfix\">";

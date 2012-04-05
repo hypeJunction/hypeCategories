@@ -10,7 +10,6 @@ $full = elgg_extract('full_view', $vars, false);
 if (!elgg_instanceof($entity, 'object', 'hjcategory')) {
 	return true;
 }
-
 if ($list_type == 'tree') {
 	elgg_push_context('category');
 	$items = $entity->getMenuItem();
@@ -48,9 +47,11 @@ if (!$full || (elgg_is_xhr() && !elgg_in_context('fancybox'))) {
 
 $params['target'] = "elgg-object-$entity->guid";
 $params['fbox_x'] = '900';
+
 $header_menu = elgg_view_menu('hjentityhead', array(
 	'entity' => $entity,
 	'current_view' => $full,
+	'has_full_view' => false,
 	'handler' => 'hjevent',
 	'class' => 'elgg-menu-hz hj-menu-hz',
 	'sort_by' => 'priority',
