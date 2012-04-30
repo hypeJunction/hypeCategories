@@ -32,10 +32,10 @@ if ($category) {
 	$id = "hj-category-parent-" . $category->guid;
 	$item_id = "elgg-object-$category->guid";
 } else {
-	$id = str_replace(':', '-', "{$item->getName()}");
-	$id = explode('-', $id);
-	$id = "hj-category-parent-" . end($id);
-	$item_id = "elgg-object-" . end($id);
+	$id_str = str_replace(':', '-', "{$item->getName()}");
+	$id_str = explode('-', $id_str);
+	$id = "hj-category-parent-" . end($id_str);
+	$item_id = "elgg-object-" . end($id_str);
 }
 
 if (elgg_get_context() == 'category_input') {

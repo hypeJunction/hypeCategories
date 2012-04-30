@@ -54,4 +54,4 @@ $html = <<<HTML
     </div>
 HTML;
 
-echo elgg_view_module('aside', elgg_echo('hj:categories:categories'), $html);
+echo elgg_view_module('info', elgg_echo('hj:categories:categories'), $html);
