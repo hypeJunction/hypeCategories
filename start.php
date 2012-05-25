@@ -22,10 +22,6 @@ function hj_categories_init() {
 		disable_plugin($plugin);
 	}
 
-// Add admin menu item
-	elgg_register_admin_menu_item('administer', 'categories', 'hj', 200);
-
-
 	$shortcuts = hj_framework_path_shortcuts($plugin);
 
 	/**
@@ -281,7 +277,7 @@ function hj_categories_menu($hook, $type, $return, $params) {
 			'is_action' => true,
 			'rel' => 'fancybox',
 			'class' => 'hj-ajaxed-add',
-			'priority' => 1
+			'priority' => 1,
 		);
 		$return[] = ElggMenuItem::factory($add_new);
 	}
@@ -317,7 +313,8 @@ function hj_categories_entity_head_menu($hook, $type, $return, $params) {
 				'is_action' => true,
 				'rel' => 'fancybox',
 				'class' => 'hj-ajaxed-add',
-				'priority' => 100
+				'priority' => 100,
+				'section' => 'dropdown'
 			);
 			$return[] = ElggMenuItem::factory($add_new);
 		}

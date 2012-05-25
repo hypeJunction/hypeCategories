@@ -43,6 +43,7 @@ if (!$full || (elgg_is_xhr() && !elgg_in_context('fancybox'))) {
 	$icon = elgg_view_entity_icon($entity, 'tiny');
 } else {
 	$icon = elgg_view_entity_icon($entity, 'medium');
+	$params['ajaxify'] = false;
 }
 
 $params['target'] = "elgg-object-$entity->guid";

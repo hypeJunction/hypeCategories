@@ -39,6 +39,10 @@
 	float:left;
 }
 
+.hj-categories-gallery {
+	border:0;
+}
+
 .hj-categories-gallery > li {
 	display:block;
 	float:left;
