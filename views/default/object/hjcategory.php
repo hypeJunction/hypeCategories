@@ -47,7 +47,7 @@ if (!$full || (elgg_is_xhr() && !elgg_in_context('fancybox'))) {
 }
 
 $params['target'] = "elgg-object-$entity->guid";
-$params['fbox_x'] = '900';
+$params['fbox_x'] = '500';
 
 $header_menu = elgg_view_menu('hjentityhead', array(
 	'entity' => $entity,
@@ -79,24 +79,41 @@ foreach ($types as $type => $subtypes) {
 	}
 	foreach ($subtypes as $subtype) {
 		if ($subtype == 'default') {
-			$subtype == null;
+			$subtype = null;
 		}
-		$items = elgg_get_entities_from_relationship(array(
-			'types' => $type,
-			'subtypes' => $subtype,
-			'limit' => 0,
+
+		$str = elgg_echo("item:$type:$subtype");
+
+		$limit = get_input('limit', 5);
+		$offset = get_input('offset', 0);
+		$options = array(
+			'type' => $type,
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset,
 			'relationship' => 'filed_in',
 			'relationship_guid' => $entity->guid,
-			'inverse_relationship' => true
-				));
-		$str = elgg_echo("item:$type:$subtype");
-		$count = 0;
-		if ($items) {
-			$count = count($items);
-		}
+			'inverse_relationship' => true,
+			'count' => true
+		);
+
+		$count = elgg_get_entities_from_relationship($options);
 		if ($count > 0) {
+			$options['count'] = false;
+			$items = elgg_get_entities_from_relationship($options);
+
 			$stats[$str] = $count;
-			$full_description .= elgg_view_module('aside', "$str ($count)", elgg_view_entity_list($items, array('full_view' => false)));
+			$list = elgg_view_entity_list($items, array(
+				'full_view' => false,
+				'pagination' => true,
+				'count' => $count,
+				'data-options' => $options,
+				'list_id' => "hj-category-items-$type-$subtype",
+				'base_url' => 'hj/sync/relationship',
+				'limit' => $limit,
+				'limit_prev' => $limit
+					));
+			$full_description .= elgg_view_module('aside', "$str ($count)", $list);
 		}
 	}
 }
@@ -130,9 +147,9 @@ if (!$full || (elgg_is_xhr() && !elgg_in_context('fancybox'))) {
 	$full_description = elgg_view_module('info', elgg_echo('hj:categories:category:items'), $full_description);
 	$comments .= elgg_view_module('info', elgg_echo('comments'), elgg_view_comments($entity));
 	echo $summary;
-	
+
 	echo elgg_view_layout('hj/dynamic', array(
-		'grid' => array(8,4),
+		'grid' => array(8, 4),
 		'content' => array($full_description . $comments, $stats_str)
 	));
 }

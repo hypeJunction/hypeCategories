@@ -15,12 +15,12 @@ if (!elgg_instanceof($root, 'group')) {
 	$root = elgg_get_site_entity();
 }
 
-if ($context == 'category') {
-	$root = get_entity(get_input('e'));
-	if (!elgg_instanceof($root, 'object', 'hjcategory')) {
-		return true;
-	}
-}
+//if ($context == 'category') {
+//	$root = get_entity(get_input('e'));
+//	if (!elgg_instanceof($root, 'object', 'hjcategory')) {
+//		return true;
+//	}
+//}
 
 elgg_load_js('hj.framework.ajax');
 

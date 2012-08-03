@@ -147,7 +147,7 @@ function hj_categories_category_input_process($hook, $type, $return, $params) {
 			$current_categories = elgg_get_entities_from_relationship(array(
 				'relationship' => 'filed_in',
 				'relationship_guid' => $entity->guid,
-					//'inverse_relationship' => true
+				//'inverse_relationship' => true
 					));
 
 			if (is_array($current_categories)) {
@@ -182,7 +182,7 @@ function hj_categories_input_process($action, $type, $entity) {
 		return true;
 	}
 
-	if (!$entity || !elgg_instanceof($entity)) {
+	if (!$entity || !elgg_instanceof($entity) || elgg_instanceof($entity, 'object', 'hjannotation')) {
 		return true;
 	}
 
@@ -225,7 +225,7 @@ function hj_categories_menu($hook, $type, $return, $params) {
 	$handler = elgg_extract('handler', $params, null);
 	$context = elgg_extract('context', $params, null);
 
-	$obj_params = elgg_extract('params', $params, null);
+	$obj_params = elgg_extract('params', $params, array());
 	$owner = elgg_extract('owner', $obj_params, null);
 	$container = elgg_extract('container', $obj_params, $entity);
 	$type = elgg_extract('type', $obj_params, null);
