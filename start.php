@@ -36,9 +36,12 @@ function hj_categories_init() {
 
 	$hj_js = elgg_get_simplecache_url('js', 'hj/categories/base');
 	elgg_register_js('hj.categories.base', $hj_js);
+	elgg_register_simplecache_view('js/hj/categories/base');
 
 	$hj_css = elgg_get_simplecache_url('css', 'hj/categories/base');
 	elgg_register_css('hj.categories.base', $hj_css);
+	elgg_register_simplecache_view('css/hj/categories/base');
+	
 	/**
 	 * INITIAL SETUP
 	 */
