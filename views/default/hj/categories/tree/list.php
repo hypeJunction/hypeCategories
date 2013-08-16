@@ -43,7 +43,7 @@ if ($root->canEdit()) {
 	$edit = elgg_view('output/url', array(
 		'text' => elgg_echo('hj:categories:edit'),
 		'href' => "category/edit/$root->guid",
-		'class' => 'hj-right'
+		'class' => 'float-alt'
 	));
 }
 

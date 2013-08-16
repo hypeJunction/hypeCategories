@@ -120,7 +120,7 @@ foreach ($types as $type => $subtypes) {
 
 if (is_array($stats)) {
 	foreach ($stats as $str => $count) {
-		$stats_str .= elgg_view_image_block("$str: ", $count, array('class' => 'hj-left'));
+		$stats_str .= elgg_view_image_block("$str: ", $count, array('class' => 'float'));
 	}
 } else {
 	$stats_str = elgg_echo('hj:categories:empty');
