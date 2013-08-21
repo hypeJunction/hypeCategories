@@ -14,5 +14,21 @@
         <type>elgg_version</type>
 		<version>2012041801</version>
     </requires>
+	<screenshot>
+		<description>Management Tool</description>
+		<path>screenshots/manager.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Form Field</description>
+		<path>screenshots/formfield.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Categories Overview Page</description>
+		<path>screenshots/page.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Category Full View</description>
+		<path>screenshots/fullview.png</path>
+	</screenshot>
 	<activate_on_install>false</activate_on_install>
 </plugin_manifest>

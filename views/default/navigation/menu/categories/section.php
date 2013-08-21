@@ -1,13 +1,4 @@
 <?php
-/**
- * Menu group
- *
- * @uses $vars['items']
- * @uses $vars['class']
- * @uses $vars['name']
- * @uses $vars['section']
- * @uses $vars['show_section_headers']
- */
 
 $headers = elgg_extract('show_section_headers', $vars, false);
 $class = elgg_extract('class', $vars, '');

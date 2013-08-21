@@ -1,156 +1,111 @@
 <?php
 
-elgg_load_js('hj.categories.base');
-elgg_load_css('hj.categories.base');
-
 $entity = elgg_extract('entity', $vars);
-$list_type = elgg_extract('list_type', $vars);
 $full = elgg_extract('full_view', $vars, false);
+$limit = get_input('limit', 5);
 
-if (!elgg_instanceof($entity, 'object', 'hjcategory')) {
-	return true;
-}
-if ($list_type == 'tree') {
-	elgg_push_context('category');
-	$items = $entity->getMenuItem();
-	echo elgg_view('navigation/menu/categories/section', array('items' => $items, 'id' => "hj-category-parent-$entity->guid"));
-	elgg_pop_context();
-	return true;
-}
+if (!$full) {
 
-if ($list_type == 'tags') {
-	//$icon = elgg_view_entity_icon($entity, $vars['size']);
-	echo elgg_view('output/url', array(
-		'text' => $entity->title,
-		'href' => $entity->getURL()
+	if ($entity->icontime) {
+		$icon = elgg_view_entity_icon($entity, 'small');
+	}
+
+	$title = elgg_view_image_block($icon, $entity->title);
+
+	$body = elgg_view('output/longtext', array(
+		'value' => $entity->description
 	));
-	return true;
-}
 
-$form = hj_framework_get_data_pattern('object', 'hjcategory');
-$fields = $form->getFields();
+	$count = hj_categories_get_filed_items($entity->guid, array('count' => true));
 
-// Short View of the Entity
-$title = elgg_view('output/url', array('text' => $entity->title, 'href' => $entity->getURL()));
+	if ($count > 0) {
 
-$subtitle = $entity->description;
-
-$params = elgg_clean_vars($vars);
-$params = hj_framework_extract_params_from_entity($entity, $params);
-
-if (!$full || (elgg_is_xhr() && !elgg_in_context('fancybox'))) {
-	//$short_description = elgg_get_excerpt($entity->description);
-	$icon = elgg_view_entity_icon($entity, 'tiny');
-} else {
-	$icon = elgg_view_entity_icon($entity, 'medium');
-	$params['ajaxify'] = false;
-}
-
-$params['target'] = "elgg-object-$entity->guid";
-$params['fbox_x'] = '500';
-
-$header_menu = elgg_view_menu('hjentityhead', array(
-	'entity' => $entity,
-	'current_view' => $full,
-	'has_full_view' => false,
-	'handler' => 'hjevent',
-	'class' => 'elgg-menu-hz hj-menu-hz',
-	'sort_by' => 'priority',
-	'params' => $params
+		$items = hj_categories_get_filed_items($entity->guid, array('limit' => $limit));
+		$body .= elgg_view_entity_list($items, array(
+			'full_view' => false
 		));
-
-
-//$types = get_input('types', null);
-//$subtypes = get_input('subtypes', null);
-//
-//if ($types && !is_array($types)) {
-//	$types = explode(',', $types);
-//}
-//
-//if ($subtypes && !is_array($subtypes)) {
-//	$subtypes = explode(',', $subtypes);
-//}
-
-$types = get_registered_entity_types();
-
-foreach ($types as $type => $subtypes) {
-	if (empty($subtypes)) {
-		$subtypes = array('default');
+	} else {
+		$body .= elgg_autop(elgg_echo('hj:categories:empty'));
 	}
-	foreach ($subtypes as $subtype) {
-		if ($subtype == 'default') {
-			$subtype = null;
+
+	if ($count > $limit) {
+		$all = elgg_view('output/url', array(
+			'text' => elgg_echo('hj:categories:view_all'),
+			'href' => $entity->getURL()
+		));
+	}
+
+	echo elgg_view_module('featured', $title, $body, array(
+		'footer' => $all
+	));
+} else {
+
+	if ($entity->icontime) {
+		$icon = elgg_view_entity_icon($entity, 'medium');
+	}
+
+	$description = elgg_view('output/longtext', array(
+		'value' => $entity->description,
+		'class' => 'elgg-text-help mbl'
+	));
+
+	$registered_entities = elgg_get_config('registered_entities');
+	foreach ($registered_entities as $type => $subtypes) {
+
+		if (!sizeof($subtypes)) {
+			$subtypes = array('default');
 		}
 
-		$str = elgg_echo("item:$type:$subtype");
+		foreach ($subtypes as $subtype) {
 
-		$limit = get_input('limit', 5);
-		$offset = get_input('offset', 0);
-		$options = array(
-			'type' => $type,
-			'subtype' => $subtype,
-			'limit' => $limit,
-			'offset' => $offset,
-			'relationship' => 'filed_in',
-			'relationship_guid' => $entity->guid,
-			'inverse_relationship' => true,
-			'count' => true
-		);
+			if ($subtype == 'hjcategory')
+				continue;
 
-		$count = elgg_get_entities_from_relationship($options);
-		if ($count > 0) {
-			$options['count'] = false;
-			$items = elgg_get_entities_from_relationship($options);
+			$count = elgg_get_entities_from_relationship(array(
+				'types' => $type,
+				'subtypes' => ($subtype == 'default') ? null : $subtype,
+				'relationship' => HYPECATEGORIES_RELATIONSHIP,
+				'relationship_guid' => $entity->guid,
+				'inverse_relationship' => true,
+				'count' => true
+			));
 
-			$stats[$str] = $count;
-			$list = elgg_view_entity_list($items, array(
-				'full_view' => false,
-				'pagination' => true,
-				'count' => $count,
-				'data-options' => $options,
-				'list_id' => "hj-category-items-$type-$subtype",
-				'base_url' => 'hj/sync/relationship',
-				'limit' => $limit,
-				'limit_prev' => $limit
-					));
-			$full_description .= elgg_view_module('aside', "$str ($count)", $list);
+			elgg_register_menu_item('category-filter', array(
+				'name' => "$type:$subtype",
+				'text' => elgg_echo('hj:categories:filter:type', array(($subtype == 'default') ? elgg_echo("item:$type") : elgg_echo("item:$type:$subtype"), $count)),
+				'href' => elgg_http_add_url_query_elements($entity->getURL(), array('type' => $type, 'subtype' => $subtype)),
+				'selected' => ($type == get_input('type') && $subtype == get_input('subtype'))
+			));
 		}
 	}
-}
 
-if (is_array($stats)) {
-	foreach ($stats as $str => $count) {
-		$stats_str .= elgg_view_image_block("$str: ", $count, array('class' => 'float'));
+	$sidebar = $icon;
+	$sidebar .= $description;
+	$sidebar .= elgg_view_menu('category-filter', array(
+		'class' => 'elgg-menu-page'
+	));
+
+	$options = array(
+		'full_view' => false,
+		'pagination' => true,
+		'types' => get_input('type', null),
+		'subtypes' => get_input('subtype', null),
+		'limit' => get_input('limit', 20),
+		'relationship' => HYPECATEGORIES_RELATIONSHIP,
+		'relationship_guid' => $entity->guid,
+		'inverse_relationship' => true,
+		'count' => true
+	);
+
+	$count = elgg_get_entities_from_relationship($options);
+	if ($count) {
+		$options['count'] = false;
+		$body .= elgg_list_entities_from_relationship($options);
+	} else {
+		$body .= elgg_autop(elgg_echo('hj:categories:empty'));
 	}
-} else {
-	$stats_str = elgg_echo('hj:categories:empty');
-}
 
-$stats_str = elgg_view_module('info', elgg_echo('hj:categories:category:stats'), $stats_str);
-
-$params = array(
-	'entity' => $entity,
-	'title' => $title,
-	'metadata' => $header_menu,
-	'subtitle' => $subtitle,
-	'content' => $short_description,
-);
-
-$params = $params + $vars;
-$list_body = elgg_view('object/elements/summary', $params);
-$summary = elgg_view_image_block($icon, $list_body);
-
-echo "<div id=\"elgg-object-$entity->guid\">";
-if (!$full || (elgg_is_xhr() && !elgg_in_context('fancybox'))) {
-	echo $summary;
-} else {
-	$full_description = elgg_view_module('info', elgg_echo('hj:categories:category:items'), $full_description);
-	$comments .= elgg_view_module('info', elgg_echo('comments'), elgg_view_comments($entity));
-	echo $summary;
-
-	echo elgg_view_layout('hj/dynamic', array(
-		'grid' => array(8, 4),
-		'content' => array($full_description . $comments, $stats_str)
+	echo elgg_view_image_block($sidebar, $body, array(
+		'class' => 'categories-category-full'
 	));
 }
-echo '</div>';

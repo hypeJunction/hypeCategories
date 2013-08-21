@@ -1,7 +1,7 @@
 <?php
 
 $subtypes = array(
-	'hjcategory' => 'hjCategory'
+	'hjcategory' => ''
 );
 
 foreach ($subtypes as $subtype => $class) {

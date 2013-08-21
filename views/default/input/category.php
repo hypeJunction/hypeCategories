@@ -1,46 +1,57 @@
 <?php
+/**
+ * Category input field
+ *
+ * @uses $vars['name_override'] Override name attribute (only use if you are planning to attach custom logic to assigning categories to entities)
+ * @uses $vars['value'] An array of category GUIDs that should be checked by default (you can leave this empty if you are passing $vars['entity']
+ * @uses $vars['entity'] An entity, which is being edited
+ * @uses $vars['multiple'] If set to true, input type will be set to checkbox, otherwise radio
+ * @uses $vars['required'] For now, this will be ignored as HTML spec does not provide clear guidelines
+ */
+elgg_load_js('categories.tree.js');
+elgg_load_css('categories.base.css');
 
-elgg_load_js('hj.categories.base');
-elgg_load_css('hj.categories.base');
-
-if (elgg_is_xhr()) {
-	echo '<script type="text/javascript">';
-	echo elgg_view('js/hj/categories/base');
-	echo '</script>';
-}
+elgg_push_context('categories-input');
 
 $entity = elgg_extract('entity', $vars, false);
-$name = elgg_extract('name', $vars, 'category');
-$value = elgg_extract('value', $vars, false);
 
-if (!$value && $entity) {
-	$category = explode(',', $entity->$name);
-	set_input('category', $category);
+$name = 'categories';
+if (isset($vars['name_override'])) {
+	$name = elgg_extract('name_override', $vars);
+}
+
+$multiple = elgg_extract('multiple', $vars, false);
+$required = elgg_extract('required', $vars, true);
+
+$value = elgg_extract('value', $vars, false);
+if (elgg_instanceof($entity)) {
+	$value = hj_categories_get_entity_categories($entity->guid, array(), true);
 }
 
 $page_owner = elgg_get_page_owner_entity();
 
-if (!elgg_instanceof($page_owner, 'group')) {
+if (!elgg_instanceof($page_owner, 'group')
+		|| !HYPECATEGORIES_GROUP_CATEGORIES) {
 	$page_owner = elgg_get_site_entity();
 }
 
-elgg_push_context('category_input');
-$categories = elgg_view_menu('hjcategories', array(
+
+echo elgg_view('input/hidden', array(
+	'name' => "{$name}",
+	'value' => true,
+	'required' => $required
+));
+	
+echo '<div class="categories-input">';
+echo elgg_view_menu('categories', array(
 	'entity' => $page_owner,
-	'handler' => 'input',
 	'sort_by' => 'priority',
-	'class' => 'elgg-menu-page elgg-menu-category-input-list'
-		));
+	'input' => array(
+		'name' => $name,
+		'value' => $value,
+		'multiple' => $multiple,
+	)
+));
+echo '</div>';
+
 elgg_pop_context();
-
-//echo '<label>' . elgg_echo('hj:categories:category') . '</label><br />';
-echo $categories;
-
-if ($category) {
-	foreach ($category as $cat) {
-		echo elgg_view('input/hidden', array(
-			'name' => 'category_guids[]',
-			'value' => $cat
-		));
-	}
-}

@@ -13,11 +13,15 @@
 
 define('HYPECATEGORIES_RELEASE', 1374851653);
 
+define('HYPECATEGORIES_RELATIONSHIP', 'filed_in');
+define('HYPECATEGORIES_ENTITY_MENU', elgg_get_plugin_setting('entity_menu', 'hypeCategories'));
+define('HYPECATEGORIES_GROUP_CATEGORIES', elgg_get_plugin_setting('group_categories', 'hypeCategories'));
+define('HYPECATEGORIES_GROUP_TREE_SITE', elgg_get_plugin_setting('group_tree_site', 'hypeCategories'));
+
+
 elgg_register_event_handler('init', 'system', 'hj_categories_init');
 
 function hj_categories_init() {
-
-	elgg_register_classes(elgg_get_plugins_path() . 'hypeCategories/classes/');
 
 	// Libraries
 	$libraries = array(
@@ -27,7 +31,10 @@ function hj_categories_init() {
 		'assets',
 		'views',
 		'menus',
-		'hooks'
+		'hooks',
+		'events',
+		'integrations',
+		'entities'
 	);
 
 	foreach ($libraries as $lib) {
@@ -40,6 +47,9 @@ function hj_categories_init() {
 
 	elgg_register_event_handler('upgrade', 'system', 'hj_categories_check_release');
 
+	// Register universal_categories metadata for search
+	elgg_register_tag_metadata_name('universal_categories');
+	
 }
 
 /**
@@ -50,7 +60,7 @@ function hj_categories_init() {
  * @param type $params
  * @return boolean
  */
-function hj_gallery_check_release($event, $type, $params) {
+function hj_categories_check_release($event, $type, $params) {
 
 	if (!elgg_is_admin_logged_in()) {
 		return true;
