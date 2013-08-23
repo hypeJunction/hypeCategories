@@ -20,7 +20,7 @@ if (isset($vars['name_override'])) {
 	$name = elgg_extract('name_override', $vars);
 }
 
-$multiple = elgg_extract('multiple', $vars, false);
+$multiple = elgg_extract('multiple', $vars, HYPECATEGORIES_INPUT_MULTIPLE);
 $required = elgg_extract('required', $vars, true);
 
 $value = elgg_extract('value', $vars, false);

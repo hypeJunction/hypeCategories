@@ -35,12 +35,15 @@ $english = array(
 	'hj:categories:entity_menu' => 'Display category in entity menu',
 	'hj:categories:group_categories' => 'Enable group categories',
 	'hj:categories:group_tree_site' => 'Add site categories to the group tree',
+	'hj:categories:input_multiple' => 'Unless specified otherwise programically, categories field should accept multiple inputs',
 
 	'hj:categories:display' => 'Display',
 	'hj:categories:donotdisplay' => 'Do not display',
 	'hj:categories:enable' => 'Enable',
 	'hj:categories:disable' => 'Disable',
-
+	'hj:categories:multiple' => 'Multiple',
+	'hj:categories:single' => 'Single',
+	
 	'hj:categories:remove:confirm' => 'Are you sure you want to remove this category and all subcategories under it?',
 
 	'hj:categories:filter:type' => '%s [%s]',

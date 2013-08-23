@@ -38,6 +38,20 @@ echo elgg_view('input/checkboxes', array(
 ));
 echo '</div>';
 
+// Default 'multiple' parameter for categories input
+echo '<div>';
+echo '<label>' . elgg_echo('hj:categories:input_multiple') . '</label>';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[input_multiple]',
+	'value' => $entity->input_multiple,
+	'options_values' => array(
+		true => elgg_echo('hj:categories:multiple'),
+		false => elgg_echo('hj:categories:single')
+	),
+));
+echo '</div>';
+
+
 echo '<div>';
 echo '<label>' . elgg_echo('hj:categories:group_categories') . '</label>';
 echo elgg_view('input/dropdown', array(
