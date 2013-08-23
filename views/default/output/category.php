@@ -44,12 +44,12 @@ if (!is_array($vars['categories'])) {
 	$vars['categories'] = array($vars['categories']);
 }
 
-$list_class = "elgg-categories";
+$list_class = "elgg-tags elgg-categories";
 if (isset($vars['list_class'])) {
 	$list_class = "$list_class {$vars['list_class']}";
 }
 
-$item_class = "elgg-category";
+$item_class = "elgg-tag elgg-category";
 if (isset($vars['item_class'])) {
 	$item_class = "$item_class {$vars['item_class']}";
 }
