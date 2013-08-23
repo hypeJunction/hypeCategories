@@ -10,7 +10,11 @@ if (!$full) {
 		$icon = elgg_view_entity_icon($entity, 'small');
 	}
 
-	$title = elgg_view_image_block($icon, $entity->title);
+	$title_link = elgg_view('output/url', array(
+		'text' => $entity->title,
+		'href' => $entity->getURL()
+	));
+	$title = elgg_view_image_block($icon, $title_link);
 
 	$body = elgg_view('output/longtext', array(
 		'value' => $entity->description
