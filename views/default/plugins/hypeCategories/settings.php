@@ -2,6 +2,42 @@
 
 $entity = elgg_extract('entity', $vars);
 
+// Type / subtype pairs that can be categorized
+// Types and subtypes to rate
+$dbprefix = elgg_get_config('dbprefix');
+$data = get_data("SELECT type AS type, subtype AS subtype
+								FROM {$dbprefix}entity_subtypes");
+
+$types = array();
+foreach ($data as $r) {
+	$type = $r->type;
+	$subtype = $r->subtype;
+
+	$types[$type][] = $subtype;
+
+	$str = elgg_echo("item:$type:$subtype");
+	$subtype_options[$str] = "$type:$subtype";
+}
+
+if (!array_key_exists('user', $types)) {
+	$str = elgg_echo("item:user");
+	$subtype_options[$str] = "user:default";
+}
+
+if (!array_key_exists('group', $types)) {
+	$str = elgg_echo("item:group");
+	$subtype_options[$str] = "group:default";
+}
+echo '<div>';
+echo '<label>' . elgg_echo('hj:categories:type_subtype_pairs') . '</label>';
+echo '<div class="elgg-text-help">' . elgg_echo('hj:categories:type_subtype_pairs:help') . '</div>';
+echo elgg_view('input/checkboxes', array(
+	'name' => 'params[type_subtype_pairs]',
+	'value' => elgg_get_config('taxonomy_type_subtype_pairs'),
+	'options' => $subtype_options,
+));
+echo '</div>';
+
 echo '<div>';
 echo '<label>' . elgg_echo('hj:categories:group_categories') . '</label>';
 echo elgg_view('input/dropdown', array(

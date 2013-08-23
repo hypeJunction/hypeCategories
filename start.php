@@ -18,6 +18,8 @@ define('HYPECATEGORIES_ENTITY_MENU', elgg_get_plugin_setting('entity_menu', 'hyp
 define('HYPECATEGORIES_GROUP_CATEGORIES', elgg_get_plugin_setting('group_categories', 'hypeCategories'));
 define('HYPECATEGORIES_GROUP_TREE_SITE', elgg_get_plugin_setting('group_tree_site', 'hypeCategories'));
 
+$type_subtype_pairs = elgg_get_plugin_setting('type_subtype_pairs', 'hypeCategories');
+elgg_set_config('taxonomy_type_subtype_pairs', ($type_subtype_pairs) ? unserialize($type_subtype_pairs) : array());
 
 elgg_register_event_handler('init', 'system', 'hj_categories_init');
 

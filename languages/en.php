@@ -27,6 +27,11 @@ $english = array(
 	'hj:categories:edit:description' => 'Category Description',
 	'hj:categories:edit:access_id' => 'Visibility',
 
+	'hj:categories:type_subtype_pairs' => 'Types of content items that categories should be applied to',
+	'hj:categories:type_subtype_pairs:help' => 'Selected types will appear in the category page filter.
+			This setting will also restrict the scope of to the default event handler, since each action
+			can trigger multiple create and update events (creating a blog for example is accompanying with creating notifications, notices etc).
+			Please note that selecting or unselecting an item will not automatically include or remove a category input field to/from the form',
 	'hj:categories:entity_menu' => 'Display category in entity menu',
 	'hj:categories:group_categories' => 'Enable group categories',
 	'hj:categories:group_tree_site' => 'Add site categories to the group tree',

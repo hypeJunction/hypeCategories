@@ -3,7 +3,6 @@
 elgg_register_event_handler('create', 'all', 'hj_categories_update_entity_categories');
 elgg_register_event_handler('update', 'all', 'hj_categories_update_entity_categories');
 
-
 /**
  * Update entity categories
  *
@@ -20,8 +19,28 @@ function hj_categories_update_entity_categories($event, $type, $entity) {
 
 	$entity_guid = $entity->getGUID();
 
+	// No need to run this handler on multiple update events for this entity
+	global $TAXONOMY_CATCH;
+	if (isset($TAXONOMY_CATCH[$entity_guid])) {
+		return true;
+	}
+	$TAXONOMY_CATCH[$entity_guid] = true;
+	
+	// Restrict the scope of the handler to entity types/subtypes specified in the plugin settings
+	$type = $entity->getType();
+	$subtype = $entity->getSubtype();
+	if (!$subtype) {
+		$subtype = 'default';
+	}
+
+	$taxonomy_type_subtype_pairs = elgg_get_config('taxonomy_type_subtype_pairs');
+	if (!in_array("$type:$subtype", $taxonomy_type_subtype_pairs)) {
+		return true;
+	}
+
 	$input_categories = get_input('categories', false);
-	set_input('categories', false); // prevent this handler from running multiple times in case of nested actions
+
+	//set_input('categories', false); // prevent this handler from running multiple times in case of nested actions
 
 	// Category form input was not present
 	if (!$input_categories) {
@@ -49,7 +68,7 @@ function hj_categories_update_entity_categories($event, $type, $entity) {
 
 	$to_remove = array_diff($current_categories, $future_categories);
 	$to_add = array_diff($future_categories, $current_categories);
-	
+
 	foreach ($to_remove as $guid) {
 		remove_entity_relationship($entity_guid, HYPECATEGORIES_RELATIONSHIP, $guid);
 	}

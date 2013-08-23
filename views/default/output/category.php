@@ -66,6 +66,7 @@ foreach ($vars['categories'] as $category) {
 		continue;
 	}
 
+	$crumbs = array();
 	$hierarchy = hj_categories_get_hierarchy($category->guid, false, true);
 	foreach ($hierarchy as $h) {
 		$crumbs[] = $h->title;
