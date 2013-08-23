@@ -53,17 +53,10 @@ if (!$full) {
 		'class' => 'elgg-text-help mbl'
 	));
 
-	$registered_entities = elgg_get_config('registered_entities');
-	foreach ($registered_entities as $type => $subtypes) {
+	$taxonomy_type_subtype_pairs = elgg_get_config('taxonomy_type_subtype_pairs');
+	foreach ($taxonomy_type_subtype_pairs as $tsp) {
 
-		if (!sizeof($subtypes)) {
-			$subtypes = array('default');
-		}
-
-		foreach ($subtypes as $subtype) {
-
-			if ($subtype == 'hjcategory')
-				continue;
+		list($type, $subtype) = explode(':', $tsp);
 
 			$count = elgg_get_entities_from_relationship(array(
 				'types' => $type,
@@ -80,7 +73,7 @@ if (!$full) {
 				'href' => elgg_http_add_url_query_elements($entity->getURL(), array('type' => $type, 'subtype' => $subtype)),
 				'selected' => ($type == get_input('type') && $subtype == get_input('subtype'))
 			));
-		}
+
 	}
 
 	$sidebar = $icon;
