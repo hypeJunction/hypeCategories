@@ -78,9 +78,11 @@ if (!$full) {
 
 	$sidebar = $icon;
 	$sidebar .= $description;
-	$sidebar .= elgg_view_menu('category-filter', array(
+
+	$filter = elgg_view_menu('category-filter', array(
 		'class' => 'elgg-menu-page'
 	));
+	$sidebar .= elgg_view_module('aside', elgg_echo('hj:categories:category_filter'), $filter);
 
 	$options = array(
 		'full_view' => false,

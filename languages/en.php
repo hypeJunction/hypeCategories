@@ -52,7 +52,9 @@ $english = array(
 	'hj:categories:view_all' => 'View all items',
 	
 	'profile_manager:admin:options:category' => 'Category',
-
+	
+	'hj:categories:category_filter' => 'Filter by content type',
+	
     );
 
 add_translation("en", $english);
