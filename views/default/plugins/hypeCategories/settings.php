@@ -87,3 +87,12 @@ echo elgg_view('input/dropdown', array(
 	),
 ));
 echo '</div>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('hj:categories:num_display') . '</label>';
+echo '<div class="elgg-text-help">' . elgg_echo('hj:categories:num_display:help') . '</div>';
+echo elgg_view('input/text', array(
+	'name' => 'params[num_display]',
+	'value' => $entity->num_display,
+));
+echo '</div>';

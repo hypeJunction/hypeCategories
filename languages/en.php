@@ -54,6 +54,9 @@ $english = array(
 	'profile_manager:admin:options:category' => 'Category',
 	
 	'hj:categories:category_filter' => 'Filter by content type',
+
+	'hj:categories:num_display' => 'Categories per page',
+	'hj:categories:num_display:help' => 'Number of categories to display per page on categories/all page (set to 0 to show all)',
 	
     );
 
