@@ -1,9 +1,9 @@
 <?php
 
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+$collapse = elgg_extract('collapse', $vars, false);
 
-//$item_class = 'elgg-menu-closed';
-$item_class = 'elgg-menu-open';
+$item_class = ($collapse) ? 'elgg-menu-closed' : 'elgg-menu-open';
 
 $children = $item->getChildren();
 if ($children) {
@@ -27,6 +27,7 @@ if ($children) {
 	echo elgg_view('navigation/menu/categories/section', array(
 		'items' => $children,
 		'class' => 'elgg-menu elgg-child-menu',
+		'collapse' => true
 	));
 }
 echo '</li>';
