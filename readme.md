@@ -45,3 +45,11 @@ $output = elgg_view('output/category', array(
 ![alt text](https://raw.github.com/hypeJunction/hypeCategories/master/screenshots/formfield.png "Form Field")
 ![alt text](https://raw.github.com/hypeJunction/hypeCategories/master/screenshots/page.png "Categories Overview Page")
 ![alt text](https://raw.github.com/hypeJunction/hypeCategories/master/screenshots/fullview.png "Category Full View")
+
+
+## Changes ##
+
+### v1.9.1 ###
+* Added a setting to configure categorizable entity types/subtypes
+* Category tree collapsing
+* Bugfixes
