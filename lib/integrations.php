@@ -1,7 +1,7 @@
 <?php
 
 // Add custom field type to profile manager
-if (elgg_is_active_plugin('profile_manager')) {
+if (is_callable('add_custom_field_type')) {
 	$profile_options = array(
 		"show_on_register" => true,
 		"mandatory" => true,

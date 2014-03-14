@@ -1,13 +1,16 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $entity = elgg_extract('entity', $vars);
 $full = elgg_extract('full_view', $vars, false);
 $limit = get_input('limit', 5);
+$size = elgg_extract('size', $vars, 'tiny');
 
 if (!$full) {
 
 	if ($entity->icontime) {
-		$icon = elgg_view_entity_icon($entity, 'small');
+		$icon = elgg_view_entity_icon($entity, $size);
 	}
 
 	$title_link = elgg_view('output/url', array(
@@ -17,94 +20,60 @@ if (!$full) {
 	$title = elgg_view_image_block($icon, $title_link);
 
 	$body = elgg_view('output/longtext', array(
-		'value' => $entity->description
+		'value' => elgg_get_excerpt($entity->description)
 	));
 
-	$count = hj_categories_get_filed_items($entity->guid, array('count' => true));
+	$count = get_filed_items($entity->guid, array('count' => true));
 
 	if ($count > 0) {
 
-		$items = hj_categories_get_filed_items($entity->guid, array('limit' => $limit));
+		$items = get_filed_items($entity->guid, array('limit' => $limit));
 		$body .= elgg_view_entity_list($items, array(
 			'full_view' => false
 		));
 	} else {
-		$body .= elgg_autop(elgg_echo('hj:categories:empty'));
+		$body .= elgg_autop(elgg_echo('categories:empty'));
 	}
 
 	if ($count > $limit) {
 		$all = elgg_view('output/url', array(
-			'text' => elgg_echo('hj:categories:view_all'),
+			'text' => elgg_echo('categories:view_all'),
 			'href' => $entity->getURL()
 		));
 	}
 
-	echo elgg_view_module('featured', $title, $body, array(
+	echo elgg_view_module('aside', $title, $body, array(
 		'footer' => $all
 	));
 } else {
 
-	if ($entity->icontime) {
-		$icon = elgg_view_entity_icon($entity, 'medium');
+
+	$types = get_input('type', elgg_get_config('taxonomy_types'));
+	$subtypes = get_input('subtype', elgg_get_config('taxonomy_subtypes'));
+
+	if ($types && $subtypes) {
+		$options = array(
+			'full_view' => false,
+			'pagination' => true,
+			'types' => $types,
+			'subtypes' => $subtypes,
+			'limit' => get_input('limit', 20),
+			'relationship' => HYPECATEGORIES_RELATIONSHIP,
+			'relationship_guid' => $entity->guid,
+			'inverse_relationship' => true,
+			'count' => true,
+			'size' => $size,
+		);
+
+		$count = elgg_get_entities_from_relationship($options);
 	}
-
-	$description = elgg_view('output/longtext', array(
-		'value' => $entity->description,
-		'class' => 'elgg-text-help mbl'
-	));
-
-	$taxonomy_type_subtype_pairs = elgg_get_config('taxonomy_type_subtype_pairs');
-	foreach ($taxonomy_type_subtype_pairs as $tsp) {
-
-		list($type, $subtype) = explode(':', $tsp);
-
-			$count = elgg_get_entities_from_relationship(array(
-				'types' => $type,
-				'subtypes' => ($subtype == 'default') ? null : $subtype,
-				'relationship' => HYPECATEGORIES_RELATIONSHIP,
-				'relationship_guid' => $entity->guid,
-				'inverse_relationship' => true,
-				'count' => true
-			));
-
-			elgg_register_menu_item('category-filter', array(
-				'name' => "$type:$subtype",
-				'text' => elgg_echo('hj:categories:filter:type', array(($subtype == 'default') ? elgg_echo("item:$type") : elgg_echo("item:$type:$subtype"), $count)),
-				'href' => elgg_http_add_url_query_elements($entity->getURL(), array('type' => $type, 'subtype' => $subtype)),
-				'selected' => ($type == get_input('type') && $subtype == get_input('subtype'))
-			));
-
-	}
-
-	$sidebar = $icon;
-	$sidebar .= $description;
-
-	$filter = elgg_view_menu('category-filter', array(
-		'class' => 'elgg-menu-page'
-	));
-	$sidebar .= elgg_view_module('aside', elgg_echo('hj:categories:category_filter'), $filter);
-
-	$options = array(
-		'full_view' => false,
-		'pagination' => true,
-		'types' => get_input('type', null),
-		'subtypes' => get_input('subtype', null),
-		'limit' => get_input('limit', 20),
-		'relationship' => HYPECATEGORIES_RELATIONSHIP,
-		'relationship_guid' => $entity->guid,
-		'inverse_relationship' => true,
-		'count' => true
-	);
-
-	$count = elgg_get_entities_from_relationship($options);
+	
 	if ($count) {
 		$options['count'] = false;
 		$body .= elgg_list_entities_from_relationship($options);
 	} else {
-		$body .= elgg_autop(elgg_echo('hj:categories:empty'));
+		$body .= elgg_autop(elgg_echo('categories:empty'));
 	}
 
-	echo elgg_view_image_block($sidebar, $body, array(
-		'class' => 'categories-category-full'
-	));
+	echo $body;
 }

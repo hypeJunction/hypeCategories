@@ -10,13 +10,36 @@
 	<category>content</category>
 
 	<author>Ismayil Khayredinov (ismayil.khayredinov@gmail.com)</author>
-    <website>http://hypeJunction.com</website>
-    <copyright>2011-2014 (c) Ismayil Khayredinov</copyright>
-    <license>GNU Public License version 2</license>
+	<website>http://hypeJunction.com</website>
+	<copyright>2011-2014 (c) Ismayil Khayredinov</copyright>
+	<license>GNU Public License version 2</license>
 
 	<requires>
-        <type>elgg_release</type>
+		<type>elgg_release</type>
 		<version>1.8</version>
-    </requires>
+	</requires>
 
+	<suggests>
+		<type>priority</type>
+		<plugin>profile_manager</plugin>
+		<priority>after</priority>
+	</suggests>
+	
+	<screenshot>
+		<description>Management Tool</description>
+		<path>screenshots/manage.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Form Field</description>
+		<path>screenshots/form.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Category Tree View</description>
+		<path>screenshots/tree.png</path>
+	</screenshot>
+	<screenshot>
+		<description>Category Full View</description>
+		<path>screenshots/category_view.png</path>
+	</screenshot>
+	
 </plugin_manifest>

@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $entity = elgg_extract('entity', $vars);
 
 // Type / subtype pairs that can be categorized
@@ -29,8 +31,8 @@ if (!array_key_exists('group', $types)) {
 	$subtype_options[$str] = "group:default";
 }
 echo '<div>';
-echo '<label>' . elgg_echo('hj:categories:type_subtype_pairs') . '</label>';
-echo '<div class="elgg-text-help">' . elgg_echo('hj:categories:type_subtype_pairs:help') . '</div>';
+echo '<label>' . elgg_echo('categories:type_subtype_pairs') . '</label>';
+echo '<div class="elgg-text-help">' . elgg_echo('categories:type_subtype_pairs:help') . '</div>';
 echo elgg_view('input/checkboxes', array(
 	'name' => 'params[type_subtype_pairs]',
 	'value' => elgg_get_config('taxonomy_type_subtype_pairs'),
@@ -40,57 +42,57 @@ echo '</div>';
 
 // Default 'multiple' parameter for categories input
 echo '<div>';
-echo '<label>' . elgg_echo('hj:categories:input_multiple') . '</label>';
+echo '<label>' . elgg_echo('categories:input_multiple') . '</label>';
 echo elgg_view('input/dropdown', array(
 	'name' => 'params[input_multiple]',
 	'value' => $entity->input_multiple,
 	'options_values' => array(
-		true => elgg_echo('hj:categories:multiple'),
-		false => elgg_echo('hj:categories:single')
+		true => elgg_echo('categories:multiple'),
+		false => elgg_echo('categories:single')
 	),
 ));
 echo '</div>';
 
 
 echo '<div>';
-echo '<label>' . elgg_echo('hj:categories:group_categories') . '</label>';
+echo '<label>' . elgg_echo('categories:group_categories') . '</label>';
 echo elgg_view('input/dropdown', array(
 	'name' => 'params[group_categories]',
 	'value' => $entity->group_categories,
 	'options_values' => array(
-		true => elgg_echo('hj:categories:enable'),
-		false => elgg_echo('hj:categories:disable')
+		true => elgg_echo('categories:enable'),
+		false => elgg_echo('categories:disable')
 	),
 ));
 echo '</div>';
 
 echo '<div>';
-echo '<label>' . elgg_echo('hj:categories:group_tree_site') . '</label>';
+echo '<label>' . elgg_echo('categories:group_tree_site') . '</label>';
 echo elgg_view('input/dropdown', array(
 	'name' => 'params[group_tree_site]',
 	'value' => $entity->group_tree_site,
 	'options_values' => array(
-		true => elgg_echo('hj:categories:enable'),
-		false => elgg_echo('hj:categories:disable')
+		true => elgg_echo('categories:enable'),
+		false => elgg_echo('categories:disable')
 	),
 ));
 echo '</div>';
 
 echo '<div>';
-echo '<label>' . elgg_echo('hj:categories:entity_menu') . '</label>';
+echo '<label>' . elgg_echo('categories:entity_menu') . '</label>';
 echo elgg_view('input/dropdown', array(
 	'name' => 'params[entity_menu]',
 	'value' => $entity->entity_menu,
 	'options_values' => array(
-		true => elgg_echo('hj:categories:display'),
-		false => elgg_echo('hj:categories:donotdisplay')
+		true => elgg_echo('categories:display'),
+		false => elgg_echo('categories:donotdisplay')
 	),
 ));
 echo '</div>';
 
 echo '<div>';
-echo '<label>' . elgg_echo('hj:categories:num_display') . '</label>';
-echo '<div class="elgg-text-help">' . elgg_echo('hj:categories:num_display:help') . '</div>';
+echo '<label>' . elgg_echo('categories:num_display') . '</label>';
+echo '<div class="elgg-text-help">' . elgg_echo('categories:num_display:help') . '</div>';
 echo elgg_view('input/text', array(
 	'name' => 'params[num_display]',
 	'value' => $entity->num_display,

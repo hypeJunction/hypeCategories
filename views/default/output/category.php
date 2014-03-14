@@ -11,8 +11,10 @@
  * @uses $vars['item_class'] Optional. Additional classes to be passed to <li> elements
  */
 
+namespace hypeJunction\Categories;
+
 if (isset($vars['entity'])) {
-	$vars['categories'] = hj_categories_get_entity_categories($vars['entity']->guid);
+	$vars['categories'] = get_entity_categories($vars['entity']->guid);
 	unset($vars['entity']);
 }
 
@@ -44,30 +46,33 @@ if (!is_array($vars['categories'])) {
 	$vars['categories'] = array($vars['categories']);
 }
 
-$list_class = "elgg-tags elgg-categories";
+$list_class = "elgg-categories";
 if (isset($vars['list_class'])) {
 	$list_class = "$list_class {$vars['list_class']}";
 }
 
-$item_class = "elgg-tag elgg-category";
+$item_class = "elgg-category";
 if (isset($vars['item_class'])) {
 	$item_class = "$item_class {$vars['item_class']}";
 }
 
+$icon_class = elgg_extract('icon_class', $vars);
+$list_items = '<li>' . elgg_view_icon('categories', $icon_class) . '</li>';
+
 foreach ($vars['categories'] as $category) {
-	
-	if (!elgg_instanceof($category, 'object', 'hjcategory')) {
+
+	if (!elgg_instanceof($category, 'object', HYPECATEGORIES_SUBTYPE)) {
 		continue;
 	}
 
-	$children = hj_categories_get_subcategories($category->guid, array('count' => true));
+	$children = get_subcategories($category->guid, array('count' => true));
 
 	if ($children > 0) {
 		continue;
 	}
 
 	$crumbs = array();
-	$hierarchy = hj_categories_get_hierarchy($category->guid, false, true);
+	$hierarchy = get_hierarchy($category->guid, false, true);
 	foreach ($hierarchy as $h) {
 		$crumbs[] = $h->title;
 	}
@@ -82,11 +87,9 @@ foreach ($vars['categories'] as $category) {
 }
 
 $list = <<<___HTML
-		<div class="clearfix">
-			<ul class="$list_class">
-				$list_items
-			</ul>
-		</div>
+<ul class="$list_class">
+	$list_items
+</ul>
 ___HTML;
 
 echo $list;

@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $item = elgg_extract('item', $vars);
 $collapse = elgg_extract('collapse', $vars, false);
 

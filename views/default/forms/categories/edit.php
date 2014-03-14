@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $entity = elgg_extract('entity', $vars);
 
 if (elgg_instanceof($entity)) {
@@ -25,25 +27,31 @@ echo elgg_view('input/hidden', array(
 
 echo '<div class="categories-icon-move icon-small"></div>';
 
-$upload = elgg_echo('hj:categories:edit:icon');
+$upload = elgg_echo('categories:edit:icon');
 
-echo "<div class=\"categories-icon-upload\" title=\"$upload\">";
 if (elgg_instanceof($entity) && $entity->icontime) {
-	echo elgg_view('output/img', array(
-		'src' => $entity->getIconURL('tiny')
-	));
+	$has_icon = true;
+	$icon_upload_class = 'categories-has-icon';
 }
+echo "<div class=\"categories-icon-upload $icon_upload_class\" title=\"$upload\">";
 echo elgg_view('input/file', array(
 	'name' => 'categories[icon][]',
 	'class' => 'hidden'
 ));
 echo '</div>';
 
+if ($has_icon) {
+	echo elgg_view('output/img', array(
+		'src' => $entity->getIconURL('tiny'),
+		'class' => 'categories-icon-preview',
+	));
+}
+
 echo '<div class="categories-category-title">';
 echo elgg_view('input/text', array(
 	'name' => 'categories[title][]',
 	'value' => $entity->title,
-	'placeholder' => elgg_echo('hj:categories:edit:title')
+	'placeholder' => elgg_echo('categories:edit:title')
 ));
 echo '</div>';
 
@@ -54,16 +62,16 @@ echo '<div class="categories-icon-minus"></div>';
 echo '<div class="categories-category-meta hidden">';
 
 echo '<div class="categories-category-description">';
-//echo '<label>' . elgg_echo('hj:categories:edit:description') . '</label>';
+//echo '<label>' . elgg_echo('categories:edit:description') . '</label>';
 echo elgg_view('input/text', array(
 	'name' => 'categories[description][]',
 	'value' => $entity->description,
-	'placeholder' => elgg_echo('hj:categories:edit:description')
+	'placeholder' => elgg_echo('categories:edit:description')
 ));
 echo '</div>';
 
 echo '<div class="categories-category-access">';
-//echo '<label>' . elgg_echo('hj:categories:edit:access_id') . '</label>';
+//echo '<label>' . elgg_echo('categories:edit:access_id') . '</label>';
 echo elgg_view('input/access', array(
 	'name' => 'categories[access_id][]',
 	'entity' => $entity,

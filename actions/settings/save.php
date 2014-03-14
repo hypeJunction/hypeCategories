@@ -1,11 +1,14 @@
 <?php
 
+namespace hypeJunction\Categories;
+
+use ElggPlugin;
+
 $params = get_input('params', array(), false); // don't filter the results so that html inputs remain unchanged
-$plugin_id = 'hypeCategories';
-$plugin = elgg_get_plugin_from_id($plugin_id);
+$plugin = elgg_get_plugin_from_id(PLUGIN_ID);
 
 if (!($plugin instanceof ElggPlugin)) {
-	register_error(elgg_echo('plugins:settings:save:fail', array($plugin_id)));
+	register_error(elgg_echo('plugins:settings:save:fail', array(PLUGIN_ID)));
 	forward(REFERER);
 }
 

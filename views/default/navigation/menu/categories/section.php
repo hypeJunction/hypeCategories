@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $headers = elgg_extract('show_section_headers', $vars, false);
 $class = elgg_extract('class', $vars, '');
 $item_class = elgg_extract('item_class', $vars, '');

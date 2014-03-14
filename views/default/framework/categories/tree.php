@@ -1,7 +1,8 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 elgg_load_js('categories.tree.js');
-elgg_load_css('categories.base.css');
 
 $container = elgg_extract('container', $vars);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Category input field
  *
@@ -8,8 +9,10 @@
  * @uses $vars['multiple'] If set to true, input type will be set to checkbox, otherwise radio
  * @uses $vars['required'] For now, this will be ignored as HTML spec does not provide clear guidelines
  */
+
+namespace hypeJunction\Categories;
+
 elgg_load_js('categories.tree.js');
-elgg_load_css('categories.base.css');
 
 elgg_push_context('categories-input');
 
@@ -25,13 +28,12 @@ $required = elgg_extract('required', $vars, true);
 
 $value = elgg_extract('value', $vars, false);
 if (elgg_instanceof($entity)) {
-	$value = hj_categories_get_entity_categories($entity->guid, array(), true);
+	$value = get_entity_categories($entity->guid, array(), true);
 }
 
 $page_owner = elgg_get_page_owner_entity();
 
-if (!elgg_instanceof($page_owner, 'group')
-		|| !HYPECATEGORIES_GROUP_CATEGORIES) {
+if (!elgg_instanceof($page_owner, 'group') || !HYPECATEGORIES_GROUP_CATEGORIES) {
 	$page_owner = elgg_get_site_entity();
 }
 
@@ -41,7 +43,7 @@ echo elgg_view('input/hidden', array(
 	'value' => true,
 	'required' => $required
 ));
-	
+
 echo '<div class="categories-input">';
 echo elgg_view_menu('categories', array(
 	'entity' => $page_owner,

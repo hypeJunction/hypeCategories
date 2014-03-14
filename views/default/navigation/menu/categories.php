@@ -1,5 +1,7 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $vars['name'] = preg_replace('/[^a-z0-9\-]/i', '-', $vars['name']);
 $headers = elgg_extract('show_section_headers', $vars, false);
 

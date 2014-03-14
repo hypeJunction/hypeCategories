@@ -1,6 +1,7 @@
 <?php
 
-elgg_load_css('categories.base.css');
+namespace hypeJunction\Categories;
+
 elgg_load_js('jquery.nestedsortable.js');
 elgg_load_js('categories.manage.js');
 

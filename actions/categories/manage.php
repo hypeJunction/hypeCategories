@@ -1,5 +1,10 @@
 <?php
 
+namespace hypeJunction\Categories;
+
+use ElggFile;
+use ElggObject;
+
 $config = get_input('categories');
 $hierarchy = json_decode(get_input('hierarchy'), true);
 $root_guid = get_input('container_guid', elgg_get_site_entity()->guid);
@@ -34,7 +39,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 		}
 	} else if ($title) {
 		$category = new ElggObject();
-		$category->subtype = 'hjcategory';
+		$category->subtype = HYPECATEGORIES_SUBTYPE;
 		$category->owner_guid = elgg_get_logged_in_user_guid();
 		$category->container_guid = $root_guid;
 		$category->title = $title;
@@ -81,14 +86,13 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 	}
 
 	$nodes[$node_id] = $category;
-	
 }
 
 foreach ($hierarchy as $key => $root) {
-	hj_categories_update_hierarchy($root['id'], $root['children'], $nodes);
+	update_hierarchy($root['id'], $root['children'], $nodes);
 }
 
-function hj_categories_update_hierarchy($node_id, $children, $nodes) {
+function update_hierarchy($node_id, $children, $nodes) {
 
 	$category = $nodes[$node_id];
 
@@ -109,7 +113,7 @@ function hj_categories_update_hierarchy($node_id, $children, $nodes) {
 			} else if (!elgg_instanceof($category) && elgg_instanceof($subcategory)) {
 //				$subcategory->delete();
 			}
-			hj_categories_update_hierarchy($child_node_id, $child_children, $nodes);
+			update_hierarchy($child_node_id, $child_children, $nodes);
 		}
 	}
 }

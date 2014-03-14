@@ -1,13 +1,15 @@
 <?php
 
+namespace hypeJunction\Categories;
+
 $container = elgg_extract('container', $vars);
-$count = hj_categories_get_subcategories($container->guid, array('count' => true));
+$count = get_subcategories($container->guid, array('count' => true));
 
 if (!$count) {
 	return;
 }
 
-$title = elgg_echo('hj:categories:subcategories');
+$title = elgg_echo('categories:subcategories');
 
 $body = elgg_view('framework/categories/tree', $vars);
 
