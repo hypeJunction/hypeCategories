@@ -29,7 +29,7 @@ $body = elgg_view('framework/categories/tree', $vars);
 if ($container->canEdit()) {
 	$footer = elgg_view('output/url', array(
 		'text' => elgg_echo('categories:manage'),
-		'href' => "categories/manage/$container->guid",
+		'href' => PAGEHANDLER . "/manage/$container->guid",
 		'is_trusted' => true
 	));
 }
