@@ -272,7 +272,7 @@
   content: ",";
   padding-right: 4px;
 }
-.elgg-categories > li:first-child:after {
+.elgg-categories > li:first-child:after, .elgg-categories > li:last-child:after {
   content: "";
 }
 .elgg-categories > li a {
