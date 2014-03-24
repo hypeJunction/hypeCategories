@@ -38,14 +38,16 @@ if (empty($vars['categories']) && !empty($vars['value'])) {
 	}
 }
 
-$vars['categories'] = array_filter($vars['categories']);
-
 if (empty($vars['categories'])) {
 	return;
 }
-
 if (!is_array($vars['categories'])) {
 	$vars['categories'] = array($vars['categories']);
+}
+$vars['categories'] = array_filter($vars['categories']);
+
+if (!count($vars['categories'])) {
+	return;
 }
 
 $list_class = "elgg-categories";
