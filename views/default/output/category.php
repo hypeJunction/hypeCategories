@@ -38,6 +38,8 @@ if (empty($vars['categories']) && !empty($vars['value'])) {
 	}
 }
 
+$vars['categories'] = array_filter($vars['categories']);
+
 if (empty($vars['categories'])) {
 	return;
 }
