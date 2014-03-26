@@ -255,7 +255,7 @@
   *zoom: 1;
   word-break: break-word;
   margin: 3px 0;
-  font-size: 15px;
+  font-size: 85%;
   line-height: 18px;
 }
 .elgg-categories:before, .elgg-categories:after {
@@ -264,6 +264,9 @@
 }
 .elgg-categories:after {
   clear: both;
+}
+.elgg-subtext .elgg-categories {
+  font-size: inherit;
 }
 .elgg-categories > li {
   display: inline;
@@ -276,7 +279,6 @@
   content: "";
 }
 .elgg-categories > li a {
-  font-size: 1em;
   font-style: normal;
 }
 
