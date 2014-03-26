@@ -9,6 +9,12 @@ Categories and taxonomy for Elgg
 * User-friendly UI for adding and managing categories
 * Support for category icons
 
+## Configuration ##
+
+* If you are working with a large taxonomy, you will most likely need to update your PHP runtime configuration.
+If, when managing categories, you loose entries or hierarchies, increase the value of ```max_input_vars```
+http://www.php.net/manual/en/info.configuration.php
+
 ## Usage ##
 
 To add a category input to your form, add the following code:

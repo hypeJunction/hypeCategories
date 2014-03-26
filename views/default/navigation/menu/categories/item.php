@@ -12,7 +12,7 @@ if ($children) {
 	$item_class = "$item_class elgg-menu-parent";
 	$toggle = '<span class="elgg-child-menu-toggle"><span class="collapse ">&#9698;</span><span class="expand">&#9654;</span></span>';
 } else {
-	$toggle = '<span class="elgg-child-memnu-indicator">&#9675;</span>';
+	$toggle = '<span class="elgg-child-menu-indicator">&#9675;</span>';
 	$item_class = "$item_class elgg-menu-nochildren";
 }
 

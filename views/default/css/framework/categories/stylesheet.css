@@ -45,9 +45,11 @@
   cursor: default;
 }
 
+.categories-icon-move {
+  cursor: move;
+}
 .categories-icon-move:before {
   content: "\f047";
-  cursor: move;
 }
 
 .categories-icon-edit:before {
@@ -75,75 +77,81 @@
   content: "\f05a";
 }
 
+.elgg-menu-categories li {
+  line-height: 18px;
+  vertical-align: middle;
+  text-indent: -15px;
+  padding-left: 20px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.elgg-menu-categories li > span, .elgg-menu-categories li > a, .elgg-menu-categories li > a span {
+  margin-right: 5px;
+  display: inline;
+  vertical-align: middle;
+  line-height: 18px;
+}
 .elgg-menu-categories .categories-icon-move {
   margin: 10px;
 }
-
-.elgg-menu-categories .categories-icon-plus,
-.elgg-menu-categories .categories-icon-minus {
+.elgg-menu-categories .categories-icon-plus, .elgg-menu-categories .categories-icon-minus {
   float: right;
-  margin: 12px 10px;
+  margin: 8px;
 }
-
-.elgg-menu-categories .categories-icon-info,
-.elgg-menu-categories .categories-icon-icon {
+.elgg-menu-categories .categories-icon-info, .elgg-menu-categories .categories-icon-icon {
   cursor: pointer;
 }
-
 .elgg-menu-categories .elgg-menu-closed .elgg-child-menu {
   display: none;
 }
-
+.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .collapse {
+  display: none;
+}
+.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .expand {
+  display: block;
+}
+.elgg-menu-categories .elgg-menu-closed.elgg-menu-parent {
+  margin-left: auto;
+}
+.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .collapse {
+  display: block;
+}
+.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .expand {
+  display: none;
+}
+.elgg-menu-categories .categories-category-icon img {
+  height: 16px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
 .elgg-menu-categories .elgg-child-menu-toggle {
-  margin: -5px 5px 0 0;
+  margin: 0;
   cursor: pointer;
   color: #666;
   font-size: 11px;
   display: inline-block;
   vertical-align: bottom;
-}
-.elgg-menu-categories .elgg-child-menu-toggle + label {
-  display: inline-block;
-}
-
-.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .collapse {
-  display: none;
-}
-
-.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .collapse {
-  display: block;
-}
-
-.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .expand {
-  display: block;
-}
-
-.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .expand {
-  display: none;
-}
-
-.elgg-menu-categories li {
-  line-height: 18px;
-  vertical-align: middle;
-}
-
-.elgg-menu-categories .elgg-menu-closed {
-  /*margin-left: 14px;*/
-}
-
-.elgg-menu-categories .elgg-menu-closed.elgg-menu-parent {
-  margin-left: auto;
-}
-
-.elgg-menu-categories ul {
-  margin-left: 35px;
+  margin-left: 15px;
 }
 
 .categories-input input[type="checkbox"], .categories-input input[type="radio"] {
   display: inline-block;
   margin: 0 8px 0 0;
+  vertical-align: middle;
+  line-height: 18px;
+}
+.categories-input label {
+  font-size: 100%;
+  font-weight: normal;
+  display: initial;
+  vertical-align: middle;
+  line-height: 18px;
 }
 
+.categories-manage li {
+  text-indent: 0;
+}
 .categories-manage input {
   margin: 0;
 }
@@ -173,31 +181,11 @@
   height: auto;
   min-height: 200px;
 }
-.categories-manage .elgg-child-menu-toggle {
+.categories-manage .elgg-child-menu-toggle, .categories-manage .elgg-child-menu-indicator {
   display: none;
 }
 .categories-manage .elgg-menu-categories .elgg-menu-closed .elgg-child-menu {
   display: block;
-}
-
-.categories-tree .elgg-menu-categories ul {
-  margin-left: 13px;
-}
-
-.categories-tree .categories-category-icon img {
-  height: 16px;
-  width: auto;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.categories-tree li > span,
-.categories-tree li > a,
-.categories-tree li > a span {
-  margin-right: 5px;
-  display: inline;
-  vertical-align: top;
-  line-height: 26px;
 }
 
 .categories-category-full > .elgg-image {
@@ -205,10 +193,6 @@
   margin-right: 20px;
 }
 
-.categories-sidebar-tree-module {
-  white-space: nowrap;
-  overflow: hidden;
-}
 .categories-sidebar-tree-module:hover {
   overflow: visible;
   /*a, span {
