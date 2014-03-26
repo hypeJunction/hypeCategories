@@ -215,9 +215,9 @@
 }
 .categories-sidebar-tree-module:hover {
   overflow: visible;
-}
-.categories-sidebar-tree-module:hover a, .categories-sidebar-tree-module:hover span {
-  background: white;
+  /*a, span {
+  	background: white;
+  }*/
 }
 .categories-sidebar-tree-module .elgg-foot {
   margin-top: 10px;
