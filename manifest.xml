@@ -18,11 +18,5 @@
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
-
-	<suggests>
-		<type>priority</type>
-		<plugin>profile_manager</plugin>
-		<priority>after</priority>
-	</suggests>
 	
 </plugin_manifest>
