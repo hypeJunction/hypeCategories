@@ -39,6 +39,27 @@ $output = elgg_view('output/category', array(
 ));
 ```
 
+## Versioning
+
+The master branch has been switched to Elgg 1.9.+ development.
+Legacy 1.8 code is in elgg18 branch.
+
+
+## Installing with Composer
+
+hypeCategories can be included in your Elgg project by ```require``` from the project's
+root ```composer.json```.
+
+Support for composer in Elgg is an experimental feature pioneered by [@Srokap](https://github.com/Srokap/ "Paweł Sroka").
+
+Provisional config to include hypeCategories into your project:
+```json
+{
+	"require": {
+		"hypejunction/hypecategories" : "@stable"
+	}
+}
+```
 
 ## Screenshots ##
 
