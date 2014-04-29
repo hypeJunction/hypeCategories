@@ -25,21 +25,4 @@
 		<priority>after</priority>
 	</suggests>
 	
-	<screenshot>
-		<description>Management Tool</description>
-		<path>screenshots/manage.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Form Field</description>
-		<path>screenshots/form.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Category Tree View</description>
-		<path>screenshots/tree.png</path>
-	</screenshot>
-	<screenshot>
-		<description>Category Full View</description>
-		<path>screenshots/category_view.png</path>
-	</screenshot>
-	
 </plugin_manifest>
