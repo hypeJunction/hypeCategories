@@ -211,22 +211,3 @@ function page_handler($page) {
 
 	return false;
 }
-
-/**
- * Category URL handler
- *
- * @param ElggObject $entity Category object
- * @return string URL
- */
-function category_url_handler($entity) {
-
-	$friendly = elgg_get_friendly_title($entity->title);
-
-	$page_owner = elgg_get_page_owner_entity();
-
-	if (HYPECATEGORIES_GROUP_CATEGORIES && elgg_instanceof($page_owner, 'group')) {
-		return elgg_normalize_url(PAGEHANDLER . "/group/$page_owner->guid/$entity->guid/$friendly");
-	} else {
-		return elgg_normalize_url(PAGEHANDLER . "/view/$entity->guid/$friendly");
-	}
-}

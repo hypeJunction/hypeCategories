@@ -5,6 +5,34 @@ namespace hypeJunction\Categories;
 use ElggMenuItem;
 
 /**
+ * Category URL handler
+ *
+ * @param string $hook		Equals 'entity:url'
+ * @param string $type		Equals 'object'
+ * @param string $return	Current URL
+ * @param array $params		Additional params
+ * @return string			Filtered URL
+ */
+function category_url_handler($hook, $type, $return, $params) {
+
+	$entity = elgg_extract('entity', $params);
+
+	if (!elgg_instanceof($entity, 'object', 'hjcategory')) {
+		return $return;
+	}
+
+	$friendly = elgg_get_friendly_title($entity->title);
+
+	$page_owner = elgg_get_page_owner_entity();
+
+	if (HYPECATEGORIES_GROUP_CATEGORIES && elgg_instanceof($page_owner, 'group')) {
+		return elgg_normalize_url(PAGEHANDLER . "/group/$page_owner->guid/$entity->guid/$friendly");
+	}
+	
+	return elgg_normalize_url(PAGEHANDLER . "/view/$entity->guid/$friendly");
+}
+
+/**
  * Update category icon URL
  *
  * @param string $hook		Equals 'entity:icon:url'
