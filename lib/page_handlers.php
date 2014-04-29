@@ -3,7 +3,6 @@
 namespace hypeJunction\Categories;
 
 use ElggFile;
-use ElggObject;
 
 /**
  * Categories page handler
