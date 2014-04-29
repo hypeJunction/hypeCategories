@@ -25,7 +25,8 @@ if (isset($vars['item_class']) && $vars['item_class']) {
 }
 
 echo "<li class=\"$item_class\">";
-echo $toggle . $item->getContent();
+echo $toggle . elgg_view_menu_item($item);
+
 if ($children) {
 	echo elgg_view('navigation/menu/categories/section', array(
 		'items' => $children,
