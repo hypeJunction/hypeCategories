@@ -38,7 +38,6 @@ function page_handler($page) {
 
 			echo elgg_view_page($title, $layout);
 			return true;
-			break;
 
 		// categories/manage/$container_guid
 		case 'manage' :
@@ -81,7 +80,6 @@ function page_handler($page) {
 
 			echo elgg_view_page($title, $layout, $shell);
 			return true;
-			break;
 
 		case 'view' :
 
@@ -126,7 +124,6 @@ function page_handler($page) {
 			echo elgg_view_page($title, $layout);
 
 			return true;
-			break;
 
 		case 'group' :
 
@@ -169,7 +166,6 @@ function page_handler($page) {
 			echo elgg_view_page($title, $layout);
 
 			return true;
-			break;
 
 		case 'icon' :
 			$entity = get_entity($page[1]);
@@ -206,7 +202,6 @@ function page_handler($page) {
 			header("Content-Length: " . strlen($contents));
 			echo $contents;
 			return true;
-			break;
 	}
 
 	return false;
