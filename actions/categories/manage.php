@@ -101,7 +101,7 @@ function update_hierarchy($node_id, $children, $nodes) {
 			$child_node_id = $child['id'];
 			$child_children = $child['children'];
 			$subcategory = $nodes[$child_node_id];
-			error_log("Parent: $node_id; Child: $child_node_id");
+			elgg_log("Updating taxonomy; parent node id $node_id -> child node id $child_node_id", 'WARNING');
 
 			if ($category->guid == $subcategory->guid) {
 				continue;
