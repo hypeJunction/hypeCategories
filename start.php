@@ -16,6 +16,9 @@ namespace hypeJunction\Categories;
 const PLUGIN_ID = 'hypeCategories';
 const PAGEHANDLER = 'categories';
 
+// Composer autoload
+require_once __DIR__ . '/vendors/autoload.php';
+
 // Load libraries
 require_once __DIR__ . '/lib/functions.php';
 require_once __DIR__ . '/lib/events.php';
@@ -26,7 +29,7 @@ require_once __DIR__ . '/lib/integrations.php';
 define('HYPECATEGORIES_RELEASE', 1394789886);
 
 define('HYPECATEGORIES_RELATIONSHIP', 'filed_in');
-define('HYPECATEGORIES_SUBTYPE', 'hjcategory');
+define('HYPECATEGORIES_SUBTYPE', Category::SUBTYPE);
 define('HYPECATEGORIES_ENTITY_MENU', elgg_get_plugin_setting('entity_menu', PLUGIN_ID));
 define('HYPECATEGORIES_GROUP_CATEGORIES', elgg_get_plugin_setting('group_categories', PLUGIN_ID));
 define('HYPECATEGORIES_GROUP_TREE_SITE', elgg_get_plugin_setting('group_tree_site', PLUGIN_ID));

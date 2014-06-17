@@ -81,7 +81,7 @@ function update_entity_categories($event, $type, $entity) {
 	}
 
 	$taxonomy_type_subtype_pairs = elgg_get_config('taxonomy_type_subtype_pairs');
-	if (!in_array("$type:$subtype", $taxonomy_type_subtype_pairs)) {
+	if (!is_array($taxonomy_type_subtype_pairs) || !in_array("$type:$subtype", $taxonomy_type_subtype_pairs)) {
 		return true;
 	}
 
