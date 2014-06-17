@@ -3,7 +3,7 @@
 namespace hypeJunction\Categories;
 
 $english = array(
-	'item:object:HYPECATEGORIES_SUBTYPE' => 'Categories',
+	'item:object:hjcategory' => 'Categories',
 	'categories' => 'Categories',
 	'categories:category' => 'Category: %s',
 	'categories:subcategories' => 'Subcategories',
