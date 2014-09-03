@@ -1,0 +1,330 @@
+/* line 9, ../sass/stylesheet.scss */
+[class*="categories-icon-"] {
+  background: none;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: none;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #666;
+  font-size: 22px;
+  line-height: 22px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+/* line 20, ../sass/stylesheet.scss */
+[class*="categories-icon-"].icon-small {
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+/* line 25, ../sass/stylesheet.scss */
+[class*="categories-icon-"].icon-small + span {
+  line-height: 16px;
+}
+/* line 29, ../sass/stylesheet.scss */
+[class*="categories-icon-"] + span {
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 26px;
+}
+
+/* line 37, ../sass/stylesheet.scss */
+.categories-icon-preview {
+  width: 22px;
+  height: 22px;
+  margin: 0 5px;
+  cursor: default;
+}
+
+/* line 43, ../sass/stylesheet.scss */
+.categories-icon-move {
+  cursor: move;
+}
+/* line 45, ../sass/stylesheet.scss */
+.categories-icon-move:before {
+  content: "\f047";
+}
+
+/* line 49, ../sass/stylesheet.scss */
+.categories-icon-edit:before {
+  content: "\f040";
+}
+
+/* line 52, ../sass/stylesheet.scss */
+.categories-icon-plus:before {
+  content: "\f055";
+}
+
+/* line 55, ../sass/stylesheet.scss */
+.categories-icon-minus:before {
+  content: "\f056";
+}
+
+/* line 58, ../sass/stylesheet.scss */
+.categories-icon-upload:before {
+  color: #ccc;
+  content: "\f0ee";
+}
+
+/* line 62, ../sass/stylesheet.scss */
+.categories-icon-checked:before {
+  content: "\f058";
+}
+
+/* line 65, ../sass/stylesheet.scss */
+.categories-icon-info:before {
+  content: "\f05a";
+}
+
+/* line 70, ../sass/stylesheet.scss */
+.elgg-menu-categories li {
+  line-height: 18px;
+  vertical-align: middle;
+  text-indent: -15px;
+  padding-left: 20px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+/* line 77, ../sass/stylesheet.scss */
+.elgg-menu-categories li > span, .elgg-menu-categories li > a, .elgg-menu-categories li > a span {
+  margin-right: 5px;
+  display: inline;
+  vertical-align: middle;
+  line-height: 18px;
+}
+/* line 84, ../sass/stylesheet.scss */
+.elgg-menu-categories .categories-icon-move {
+  margin: 10px;
+}
+/* line 87, ../sass/stylesheet.scss */
+.elgg-menu-categories .categories-icon-plus, .elgg-menu-categories .categories-icon-minus {
+  float: right;
+  margin: 8px;
+}
+/* line 91, ../sass/stylesheet.scss */
+.elgg-menu-categories .categories-icon-info, .elgg-menu-categories .categories-icon-icon {
+  cursor: pointer;
+}
+/* line 95, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-menu-closed .elgg-child-menu {
+  display: none;
+}
+/* line 98, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .collapse {
+  display: none;
+}
+/* line 101, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .expand {
+  display: block;
+}
+/* line 104, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-menu-closed.elgg-menu-parent {
+  margin-left: auto;
+}
+/* line 110, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .collapse {
+  display: block;
+}
+/* line 113, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .expand {
+  display: none;
+}
+/* line 118, ../sass/stylesheet.scss */
+.elgg-menu-categories .categories-category-icon img {
+  height: 16px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 125, ../sass/stylesheet.scss */
+.elgg-menu-categories .elgg-child-menu-toggle {
+  margin: 0;
+  cursor: pointer;
+  color: #666;
+  font-size: 11px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 15px;
+}
+
+/* line 138, ../sass/stylesheet.scss */
+.categories-input input[type="checkbox"], .categories-input input[type="radio"] {
+  display: inline-block;
+  margin: 0 8px 0 0;
+  vertical-align: middle;
+  line-height: 18px;
+}
+/* line 144, ../sass/stylesheet.scss */
+.categories-input label {
+  font-size: 100%;
+  font-weight: normal;
+  display: initial;
+  vertical-align: middle;
+  line-height: 18px;
+}
+
+/* line 153, ../sass/stylesheet.scss */
+.categories-manage li {
+  text-indent: 0;
+}
+/* line 156, ../sass/stylesheet.scss */
+.categories-manage input {
+  margin: 0;
+}
+/* line 159, ../sass/stylesheet.scss */
+.categories-manage .categories-category-title, .categories-manage .categories-category-description, .categories-manage .categories-category-access {
+  display: inline-block;
+  margin: 5px 10px;
+  vertical-align: middle;
+  width: 25%;
+}
+/* line 165, ../sass/stylesheet.scss */
+.categories-manage .categories-category-block {
+  border: 1px solid #e8e8e8;
+  margin: 3px;
+  background: #f4f4f4;
+  padding: 4px;
+}
+/* line 172, ../sass/stylesheet.scss */
+.categories-manage .categories-icon-upload img {
+  max-width: 100%;
+}
+/* line 176, ../sass/stylesheet.scss */
+.categories-manage .elgg-menu-categories ul li .categories-icon-plus {
+  display: none;
+}
+/* line 179, ../sass/stylesheet.scss */
+.categories-manage .elgg-menu-categories ul li:last-child .categories-icon-plus {
+  display: inline-block;
+}
+/* line 182, ../sass/stylesheet.scss */
+.categories-manage .categories-draggable-placeholder {
+  border: 2px dashed #e8e8e8;
+  height: auto;
+  min-height: 200px;
+}
+/* line 187, ../sass/stylesheet.scss */
+.categories-manage .elgg-child-menu-toggle, .categories-manage .elgg-child-menu-indicator {
+  display: none;
+}
+/* line 190, ../sass/stylesheet.scss */
+.categories-manage .elgg-menu-categories .elgg-menu-closed .elgg-child-menu {
+  display: block;
+}
+
+/* line 195, ../sass/stylesheet.scss */
+.categories-category-full > .elgg-image {
+  max-width: 100px;
+  margin-right: 20px;
+}
+
+/* line 201, ../sass/stylesheet.scss */
+.categories-sidebar-tree-module:hover {
+  overflow: visible;
+  /*a, span {
+  	background: white;
+  }*/
+}
+/* line 207, ../sass/stylesheet.scss */
+.categories-sidebar-tree-module .elgg-foot {
+  margin-top: 10px;
+  text-align: right;
+}
+/* line 211, ../sass/stylesheet.scss */
+.categories-sidebar-tree-module em {
+  font-size: 11px;
+  padding: 2px 5px;
+  margin-left: 5px;
+  background: #4690d6;
+  color: white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  font-style: normal;
+}
+
+/* line 223, ../sass/stylesheet.scss */
+.elgg-menu-category-filter em {
+  font-size: 11px;
+  padding: 2px 5px;
+  margin-left: 5px;
+  background: #4690d6;
+  color: white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  font-style: normal;
+}
+
+/* line 234, ../sass/stylesheet.scss */
+.elgg-categories {
+  *zoom: 1;
+  word-break: break-word;
+  margin: 3px 0;
+  font-size: 85%;
+  line-height: 18px;
+}
+/* line 3, ../sass/_mixins.scss */
+.elgg-categories:before, .elgg-categories:after {
+  content: " ";
+  display: table;
+}
+/* line 4, ../sass/_mixins.scss */
+.elgg-categories:after {
+  clear: both;
+}
+/* line 240, ../sass/stylesheet.scss */
+.elgg-subtext .elgg-categories {
+  font-size: inherit;
+}
+/* line 243, ../sass/stylesheet.scss */
+.elgg-categories > li {
+  display: inline;
+}
+/* line 245, ../sass/stylesheet.scss */
+.elgg-categories > li:after {
+  content: ",";
+  padding-right: 4px;
+}
+/* line 249, ../sass/stylesheet.scss */
+.elgg-categories > li:first-child:after, .elgg-categories > li:last-child:after {
+  content: "";
+}
+/* line 252, ../sass/stylesheet.scss */
+.elgg-categories > li a {
+  font-style: normal;
+}
+
+/* line 257, ../sass/stylesheet.scss */
+.elgg-icon.elgg-icon-categories {
+  background: none;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* line 260, ../sass/stylesheet.scss */
+.elgg-icon.elgg-icon-categories:before {
+  content: "\f0e8";
+}

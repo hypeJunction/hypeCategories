@@ -63,8 +63,8 @@ function init() {
 
 	elgg_require_js('framework/categories/init');
 	
-	elgg_extend_view('css/elgg', 'css/framework/categories/base');
-	elgg_extend_view('css/admin', 'css/framework/categories/base');
+	elgg_extend_view('css/elgg', 'css/framework/categories/stylesheet.css');
+	elgg_extend_view('css/admin', 'css/framework/categories/stylesheet.css');
 
 	/**
 	 * Actions
