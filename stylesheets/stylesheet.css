@@ -216,35 +216,36 @@
   border: 2px dashed #e8e8e8;
   height: auto;
   min-height: 200px;
+  margin-left: 20px;
 }
-/* line 187, ../sass/stylesheet.scss */
+/* line 188, ../sass/stylesheet.scss */
 .categories-manage .elgg-child-menu-toggle, .categories-manage .elgg-child-menu-indicator {
   display: none;
 }
-/* line 190, ../sass/stylesheet.scss */
+/* line 191, ../sass/stylesheet.scss */
 .categories-manage .elgg-menu-categories .elgg-menu-closed .elgg-child-menu {
   display: block;
 }
 
-/* line 195, ../sass/stylesheet.scss */
+/* line 196, ../sass/stylesheet.scss */
 .categories-category-full > .elgg-image {
   max-width: 100px;
   margin-right: 20px;
 }
 
-/* line 201, ../sass/stylesheet.scss */
+/* line 202, ../sass/stylesheet.scss */
 .categories-sidebar-tree-module:hover {
   overflow: visible;
   /*a, span {
   	background: white;
   }*/
 }
-/* line 207, ../sass/stylesheet.scss */
+/* line 208, ../sass/stylesheet.scss */
 .categories-sidebar-tree-module .elgg-foot {
   margin-top: 10px;
   text-align: right;
 }
-/* line 211, ../sass/stylesheet.scss */
+/* line 212, ../sass/stylesheet.scss */
 .categories-sidebar-tree-module em {
   font-size: 11px;
   padding: 2px 5px;
@@ -259,7 +260,7 @@
   font-style: normal;
 }
 
-/* line 223, ../sass/stylesheet.scss */
+/* line 224, ../sass/stylesheet.scss */
 .elgg-menu-category-filter em {
   font-size: 11px;
   padding: 2px 5px;
@@ -274,7 +275,7 @@
   font-style: normal;
 }
 
-/* line 234, ../sass/stylesheet.scss */
+/* line 235, ../sass/stylesheet.scss */
 .elgg-categories {
   *zoom: 1;
   word-break: break-word;
@@ -291,29 +292,29 @@
 .elgg-categories:after {
   clear: both;
 }
-/* line 240, ../sass/stylesheet.scss */
+/* line 241, ../sass/stylesheet.scss */
 .elgg-subtext .elgg-categories {
   font-size: inherit;
 }
-/* line 243, ../sass/stylesheet.scss */
+/* line 244, ../sass/stylesheet.scss */
 .elgg-categories > li {
   display: inline;
 }
-/* line 245, ../sass/stylesheet.scss */
+/* line 246, ../sass/stylesheet.scss */
 .elgg-categories > li:after {
   content: ",";
   padding-right: 4px;
 }
-/* line 249, ../sass/stylesheet.scss */
+/* line 250, ../sass/stylesheet.scss */
 .elgg-categories > li:first-child:after, .elgg-categories > li:last-child:after {
   content: "";
 }
-/* line 252, ../sass/stylesheet.scss */
+/* line 253, ../sass/stylesheet.scss */
 .elgg-categories > li a {
   font-style: normal;
 }
 
-/* line 257, ../sass/stylesheet.scss */
+/* line 258, ../sass/stylesheet.scss */
 .elgg-icon.elgg-icon-categories {
   background: none;
   display: inline-block;
@@ -324,7 +325,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 260, ../sass/stylesheet.scss */
+/* line 261, ../sass/stylesheet.scss */
 .elgg-icon.elgg-icon-categories:before {
   content: "\f0e8";
 }
