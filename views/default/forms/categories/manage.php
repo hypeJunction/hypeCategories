@@ -2,8 +2,7 @@
 
 namespace hypeJunction\Categories;
 
-elgg_load_js('jquery.nestedsortable.js');
-elgg_load_js('categories.manage.js');
+elgg_require_js('framework/categories/init');
 
 $container = elgg_extract('container', $vars, elgg_get_site_entity());
 

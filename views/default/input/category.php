@@ -12,8 +12,6 @@
 
 namespace hypeJunction\Categories;
 
-elgg_load_js('categories.tree.js');
-
 elgg_push_context('categories-input');
 
 $entity = elgg_extract('entity', $vars, false);

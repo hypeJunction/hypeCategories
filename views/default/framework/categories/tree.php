@@ -2,8 +2,6 @@
 
 namespace hypeJunction\Categories;
 
-elgg_load_js('categories.tree.js');
-
 $container = elgg_extract('container', $vars);
 
 echo '<div class="categories-tree">';
