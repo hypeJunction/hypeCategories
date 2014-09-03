@@ -42,7 +42,7 @@ $output = elgg_view('output/category', array(
 ## Versioning
 
 The master branch has been switched to Elgg 1.9.+ development.
-Legacy 1.8 code is in elgg18 branch.
+Legacy 1.8 code is in elgg1.8 branch.
 
 
 ## Installing with Composer
