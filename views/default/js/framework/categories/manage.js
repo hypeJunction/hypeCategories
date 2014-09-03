@@ -21,10 +21,9 @@ define(['jquery', 'elgg', 'jquery.nestedSortable'], function($, elgg) {
 				}
 				$(this).closest('li').fadeOut().appendTo($(this).closest('form')).find('[name="categories[title][]"]').val('');
 			});
-			$(document).on('click', '.categories-info-link', function(e) {
+			$(document).on('click', '.categories-icon-info', function(e) {
 				$(this).siblings('.categories-category-meta').toggleClass('hidden');
 			});
-
 			$('.categories-manage .elgg-menu-categories').nestedSortable({
 				handle: 'div .categories-icon-move',
 				items: 'li',
@@ -35,8 +34,6 @@ define(['jquery', 'elgg', 'jquery.nestedSortable'], function($, elgg) {
 				rootID: 1,
 				protectRoot: true
 			});
-
-
 			$(document).on('submit', 'form.elgg-form-categories-manage', function(e) {
 				categories.updateHierarchy();
 				return true;
