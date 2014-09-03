@@ -2,8 +2,6 @@
 
 namespace hypeJunction\Categories;
 
-elgg_require_js('framework/categories/init');
-
 $container = elgg_extract('container', $vars, elgg_get_site_entity());
 
 elgg_push_context('categories-manage');
