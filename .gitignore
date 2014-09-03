@@ -4,5 +4,4 @@
 robots.txt
 /nbproject/
 composer.lock
-config.rb
 /.sass-cache/
