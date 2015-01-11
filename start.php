@@ -62,7 +62,7 @@ function init() {
 	));
 
 	elgg_require_js('framework/categories/init');
-	
+
 	elgg_extend_view('css/elgg', 'css/framework/categories/stylesheet.css');
 	elgg_extend_view('css/admin', 'css/framework/categories/stylesheet.css');
 
@@ -124,6 +124,10 @@ function setup_taxonomy() {
 
 	elgg_set_config('taxonomy_types', array_unique($types));
 	elgg_set_config('taxonomy_subtypes', array_unique($subtypes));
+
+	elgg_set_config('taxonomy_tree_subtypes', array(
+		Category::SUBTYPE,
+	));
 }
 
 /**
