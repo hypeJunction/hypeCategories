@@ -33,7 +33,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 		} else {
 			$category->title = $title;
 			$category->description = $desc;
-			$category->container_guid = $root_guid;
+			//$category->container_guid = $container_guid ?: $root_guid;
 			$category->access_id = $access_id;
 			$category->priority = $key;
 			$category->setVolatileData('formValues', $form_values);
