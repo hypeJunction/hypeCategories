@@ -21,12 +21,12 @@ if (!instanceof_category($entity)) {
 $crumbs = get_hierarchy($entity->guid, false);
 if ($crumbs) {
 	foreach ($crumbs as $crumb) {
-		elgg_push_breadcrumb($crumb->title, $crumb->getURL());
+		elgg_push_breadcrumb($crumb->getDisplayName(), $crumb->getURL());
 	}
 }
-elgg_push_breadcrumb($entity->title);
+elgg_push_breadcrumb($entity->getDisplayName());
 
-$title = elgg_echo('categories:category', array($entity->title));
+$title = elgg_echo('categories:category', array($entity->getDisplayName()));
 
 $content = elgg_view_entity($entity, array(
 	'full_view' => true

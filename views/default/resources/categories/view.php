@@ -13,7 +13,7 @@ $crumbs = get_hierarchy($entity->guid, false);
 if ($crumbs) {
 	foreach ($crumbs as $crumb) {
 		if (elgg_instanceof($crumb)) {
-			elgg_push_breadcrumb($crumb->title, $crumb->getURL());
+			elgg_push_breadcrumb($crumb->getDisplayName(), $crumb->getURL());
 			$container = $crumb->getContainerEntity();
 			if (elgg_instanceof($container, 'group')) {
 				elgg_set_page_owner_guid($container->guid);
@@ -22,9 +22,9 @@ if ($crumbs) {
 	}
 }
 
-elgg_push_breadcrumb($entity->title);
+elgg_push_breadcrumb($entity->getDisplayName());
 
-$title = elgg_echo('categories:category', array($entity->title));
+$title = elgg_echo('categories:category', array($entity->getDisplayName()));
 
 $content = elgg_view_entity($entity, array(
 	'full_view' => true

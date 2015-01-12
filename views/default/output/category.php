@@ -78,14 +78,14 @@ foreach ($vars['categories'] as $category) {
 	$crumbs = array();
 	$hierarchy = get_hierarchy($category->guid, false, true);
 	foreach ($hierarchy as $h) {
-		$crumbs[] = $h->title;
+		$crumbs[] = $h->getDisplayName();
 	}
 
 	$list_items .= "<li class=\"$item_class\">";
 	$list_items .= elgg_view('output/url', array(
 		'href' => $category->getURL(),
 		'title' => implode(" &#8227; ", $crumbs),
-		'text' => $category->title
+		'text' => $category->getDisplayName(),
 	));
 	$list_items .= '</li>';
 }

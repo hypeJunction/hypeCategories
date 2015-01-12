@@ -48,6 +48,9 @@ To add custom category subtypes to the workflow, update 'taxonomy_tree_subtypes'
 For example, you may want to have multiple taxonomies for categorizing content by topic, by context etc. The easiest way to achieve that, is by using different
 category subtypes, e.g. topic_category, cluster, grouping etc.
 
+### Internationalization
+
+You can internationalize category names by adding translations to your language files. Translations should be namespaced with ```"category:$category_title"```.
 
 ## Versioning
 

@@ -16,7 +16,7 @@ if (instanceof_category($entity)) {
 		'container_guids' => (HYPECATEGORIES_GROUP_CATEGORIES && elgg_instanceof($page_owner, 'group')) ? $page_owner->guid : null
 	));
 
-	$attr = '<span>' . elgg_echo('categories:category:title', array($entity->title, $count)) . '</span>';
+	$attr = '<span>' . elgg_echo('categories:category:title', array($entity->getDisplayName(), $count)) . '</span>';
 
 	echo elgg_view('output/url', array(
 		'text' => $icon . $attr,

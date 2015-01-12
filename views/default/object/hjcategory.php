@@ -14,7 +14,7 @@ if (!$full) {
 	}
 
 	$title_link = elgg_view('output/url', array(
-		'text' => $entity->title,
+		'text' => $entity->getDisplayName(),
 		'href' => $entity->getURL()
 	));
 	$title = elgg_view_image_block($icon, $title_link);

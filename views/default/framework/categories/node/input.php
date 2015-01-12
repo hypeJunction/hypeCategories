@@ -22,7 +22,7 @@ if (instanceof_category($entity)) {
 		));
 		$checkbox = "<input $checkbox_attr />";
 	}
-	$attr = $entity->title;
+	$attr = $entity->getDisplayName();
 } else if (elgg_instanceof($entity, 'site')) {
 	$attr = elgg_echo('categories:select:site');
 } else {

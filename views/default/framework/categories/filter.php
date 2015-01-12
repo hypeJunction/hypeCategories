@@ -46,5 +46,5 @@ $description .= elgg_view_menu('category-filter', array(
 	'class' => 'elgg-menu-page'
 		));
 
-echo elgg_view_module('aside', $entity->title, $description);
+echo elgg_view_module('aside', $entity->getDisplayName(), $description);
 

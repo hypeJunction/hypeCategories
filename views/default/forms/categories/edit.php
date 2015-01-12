@@ -50,7 +50,7 @@ if ($has_icon) {
 echo '<div class="categories-category-title">';
 echo elgg_view('input/text', array(
 	'name' => 'categories[title][]',
-	'value' => $entity->title,
+	'value' => ($entity->title) ?: $entity->getDisplayName(),
 	'placeholder' => elgg_echo('categories:edit:title')
 ));
 echo '</div>';
