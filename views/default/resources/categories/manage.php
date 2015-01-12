@@ -25,7 +25,7 @@ if (elgg_instanceof($container, 'group')) {
 	$layout = 'one_sidebar';
 	$shell = 'default';
 } else {
-	elgg_set_context('admin');
+	elgg_push_context('admin');
 	$title = elgg_echo('categories:site');
 	$layout = 'admin';
 	$shell = 'admin';
