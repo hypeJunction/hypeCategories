@@ -214,7 +214,7 @@ function get_category_subtypes() {
 		$subtypes = array(HYPECATEGORIES_SUBTYPE);
 	}
 
-	return $subtypes;
+	return elgg_trigger_plugin_hook('get_subtypes', 'framework:categories', null, $subtypes);
 }
 
 /**

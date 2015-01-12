@@ -43,10 +43,13 @@ $output = elgg_view('output/category', array(
 
 ### Custom category subtypes
 
-To add custom category subtypes to the workflow, update 'taxonomy_tree_subtypes' config value.
+To add custom category subtypes to the workflow globally, update 'taxonomy_tree_subtypes' config value.
 
 For example, you may want to have multiple taxonomies for categorizing content by topic, by context etc. The easiest way to achieve that, is by using different
-category subtypes, e.g. topic_category, cluster, grouping etc.
+category subtypes, e.g. topic, cluster, grouping etc, or blog_categories, bookmark_categories etc.
+
+Context-based filtering of category subtypes can be achieved via ```'get_subtypes', 'framework:categories'``` hook.
+
 
 ### Internationalization
 
