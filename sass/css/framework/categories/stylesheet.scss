@@ -165,7 +165,10 @@
 		display: inline-block;
 		margin: 5px 10px;
 		vertical-align: middle;
-		width: 25%;
+		max-width: 25%;
+		input, textarea, select {
+			margin: 0;
+		}
 	}
 	.categories-category-block {
 		border: 1px solid #e8e8e8;

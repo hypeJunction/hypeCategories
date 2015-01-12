@@ -42,7 +42,8 @@
 
 .categories-manage li { text-indent: 0; }
 .categories-manage input { margin: 0; }
-.categories-manage .categories-category-title, .categories-manage .categories-category-description, .categories-manage .categories-category-access, .categories-manage .categories-category-subtype { display: inline-block; margin: 5px 10px; vertical-align: middle; width: 25%; }
+.categories-manage .categories-category-title, .categories-manage .categories-category-description, .categories-manage .categories-category-access, .categories-manage .categories-category-subtype { display: inline-block; margin: 5px 10px; vertical-align: middle; max-width: 25%; }
+.categories-manage .categories-category-title input, .categories-manage .categories-category-title textarea, .categories-manage .categories-category-title select, .categories-manage .categories-category-description input, .categories-manage .categories-category-description textarea, .categories-manage .categories-category-description select, .categories-manage .categories-category-access input, .categories-manage .categories-category-access textarea, .categories-manage .categories-category-access select, .categories-manage .categories-category-subtype input, .categories-manage .categories-category-subtype textarea, .categories-manage .categories-category-subtype select { margin: 0; }
 .categories-manage .categories-category-block { border: 1px solid #e8e8e8; margin: 3px; background: #f4f4f4; padding: 4px; }
 .categories-manage .categories-icon-upload img { max-width: 100%; }
 .categories-manage .elgg-menu-categories ul li .categories-icon-plus { display: none; }
