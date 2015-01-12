@@ -8,9 +8,9 @@ use ElggMenuItem;
 /**
  * Get first level subcategories for a given container
  * 
- * @param int $container_guid Container GUID or an array of container GUIDs
- * @param array $params Additional parameters to be passed to the getter function
- * @return array Array of categories
+ * @param int   $container_guid Container GUID or an array of container GUIDs
+ * @param array $params         Additional parameters to be passed to the getter function
+ * @return ElggObject[]|false Array of categories
  */
 function get_subcategories($container_guid = null, $params = array()) {
 
@@ -36,15 +36,15 @@ function get_subcategories($container_guid = null, $params = array()) {
 
 	$params['container_guids'] = $container_guid;
 
-	return elgg_get_entities_from_metadata($params);
+	return elgg_get_entities($params);
 }
 
 /**
  * Get entities filed under this category
  *
- * @param int $category_guid GUID of the category
- * @param array $params Additional parameters to be passed to the getter function
- * @return array Array of filed items
+ * @param int   $category_guid GUID of the category
+ * @param array $params        Additional parameters to be passed to the getter function
+ * @return ElggEntity[]|false Array of filed items
  */
 function get_filed_items($category_guid, $params = array()) {
 
@@ -65,10 +65,10 @@ function get_filed_items($category_guid, $params = array()) {
 /**
  * Get categories an entity is filed in
  *
- * @param int $entity_guid GUID of an entity
- * @param array $params Additional parameters to be passed to the getter function
- * @param bool $as_guids Return an array of GUIDs
- * @return array Array of filed items
+ * @param int   $entity_guid GUID of an entity
+ * @param array $params      Additional parameters to be passed to the getter function
+ * @param bool  $as_guids    Return an array of GUIDs
+ * @return ElggEntity[]|int[]|false Array of filed items
  */
 function get_entity_categories($entity_guid, $params = array(), $as_guids = false) {
 
@@ -84,6 +84,10 @@ function get_entity_categories($entity_guid, $params = array(), $as_guids = fals
 
 	$params['relationship_guid'] = $entity_guid;
 
+	if ($as_guids) {
+		$params['callback'] = false;
+	}
+
 	$categories = elgg_get_entities_from_relationship($params);
 
 	if ($as_guids && $categories) {
@@ -98,9 +102,9 @@ function get_entity_categories($entity_guid, $params = array(), $as_guids = fals
 /**
  * Build an array of categories from top level parent category to the current category
  * 
- * @param int $entity_guid GUID of the current category
- * @param bool $as_guids Return an array of guids instead of objects
- * @param bool $self Include current category
+ * @param int  $entity_guid GUID of the current category
+ * @param bool $as_guids    Return an array of guids instead of objects
+ * @param bool $self        Include current category
  * @return array An array of categories or category guids
  */
 function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
@@ -123,8 +127,8 @@ function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
  * Add a category menu item with its underlying taxonomy
  *
  * @param ElggEntity $entity Site, group or category
- * @param array $params An array of additional parameters
- * @return array An array of menu items
+ * @param array      $params An array of additional parameters
+ * @return ElggMenuItem[] An array of menu items
  */
 function add_tree_node($entity, $params = array()) {
 
