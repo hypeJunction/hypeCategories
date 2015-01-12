@@ -3,7 +3,6 @@
 namespace hypeJunction\Categories;
 
 use ElggFile;
-use ElggObject;
 
 $config = get_input('categories');
 $hierarchy = json_decode(get_input('hierarchy'), true);
@@ -45,7 +44,11 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 			}
 		}
 	} else if ($title) {
-		$category = new ElggObject();
+		$class = get_subtype_class('object', $subtype);
+		if (!$class) {
+			$class = '\\ElggObject';
+		}
+		$category = new $class();
 		$category->subtype = ($subtype) ? $subtype : HYPECATEGORIES_SUBTYPE;
 		$category->owner_guid = elgg_get_logged_in_user_guid();
 		$category->container_guid = $root_guid;
