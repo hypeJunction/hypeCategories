@@ -94,4 +94,6 @@ echo elgg_view('input/access', array(
 ));
 echo '</div>';
 
+echo elgg_view('categories/edit/extend', $vars);
+
 echo '</div>';

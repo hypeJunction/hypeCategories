@@ -21,6 +21,11 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 	$subtype = $config['subtype'][$key];
 	$icon = '';
 
+	$form_values = array();
+	foreach ($config as $param_name => $entity_params) {
+		$form_values[$param_name] = $entity_params[$key];
+	}
+
 	if ($guid && ($category = get_entity($guid))) {
 		if (!$title) {
 			$category->delete();
@@ -32,6 +37,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 			$category->container_guid = $root_guid;
 			$category->access_id = $access_id;
 			$category->priority = $key;
+			$category->setVolatileData('formValues', $form_values);
 			if ($category->save()) {
 				$success++;
 			} else {
@@ -47,6 +53,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 		$category->description = $desc;
 		$category->access_id = $access_id;
 		$category->priority = $key;
+		$category->setVolatileData('formValues', $form_values);
 		if ($category->save()) {
 			$success++;
 		} else {
