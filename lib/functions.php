@@ -14,10 +14,16 @@ use ElggMenuItem;
  */
 function get_subcategories($container_guid = null, $params = array()) {
 
+	$dbprefix = elgg_get_config('dbprefix');
+	$nid = elgg_get_metastring_id('priority');
 	$defaults = array(
 		'types' => 'object',
 		'subtypes' => get_category_subtypes(),
-		'order_by_metadata' => array('name' => 'priority', 'direction' => 'ASC', 'as' => 'integer'),
+		'joins' => array(
+			"LEFT JOIN {$dbprefix}metadata md ON md.name_id = $nid",
+			"LEFT JOIN {$dbprefix}metastrings msv ON msv.id = md.value_id",
+		),
+		'order_by' => 'ISNULL(msv.string), CAST(msv.string as SIGNED) ASC',
 		'limit' => 9999
 	);
 
