@@ -50,7 +50,7 @@ if ($has_icon) {
 echo '<div class="categories-category-title">';
 echo elgg_view('input/text', array(
 	'name' => 'categories[title][]',
-	'value' => ($entity->title) ?: $entity->getDisplayName(),
+	'value' => ($entity) ? (($entity->title) ?: $entity->getDisplayName()) : '',
 	'placeholder' => elgg_echo('categories:edit:title')
 ));
 echo '</div>';
@@ -70,7 +70,7 @@ if (count($tree_subtypes) > 1) {
 	echo '<div class="categories-category-subtype">';
 	echo elgg_view('input/dropdown', array(
 		'name' => 'categories[subtype][]',
-		'value' => HYPECATEGORIES_SUBTYPE,
+		'value' => ($entity) ? $entity->getSubtype() : HYPECATEGORIES_SUBTYPE,
 		'options_values' => $tree_subtype_options,
 		'disabled' => (elgg_instanceof($entity)),
 	));
