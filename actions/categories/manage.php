@@ -47,7 +47,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 		$class = get_subtype_class('object', $subtype);
 		if (!$class) {
 			$class = '\\ElggObject';
-		}
+		}		
 		$category = new $class();
 		$category->subtype = ($subtype) ? $subtype : HYPECATEGORIES_SUBTYPE;
 		$category->owner_guid = elgg_get_logged_in_user_guid();

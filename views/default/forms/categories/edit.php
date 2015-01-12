@@ -6,6 +6,7 @@ $entity = elgg_extract('entity', $vars);
 
 if (elgg_instanceof($entity)) {
 	$container = $entity->getContainerEntity();
+	$subtype = $entity->getSubtype();
 } else {
 	$container = elgg_extract('container', $vars, elgg_get_site_entity());
 }
@@ -61,7 +62,7 @@ echo '<div class="categories-icon-minus"></div>';
 
 echo '<div class="categories-category-meta hidden">';
 
-$tree_subtypes = elgg_get_config('taxonomy_tree_subtypes');
+$tree_subtypes = get_category_subtypes();
 $tree_subtype_options = array();
 foreach ($tree_subtypes as $ts) {
 	$tree_subtype_options[$ts] = elgg_echo("item:object:$ts");
@@ -70,11 +71,15 @@ if (count($tree_subtypes) > 1) {
 	echo '<div class="categories-category-subtype">';
 	echo elgg_view('input/dropdown', array(
 		'name' => 'categories[subtype][]',
-		'value' => ($entity) ? $entity->getSubtype() : HYPECATEGORIES_SUBTYPE,
-		'options_values' => $tree_subtype_options,
-		'disabled' => (elgg_instanceof($entity)),
+		'value' => $subtype ?: HYPECATEGORIES_SUBTYPE,
+		'options_values' => $subtype ? array($subtype => $tree_subtype_options[$subtype]) : $tree_subtype_options,
 	));
 	echo '</div>';
+} else {
+	echo elgg_view('input/hidden', array(
+		'name' => 'categories[subtype][]',
+		'value' => $subtype ?: HYPECATEGORIES_SUBTYPE,
+	));
 }
 
 echo '<div class="categories-category-description">';
