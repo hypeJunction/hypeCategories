@@ -14,7 +14,7 @@ elgg_set_page_owner_guid($group_guid);
 
 group_gatekeeper();
 
-if (!elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+if (!instanceof_category($entity)) {
 	return false;
 }
 

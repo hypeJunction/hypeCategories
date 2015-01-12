@@ -3,8 +3,9 @@
 namespace hypeJunction\Categories;
 
 $entity = elgg_extract('entity', $vars);
-if (!elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
-	return;
+
+if (!instanceof_category($entity)) {
+	return true;
 }
 
 if ($entity->icontime) {

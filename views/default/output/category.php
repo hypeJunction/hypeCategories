@@ -65,7 +65,7 @@ $list_items = '<li>' . elgg_view_icon('categories', $icon_class) . '</li>';
 
 foreach ($vars['categories'] as $category) {
 
-	if (!elgg_instanceof($category, 'object', HYPECATEGORIES_SUBTYPE)) {
+	if (!instanceof_category($entity)) {
 		continue;
 	}
 

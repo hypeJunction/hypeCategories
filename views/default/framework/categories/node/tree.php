@@ -5,7 +5,7 @@ namespace hypeJunction\Categories;
 $entity = elgg_extract('entity', $vars);
 $page_owner = elgg_get_page_owner_entity();
 
-if (elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+if (instanceof_category($entity)) {
 	if ($entity->icontime) {
 		$icon = '<span class="categories-category-icon">' . elgg_view('output/img', array(
 					'src' => $entity->getIconURL('tiny')

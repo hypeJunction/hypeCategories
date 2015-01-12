@@ -9,7 +9,7 @@ $name = elgg_extract('name', $input_params, 'categories');
 $value = elgg_extract('value', $input_params, array());
 $multiple = elgg_extract('multiple', $input_params, HYPECATEGORIES_INPUT_MULTIPLE);
 
-if (elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+if (instanceof_category($entity)) {
 
 	$children = get_subcategories($entity->guid, array('count' => true));
 

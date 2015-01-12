@@ -15,7 +15,9 @@ Categories and taxonomy for Elgg
 If, when managing categories, you loose entries or hierarchies, increase the value of ```max_input_vars```
 http://www.php.net/manual/en/info.configuration.php
 
-## Usage ##
+## Usage
+
+### Adding category input
 
 To add a category input to your form, add the following code:
 
@@ -38,6 +40,14 @@ $output = elgg_view('output/category', array(
 	'entity' => $entity // Entity for which the categories should be displayed
 ));
 ```
+
+### Custom category subtypes
+
+To add custom category subtypes to the workflow, update 'taxonomy_tree_subtypes' config value.
+
+For example, you may want to have multiple taxonomies for categorizing content by topic, by context etc. The easiest way to achieve that, is by using different
+category subtypes, e.g. topic_category, cluster, grouping etc.
+
 
 ## Versioning
 

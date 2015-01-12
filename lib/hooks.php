@@ -46,7 +46,7 @@ function category_icon_url($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	$size = elgg_extract('size', $params, 'medium');
 
-	if (!elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+	if (!instanceof_category($entity)) {
 		return $return;
 	}
 
@@ -104,7 +104,7 @@ function tree_menu_setup($hook, $type, $return, $params) {
 
 	if (!elgg_instanceof($entity, 'site')
 			&& !elgg_instanceof($entity, 'group')
-			&& !elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+			&& !instanceof_category($entity)) {
 		return $return;
 	}
 

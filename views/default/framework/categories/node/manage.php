@@ -4,7 +4,7 @@ namespace hypeJunction\Categories;
 
 $entity = elgg_extract('entity', $vars);
 
-if (elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+if (instanceof_category($entity)) {
 	echo elgg_view_image_block('', elgg_view('forms/categories/edit', $vars), array(
 		'class' => 'categories-category-block'
 	));

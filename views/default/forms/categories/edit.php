@@ -61,6 +61,22 @@ echo '<div class="categories-icon-minus"></div>';
 
 echo '<div class="categories-category-meta hidden">';
 
+$tree_subtypes = elgg_get_config('taxonomy_tree_subtypes');
+$tree_subtype_options = array();
+foreach ($tree_subtypes as $ts) {
+	$tree_subtype_options[$ts] = elgg_echo("item:object:$ts");
+}
+if (count($tree_subtypes) > 1) {
+	echo '<div class="categories-category-subtype">';
+	echo elgg_view('input/dropdown', array(
+		'name' => 'categories[subtype][]',
+		'value' => HYPECATEGORIES_SUBTYPE,
+		'options_values' => $tree_subtype_options,
+		'disabled' => (elgg_instanceof($entity)),
+	));
+	echo '</div>';
+}
+
 echo '<div class="categories-category-description">';
 //echo '<label>' . elgg_echo('categories:edit:description') . '</label>';
 echo elgg_view('input/text', array(

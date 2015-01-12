@@ -5,8 +5,8 @@ namespace hypeJunction\Categories;
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
-if (!elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
-	return false;
+if (!instanceof_category($entity)) {
+	return true;
 }
 
 $crumbs = get_hierarchy($entity->guid, false);

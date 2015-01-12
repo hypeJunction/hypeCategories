@@ -18,6 +18,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 	$desc = $config['description'][$key];
 	//$container_guid = $config['container_guid'][$key];
 	$access_id = $config['access_id'][$key];
+	$subtype = $config['subtype'][$key];
 	$icon = '';
 
 	if ($guid && ($category = get_entity($guid))) {
@@ -39,7 +40,7 @@ foreach ($config['hierarchy'] as $key => $node_id) {
 		}
 	} else if ($title) {
 		$category = new ElggObject();
-		$category->subtype = HYPECATEGORIES_SUBTYPE;
+		$category->subtype = ($subtype) ? $subtype : HYPECATEGORIES_SUBTYPE;
 		$category->owner_guid = elgg_get_logged_in_user_guid();
 		$category->container_guid = $root_guid;
 		$category->title = $title;

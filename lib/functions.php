@@ -16,7 +16,7 @@ function get_subcategories($container_guid = null, $params = array()) {
 
 	$defaults = array(
 		'types' => 'object',
-		'subtypes' => HYPECATEGORIES_SUBTYPE,
+		'subtypes' => get_category_subtypes(),
 		'order_by_metadata' => array('name' => 'priority', 'direction' => 'ASC', 'as' => 'integer'),
 		'limit' => 9999
 	);
@@ -68,7 +68,7 @@ function get_entity_categories($entity_guid, $params = array(), $as_guids = fals
 
 	$defaults = array(
 		'types' => 'object',
-		'subtypes' => HYPECATEGORIES_SUBTYPE,
+		'subtypes' => get_category_subtypes(),
 		'reltionship' => HYPECATEGORIES_RELATIONSHIP,
 		'inverse_relationship' => false,
 		'limit' => false
@@ -101,7 +101,7 @@ function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
 
 	$entity = get_entity($entity_guid);
 
-	while (elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+	while (instanceof_category($entity)) {
 		$return[] = ($as_guids) ? $entity->guid : $entity;
 		$entity = $entity->getContainerEntity();
 	}
@@ -112,7 +112,6 @@ function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
 
 	return (sizeof($return)) ? array_reverse($return) : array();
 }
-
 
 /**
  * Add a category menu item with its underlying taxonomy
@@ -130,8 +129,7 @@ function add_tree_node($entity, $params = array()) {
 		$params['level'] = 0;
 	}
 
-	if (elgg_instanceof($container, 'object', HYPECATEGORIES_SUBTYPE)
-			&& $params['level'] > 0) {
+	if (instanceof_category($container) && $params['level'] > 0) {
 		$root = array(
 			'name' => "category:$entity->guid",
 			'text' => elgg_view('framework/categories/node', $params),
@@ -140,7 +138,7 @@ function add_tree_node($entity, $params = array()) {
 			'parent_name' => ($params['level'] > 0) ? "category:$container->guid" : null,
 			'data-guid' => $entity->guid
 		);
-	} else if (elgg_instanceof($entity, 'object', HYPECATEGORIES_SUBTYPE)) {
+	} else if (instanceof_category($entity)) {
 		$root = array(
 			'name' => "category:$entity->guid",
 			'text' => elgg_view('framework/categories/node', $params),
@@ -159,14 +157,12 @@ function add_tree_node($entity, $params = array()) {
 		);
 	}
 
-	$params['level']++;
+	$params['level'] ++;
 
 	$root_menu_item = ElggMenuItem::factory($root);
 	$return[] = $root_menu_item;
 
-	if (HYPECATEGORIES_GROUP_TREE_SITE
-			&& elgg_instanceof($entity, 'group')
-			&& !elgg_in_context('categories-manage')) {
+	if (HYPECATEGORIES_GROUP_TREE_SITE && elgg_instanceof($entity, 'group') && !elgg_in_context('categories-manage')) {
 		$categories = get_subcategories(array(elgg_get_site_entity()->guid, $entity->guid));
 	} else {
 		$categories = get_subcategories($entity->guid);
@@ -195,4 +191,32 @@ function add_tree_node($entity, $params = array()) {
 	}
 
 	return $return;
+}
+
+/**
+ * Returns entity subtypes that represent categories
+ * @return array
+ */
+function get_category_subtypes() {
+
+	$subtypes = elgg_get_config('taxonomy_tree_subtypes');
+	if (!is_array($subtypes)) {
+		$subtypes = array(HYPECATEGORIES_SUBTYPE);
+	}
+
+	return $subtypes;
+}
+
+/**
+ * Checks if entity is a category
+ *
+ * @param ElggEntity $entity   Entity to check
+ * @param array      $subtypes Override subtypes to check against
+ * @return bool
+ */
+function instanceof_category($entity, $subtypes = null) {
+	if (!is_array($subtypes)) {
+		$subtypes = get_category_subtypes();
+	}
+	return elgg_instanceof($entity, 'object') && in_array($entity->getSubtype(), $subtypes);
 }

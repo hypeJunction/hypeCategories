@@ -156,7 +156,10 @@
 	input {
 		margin: 0;
 	}
-	.categories-category-title, .categories-category-description, .categories-category-access {
+	.categories-category-title,
+	.categories-category-description,
+	.categories-category-access,
+	.categories-category-subtype {
 		display: inline-block;
 		margin: 5px 10px;
 		vertical-align: middle;
