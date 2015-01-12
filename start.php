@@ -100,9 +100,6 @@ function init() {
 	 */
 	elgg_extend_view('page/elements/sidebar', 'framework/categories/sidebar');
 
-	// Load fonts
-	elgg_extend_view('page/elements/head', 'framework/fonts/font-awesome');
-	elgg_extend_view('page/elements/head', 'framework/fonts/open-sans');
 }
 
 function setup_taxonomy() {
