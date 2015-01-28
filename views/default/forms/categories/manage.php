@@ -9,7 +9,7 @@ elgg_push_context('categories-manage');
 echo '<div class="categories-manage">';
 echo elgg_view_menu('categories', array(
 	'entity' => $container,
-	'sort_by' => 'priorty'
+	'sort_by' => 'priority'
 ));
 echo elgg_view('input/hidden', array(
 	'name' => 'container_guid',
