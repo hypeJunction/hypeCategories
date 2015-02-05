@@ -7,7 +7,7 @@ if (!HYPECATEGORIES_GROUP_CATEGORIES) {
 }
 
 $group_guid = get_input('group_guid');
-$guid = elgg_extract('guid');
+$guid = get_input('guid');
 $entity = get_entity($guid);
 
 elgg_set_page_owner_guid($group_guid);
