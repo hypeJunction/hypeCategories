@@ -7,12 +7,21 @@ if (!HYPECATEGORIES_GROUP_CATEGORIES) {
 }
 
 $group_guid = get_input('group_guid');
+$container = get_entity($group_guid);
+
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
 elgg_set_page_owner_guid($group_guid);
 
 group_gatekeeper();
+
+if (elgg_instanceof($container, 'group')) {
+	elgg_push_breadcrumb(elgg_echo('groups'), 'groups');
+	elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+} else {
+	elgg_push_breadcrumb(elgg_echo('categories'));
+}
 
 if (!instanceof_category($entity)) {
 	return false;
