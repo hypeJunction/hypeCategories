@@ -92,7 +92,7 @@ function get_entity_categories($entity_guid, $params = array(), $as_guids = fals
 
 	if ($as_guids && $categories) {
 		foreach ($categories as $key => $category) {
-			$categories[$key] = (int) $category->guid;
+			$categories[$key] = $category->guid;
 		}
 	}
 

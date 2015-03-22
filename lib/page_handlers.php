@@ -23,26 +23,26 @@ function page_handler($page) {
 		case 'all' :
 
 			set_input('container_guid', $page[1]);
-			$page = elgg_view('resources/categories/all');
+			$output = elgg_view('resources/categories/all');
 			break;
 
 		case 'manage' :
 
 			set_input('container_guid', $page[1]);
-			$page = elgg_view('resources/categories/manage');
+			$output = elgg_view('resources/categories/manage');
 			break;
 
 		case 'view' :
 
 			set_input('guid', $page[1]);
-			$page = elgg_view('resources/categories/view');
+			$output = elgg_view('resources/categories/view');
 			break;
 
 		case 'group' :
 
 			set_input('group_guid', $page[1]);
 			set_input('guid', $page[2]);
-			$page = elgg_view('resources/categories/group');
+			$output = elgg_view('resources/categories/group');
 			break;
 
 		case 'icon' :
@@ -81,10 +81,10 @@ function page_handler($page) {
 			return true;
 	}
 
-	if (!$page) {
+	if (!$output) {
 		return false;
 	}
 
-	echo $page;
+	echo $output;
 	return true;
 }

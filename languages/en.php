@@ -11,6 +11,7 @@ $english = array(
 	'categories:manage' => 'Manage categories',
 	'categories:site' => 'Site-wide Categories',
 	'categories:group' => '%s Categories',
+	'categories:group:all' => 'Categories',
 	'categories:select:site' => 'Select category',
 	'categories:select:group' => 'Select group category',
 	'categories:category:title' => '%s <em>%s</em>',
