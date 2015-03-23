@@ -58,9 +58,9 @@
 	background: white;
 }*/ }
 .categories-sidebar-tree-module .elgg-foot { margin-top: 10px; text-align: right; }
-.categories-sidebar-tree-module em { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #4690d6; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; font-style: normal; }
+.categories-sidebar-tree-module em { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #F4B400; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; font-style: normal; }
 
-.elgg-menu-category-filter em { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #4690d6; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; font-style: normal; }
+.elgg-menu-category-filter em { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #F4B400; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; font-style: normal; }
 
 .elgg-categories { *zoom: 1; word-break: break-word; margin: 3px 0; font-size: 85%; line-height: 18px; }
 .elgg-categories:before, .elgg-categories:after { content: " "; display: table; }
@@ -73,3 +73,5 @@
 
 .elgg-icon.elgg-icon-categories { background: none; display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 .elgg-icon.elgg-icon-categories:before { content: ""; }
+
+.categories-tree-input-node { display: none; }

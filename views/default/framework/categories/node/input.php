@@ -9,19 +9,16 @@ $name = elgg_extract('name', $input_params, 'categories');
 $value = elgg_extract('value', $input_params, array());
 $multiple = elgg_extract('multiple', $input_params, HYPECATEGORIES_INPUT_MULTIPLE);
 
-if (instanceof_category($entity)) {
-
-	$children = get_subcategories($entity->guid, array('count' => true));
-
-	if ($children == 0) {
-		$checkbox_attr = elgg_format_attributes(array(
-			'type' => ($multiple === false) ? 'radio' : 'checkbox',
-			'name' => "{$name}[]",
-			'value' => $entity->guid,
-			'checked' => (is_array($value) && in_array($entity->guid, $value)),
-		));
-		$checkbox = "<input $checkbox_attr />";
-	}
+if (Taxonomy::instanceOfCategory($entity)) {
+	$has_children = Taxonomy::getSubcategories($entity->guid, array('count' => true));
+	$checkbox_attr = elgg_format_attributes(array(
+		'type' => ($multiple === false) ? 'radio' : 'checkbox',
+		'name' => "{$name}[]",
+		'value' => $entity->guid,
+		'checked' => (is_array($value) && in_array($entity->guid, $value)),
+		'class' => ($has_children) ? 'categories-tree-input-node' : 'categories-tree-input-leaf',
+	));
+	$checkbox = "<input $checkbox_attr />";
 	$attr = $entity->getDisplayName();
 } else if (elgg_instanceof($entity, 'site')) {
 	$attr = elgg_echo('categories:select:site');
