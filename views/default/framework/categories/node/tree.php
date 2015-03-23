@@ -2,28 +2,56 @@
 
 namespace hypeJunction\Categories;
 
+use ElggEntity;
+use ElggGroup;
+use ElggSite;
+
 $entity = elgg_extract('entity', $vars);
-$page_owner = elgg_get_page_owner_entity();
+if (!$entity instanceof ElggEntity) {
+	return;
+}
 
-if (instanceof_category($entity)) {
+if (Taxonomy::instanceOfCategory($entity)) {
 	if ($entity->icontime) {
-		$icon = '<span class="categories-category-icon">' . elgg_view('output/img', array(
-					'src' => $entity->getIconURL('tiny')
-				)) . '</span>';
+		$img = elgg_view('output/img', array(
+			'src' => $entity->getIconURL('tiny')
+		));
+		$icon = elgg_format_element('span', array(
+			'class' => 'categories-category-icon',
+				), $img);
 	}
-	$count = get_filed_items($entity->guid, array(
-		'count' => true,
-		'container_guids' => (HYPECATEGORIES_GROUP_CATEGORIES && elgg_instanceof($page_owner, 'group')) ? $page_owner->guid : null
-	));
 
-	$attr = '<span>' . elgg_echo('categories:category:title', array($entity->getDisplayName(), $count)) . '</span>';
+	$container_guid = ELGG_ENTITIES_ANY_VALUE;
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner instanceof ElggGroup && HYPECATEGORIES_GROUP_CATEGORIES) {
+		// only count items added to the group container
+		$container_guid = $page_owner->guid;
+	}
+	$count = Taxonomy::getCategoryItems($entity->guid, array(
+				'count' => true,
+				'container_guids' => $container_guid,
+	));
+	$counter = elgg_format_element('span', array(
+		'class' => 'cateogires-category-badge',
+			), $count);
+
+	$title = elgg_echo('categories:category:title', array($entity->getDisplayName(), $counter));
 
 	echo elgg_view('output/url', array(
-		'text' => $icon . $attr,
+		'text' => $icon . $title,
 		'href' => $entity->getURL(),
+		'class' => 'categories-category-label',
 	));
-} else if (elgg_instanceof($entity, 'site')) {
-	echo '<span>' . elgg_echo('categories:site') . '</span>';
+} else if ($entity instanceof ElggSite) {
+	echo elgg_format_element('span', array(
+		'class' => 'categories-category-label',
+			), elgg_echo('categories:site'));
+} else if ($entity instanceof ElggGroup) {
+	echo elgg_format_element('span', array(
+		'class' => 'categories-category-label',
+			), elgg_echo('categories:group', array($entity->getDisplayName())));
 } else {
-	echo '<span>'  . elgg_echo('categories:group', array($entity->name)) . '</span>';
+	echo elgg_format_element('span', array(
+		'class' => 'categories-category-label',
+			), $entity->getDisplayName());
 }

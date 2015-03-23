@@ -217,27 +217,16 @@
 		margin-top: 10px;
 		text-align: right;
 	}
-	em {
-		font-size: 11px;
-		padding: 2px 5px;
-		margin-left: 5px;
-		background: $primary-color;
-		color: white;
-		@include border-radius(3px);
-		font-style: normal;
-	}
 }
 
-.elgg-menu-category-filter {
-	em {
-		font-size: 11px;
-		padding: 2px 5px;
-		margin-left: 5px;
-		background: $primary-color;
-		color: white;
-		@include border-radius(3px);
-		font-style: normal;
-	}
+.categories-category-badge {
+	font-size: 11px;
+	padding: 2px 5px;
+	margin-left: 5px;
+	background: $primary-color;
+	color: white;
+	@include border-radius(3px);
+	font-style: normal;
 }
 
 .elgg-categories {
