@@ -6,6 +6,17 @@
 [class*="categories-icon-"].icon-small + span { line-height: 16px; }
 [class*="categories-icon-"] + span { margin-left: 5px; display: inline-block; vertical-align: middle; line-height: 26px; }
 
+.elgg-menu-categories li { line-height: 18px; vertical-align: middle; text-indent: -15px; padding-left: 20px; padding-top: 4px; padding-bottom: 4px; }
+.elgg-menu-categories li > span, .elgg-menu-categories li > a, .elgg-menu-categories li > a span { margin-right: 5px; display: inline; vertical-align: middle; line-height: 18px; }
+.elgg-menu-categories .elgg-menu-closed .elgg-child-menu { display: none; }
+.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .collapse { display: none; }
+.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .expand { display: block; }
+.elgg-menu-categories .elgg-menu-closed.elgg-menu-parent { margin-left: auto; }
+.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .collapse { display: block; }
+.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .expand { display: none; }
+.elgg-menu-categories img { width: 16px; height: 16px; width: auto; display: inline-block; vertical-align: middle; margin-right: 4px; }
+.elgg-menu-categories .elgg-child-menu-toggle { margin: 0; cursor: pointer; color: #666; font-size: 11px; display: inline-block; vertical-align: bottom; margin-left: 15px; }
+
 .categories-icon-preview { width: 22px; height: 22px; margin: 0 5px; cursor: default; }
 
 .categories-icon-move { cursor: move; }
@@ -23,20 +34,6 @@
 
 .categories-icon-info:before { content: ""; }
 
-.elgg-menu-categories li { line-height: 18px; vertical-align: middle; text-indent: -15px; padding-left: 20px; padding-top: 4px; padding-bottom: 4px; }
-.elgg-menu-categories li > span, .elgg-menu-categories li > a, .elgg-menu-categories li > a span { margin-right: 5px; display: inline; vertical-align: middle; line-height: 18px; }
-.elgg-menu-categories .categories-icon-move { margin: 10px; }
-.elgg-menu-categories .categories-icon-plus, .elgg-menu-categories .categories-icon-minus { float: right; margin: 8px; }
-.elgg-menu-categories .categories-icon-info, .elgg-menu-categories .categories-icon-icon { cursor: pointer; }
-.elgg-menu-categories .elgg-menu-closed .elgg-child-menu { display: none; }
-.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .collapse { display: none; }
-.elgg-menu-categories .elgg-menu-closed > .elgg-child-menu-toggle > .expand { display: block; }
-.elgg-menu-categories .elgg-menu-closed.elgg-menu-parent { margin-left: auto; }
-.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .collapse { display: block; }
-.elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .expand { display: none; }
-.elgg-menu-categories .categories-category-icon img { height: 16px; width: auto; display: inline-block; vertical-align: middle; }
-.elgg-menu-categories .elgg-child-menu-toggle { margin: 0; cursor: pointer; color: #666; font-size: 11px; display: inline-block; vertical-align: bottom; margin-left: 15px; }
-
 .categories-input input[type="checkbox"], .categories-input input[type="radio"] { display: inline-block; margin: 0 8px 0 0; vertical-align: middle; line-height: 18px; }
 .categories-input label { font-size: 100%; font-weight: normal; display: initial; vertical-align: middle; line-height: 18px; }
 
@@ -51,13 +48,11 @@
 .categories-manage .categories-draggable-placeholder { border: 2px dashed #e8e8e8; height: auto; min-height: 200px; margin-left: 22px; }
 .categories-manage .elgg-child-menu-toggle, .categories-manage .elgg-child-menu-indicator { display: none; }
 .categories-manage .elgg-menu-categories .elgg-menu-closed .elgg-child-menu { display: block; }
+.categories-manage .categories-icon-move { margin: 10px; }
+.categories-manage .categories-icon-plus, .categories-manage .categories-icon-minus { float: right; margin: 8px; }
+.categories-manage .categories-icon-info, .categories-manage .categories-icon-icon { cursor: pointer; }
 
 .categories-category-full > .elgg-image { max-width: 100px; margin-right: 20px; }
-
-.categories-sidebar-tree-module:hover { overflow: visible; /*a, span {
-	background: white;
-}*/ }
-.categories-sidebar-tree-module .elgg-foot { margin-top: 10px; text-align: right; }
 
 .categories-category-badge { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #F4B400; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; font-style: normal; }
 

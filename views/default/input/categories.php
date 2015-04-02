@@ -1,8 +1,7 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 if (!isset($vars['multiple'])) {
-	$vars['multiple'] = HYPECATEGORIES_INPUT_MULTIPLE;
+	$vars['multiple'] = hypeCategories()->config->allowsMultipleInput();
 }
+
 echo elgg_view('input/category', $vars);

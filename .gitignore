@@ -5,3 +5,4 @@ robots.txt
 /nbproject/
 composer.lock
 /.sass-cache/
+/vendor/

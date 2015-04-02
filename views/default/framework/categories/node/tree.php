@@ -1,39 +1,37 @@
 <?php
 
-namespace hypeJunction\Categories;
-
-use ElggEntity;
-use ElggGroup;
-use ElggSite;
-
 $entity = elgg_extract('entity', $vars);
+$badge = elgg_extract('badge', $vars, true);
+$icons = elgg_extract('icons', $vars, true);
+
 if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-if (Taxonomy::instanceOfCategory($entity)) {
-	if ($entity->icontime) {
-		$img = elgg_view('output/img', array(
-			'src' => $entity->getIconURL('tiny')
-		));
-		$icon = elgg_format_element('span', array(
-			'class' => 'categories-category-icon',
-				), $img);
-	}
+if (hypeCategories()->model->instanceOfCategory($entity)) {
 
-	$container_guid = ELGG_ENTITIES_ANY_VALUE;
-	$page_owner = elgg_get_page_owner_entity();
-	if ($page_owner instanceof ElggGroup && HYPECATEGORIES_GROUP_CATEGORIES) {
-		// only count items added to the group container
-		$container_guid = $page_owner->guid;
+	$icon = '';
+	if ($entity->icontime) {
+		$icon = elgg_view_entity_icon($entity, 'tiny', array(
+			'href' => false,
+		));
 	}
-	$count = Taxonomy::getCategoryItems($entity->guid, array(
-				'count' => true,
-				'container_guids' => $container_guid,
-	));
-	$counter = elgg_format_element('span', array(
-		'class' => 'cateogires-category-badge',
-			), $count);
+	$counter = '';
+	if ($badge) {
+		$container_guid = ELGG_ENTITIES_ANY_VALUE;
+		$page_owner = elgg_get_page_owner_entity();
+		if ($page_owner instanceof ElggGroup) {
+			// only count items added to the group container
+			$container_guid = $page_owner->guid;
+		}
+		$count = hypeCategories()->model->getItemsInCategory($entity, array(
+			'count' => true,
+			'container_guids' => $container_guid,
+		));
+		$counter = elgg_format_element('span', array(
+			'class' => 'categories-category-badge',
+				), $count);
+	}
 
 	$title = elgg_echo('categories:category:title', array($entity->getDisplayName(), $counter));
 

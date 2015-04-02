@@ -1,28 +1,13 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
-if (!instanceof_category($entity)) {
-	return true;
+if (!hypeCategories()->model->instanceOfCategory($entity)) {
+	forward('', '404');
 }
 
-$crumbs = get_hierarchy($entity->guid, false);
-if ($crumbs) {
-	foreach ($crumbs as $crumb) {
-		if (elgg_instanceof($crumb)) {
-			elgg_push_breadcrumb($crumb->getDisplayName(), $crumb->getURL());
-			$container = $crumb->getContainerEntity();
-			if (elgg_instanceof($container, 'group')) {
-				elgg_set_page_owner_guid($container->guid);
-			}
-		}
-	}
-}
-
-elgg_push_breadcrumb($entity->getDisplayName());
+hypeCategories()->navigation->pushBreadcrumbs($entity);
 
 $title = elgg_echo('categories:category', array($entity->getDisplayName()));
 

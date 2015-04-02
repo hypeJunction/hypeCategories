@@ -60,6 +60,12 @@ You can internationalize category names by adding translations to your language 
 The master branch has been switched to Elgg 1.9.+ development.
 Legacy 1.8 code is in elgg1.8 branch.
 
+## Upgrading to 3.1
+
+The focus of 3.1 is to improve performance. There are several changes that should  not but may affect your install:
+
+1. Subcategory querying no longer uses LEFT JOIN for retrieving 'priority' metadata. If you are missing categories from your list,
+run a batch query and set priority on all your categories to 0 (this will place them at the end of the list)
 
 ## Installing with Composer
 

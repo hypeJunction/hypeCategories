@@ -1,7 +1,5 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 $entity = elgg_extract('entity', $vars);
 
 // Type / subtype pairs that can be categorized

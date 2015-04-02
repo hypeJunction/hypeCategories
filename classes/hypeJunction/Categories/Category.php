@@ -2,10 +2,17 @@
 
 namespace hypeJunction\Categories;
 
+use ElggBatch;
 use ElggObject;
 
+/**
+ * Category object
+ *
+ * @property int $priority
+ */
 class Category extends ElggObject {
 
+	const CLASSNAME = __CLASS__;
 	const SUBTYPE = 'hjcategory';
 
 	/**
@@ -14,6 +21,16 @@ class Category extends ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 		$this->attributes['subtype'] = self::SUBTYPE;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function save() {
+		if (!$this->priority) {
+			$this->priority = 0;
+		}
+		return parent::save();
 	}
 
 	/**
@@ -28,4 +45,23 @@ class Category extends ElggObject {
 		return $i18n;
 	}
 
+	/**
+	 * Returns items in this category
+	 *
+	 * @param array $options ege* options
+	 * @return ElggBatch
+	 */
+	public function getItems(array $options = array()) {
+		return hypeCategories()->model->getItemsInCategory($this, $options);
+	}
+
+	/**
+	 * Returns subcategories in this category
+	 * 
+	 * @param array $options ege* options
+	 * @return ElggBatch
+	 */
+	public function getSubcategories(array $options = array()) {
+		return hypeCategories()->model->getSubcategories($this, $options);
+	}
 }

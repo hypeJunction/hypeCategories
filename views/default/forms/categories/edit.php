@@ -1,14 +1,14 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 $entity = elgg_extract('entity', $vars);
 
 if (elgg_instanceof($entity)) {
 	$container = $entity->getContainerEntity();
 	$subtype = $entity->getSubtype();
 } else {
+	$entity = false;
 	$container = elgg_extract('container', $vars, elgg_get_site_entity());
+	$subtype = hypeCategories()->config->getSubtype();
 }
 
 echo elgg_view('input/hidden', array(
@@ -30,7 +30,7 @@ echo '<div class="categories-icon-move icon-small"></div>';
 
 $upload = elgg_echo('categories:edit:icon');
 
-if (elgg_instanceof($entity) && $entity->icontime) {
+if ($entity && $entity->icontime) {
 	$has_icon = true;
 	$icon_upload_class = 'categories-has-icon';
 }
@@ -51,18 +51,22 @@ if ($has_icon) {
 echo '<div class="categories-category-title">';
 echo elgg_view('input/text', array(
 	'name' => 'categories[title][]',
-	'value' => ($entity) ? (($entity->title) ?: $entity->getDisplayName()) : '',
+	'value' => ($entity) ? $entity->getDisplayName() : '',
 	'placeholder' => elgg_echo('categories:edit:title')
 ));
 echo '</div>';
 
 echo '<div class="categories-icon-info icon-small"></div>';
-echo '<div class="categories-icon-plus"></div>';
+
+if (!$entity) {
+	echo '<div class="categories-icon-plus"></div>';
+}
+
 echo '<div class="categories-icon-minus"></div>';
 
 echo '<div class="categories-category-meta hidden">';
 
-$tree_subtypes = get_category_subtypes();
+$tree_subtypes = hypeCategories()->config->getCategorySubtypes();
 $tree_subtype_options = array();
 foreach ($tree_subtypes as $ts) {
 	$tree_subtype_options[$ts] = elgg_echo("item:object:$ts");
@@ -71,14 +75,14 @@ if (count($tree_subtypes) > 1) {
 	echo '<div class="categories-category-subtype">';
 	echo elgg_view('input/dropdown', array(
 		'name' => 'categories[subtype][]',
-		'value' => $subtype ?: HYPECATEGORIES_SUBTYPE,
-		'options_values' => $subtype ? array($subtype => $tree_subtype_options[$subtype]) : $tree_subtype_options,
+		'value' => $subtype,
+		'options_values' => $entity ? array($subtype => $tree_subtype_options[$subtype]) : $tree_subtype_options,
 	));
 	echo '</div>';
 } else {
 	echo elgg_view('input/hidden', array(
 		'name' => 'categories[subtype][]',
-		'value' => $subtype ?: HYPECATEGORIES_SUBTYPE,
+		'value' => $subtype,
 	));
 }
 

@@ -10,8 +10,6 @@
  * @uses $vars['required'] For now, this will be ignored as HTML spec does not provide clear guidelines
  */
 
-namespace hypeJunction\Categories;
-
 elgg_push_context('categories-input');
 
 $entity = elgg_extract('entity', $vars, false);
@@ -21,7 +19,7 @@ if (isset($vars['name_override'])) {
 	$name = elgg_extract('name_override', $vars);
 }
 
-$multiple = elgg_extract('multiple', $vars, HYPECATEGORIES_INPUT_MULTIPLE);
+$multiple = elgg_extract('multiple', $vars, hypeCategories()->config->allowsMultipleInput());
 $required = elgg_extract('required', $vars, true);
 
 $value = elgg_extract('value', $vars, false);
@@ -31,10 +29,9 @@ if (elgg_instanceof($entity)) {
 
 $page_owner = elgg_get_page_owner_entity();
 
-if (!elgg_instanceof($page_owner, 'group') || !HYPECATEGORIES_GROUP_CATEGORIES) {
+if (!elgg_instanceof($page_owner, 'group') || !hypeCategories()->config->allowsGroupCategories()) {
 	$page_owner = elgg_get_site_entity();
 }
-
 
 echo elgg_view('input/hidden', array(
 	'name' => "{$name}",

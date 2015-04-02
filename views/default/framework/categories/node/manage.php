@@ -1,19 +1,21 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 $entity = elgg_extract('entity', $vars);
 
-if (instanceof_category($entity)) {
+if (hypeCategories()->model->instanceOfCategory($entity)) {
 	echo elgg_view_image_block('', elgg_view('forms/categories/edit', $vars), array(
 		'class' => 'categories-category-block'
 	));
 } else {
-	if (elgg_instanceof($entity, 'site')) {
+	if ($entity instanceof ElggSite) {
+		$icon = '';
 		$attr = elgg_echo('categories:site');
+	} else if ($entity instanceof ElggGroup) {
+		$icon = elgg_view_entity_icon($entity, 'tiny');
+		$attr = elgg_echo('categories:group', array($entity->getDisplayName()));
 	} else {
 		$icon = elgg_view_entity_icon($entity, 'tiny');
-		$attr = elgg_echo('categories:group', array($entity->name));
+		$attr = $entity->getDisplayName();
 	}
 
 	echo elgg_view_image_block($icon, $attr, array(

@@ -1,7 +1,5 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 $entity = elgg_extract('entity', $vars);
 $full = elgg_extract('full_view', $vars, false);
 $limit = get_input('limit', 5);
@@ -23,17 +21,11 @@ if (!$full) {
 		'value' => elgg_get_excerpt($entity->description)
 	));
 
-	$count = get_filed_items($entity->guid, array('count' => true));
-
-	if ($count > 0) {
-
-		$items = get_filed_items($entity->guid, array('limit' => $limit));
-		$body .= elgg_view_entity_list($items, array(
-			'full_view' => false
-		));
-	} else {
-		$body .= elgg_autop(elgg_echo('categories:empty'));
-	}
+	$items = hypeCategories()->model->getItemsInCategory($entity, array('limit' => $limit));
+	$body .= elgg_view_entity_list($items, array(
+		'full_view' => false,
+		'no_results' => elgg_echo('categories:empty'),
+	));
 
 	if ($count > $limit) {
 		$all = elgg_view('output/url', array(
@@ -67,7 +59,7 @@ if (!$full) {
 
 		$count = elgg_get_entities_from_relationship($options);
 	}
-	
+
 	if ($count) {
 		$options['count'] = false;
 		$body .= elgg_list_entities_from_relationship($options);

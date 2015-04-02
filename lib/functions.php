@@ -2,8 +2,10 @@
 
 namespace hypeJunction\Categories;
 
+use ElggBatch;
 use ElggEntity;
 use ElggMenuItem;
+use ElggObject;
 
 /**
  * Get first level subcategories for a given container
@@ -11,32 +13,24 @@ use ElggMenuItem;
  * @param int   $container_guid Container GUID or an array of container GUIDs
  * @param array $params         Additional parameters to be passed to the getter function
  * @return ElggObject[]|false Array of categories
+ * @deprecated since version 3.1
  */
 function get_subcategories($container_guid = null, $params = array()) {
-
-	$dbprefix = elgg_get_config('dbprefix');
-	$nid = elgg_get_metastring_id('priority');
-	$defaults = array(
-		'types' => 'object',
-		'subtypes' => get_category_subtypes(),
-		'joins' => array(
-			"LEFT JOIN {$dbprefix}metadata md ON md.name_id = $nid",
-			"LEFT JOIN {$dbprefix}metastrings msv ON msv.id = md.value_id",
-		),
-		'order_by' => 'ISNULL(msv.string), CAST(msv.string as SIGNED) ASC',
-		'limit' => 9999
-	);
-
-	$params = array_merge($defaults, $params);
-
-	if (!$container_guid) {
-		$site = elgg_get_site_entity();
-		$container_guid = $site->guid;
+	if (is_null($container_guid)) {
+		$container_guid = elgg_get_site_entity()->guid;
 	}
 
-	$params['container_guids'] = $container_guid;
+	$batch = hypeCategories()->model->getSubategories($container_guid, $params);
 
-	return elgg_get_entities($params);
+	if ($batch instanceof ElggBatch || is_array($batch)) {
+		$categories = array();
+		foreach ($batch as $b) {
+			$categories[] = $b;
+		}
+		return $categories;
+	}
+
+	return $batch;
 }
 
 /**
@@ -45,21 +39,24 @@ function get_subcategories($container_guid = null, $params = array()) {
  * @param int   $category_guid GUID of the category
  * @param array $params        Additional parameters to be passed to the getter function
  * @return ElggEntity[]|false Array of filed items
+ * @deprecated since version 3.1
  */
 function get_filed_items($category_guid, $params = array()) {
-
-	$defaults = array(
-		'types' => elgg_get_config('taxonomy_types'),
-		'subtypes' => elgg_get_config('taxonomy_subtypes'),
-		'relationship' => HYPECATEGORIES_RELATIONSHIP,
-		'inverse_relationship' => true
-	);
-
-	$params = array_merge($defaults, $params);
-
-	$params['relationship_guid'] = $category_guid;
-
-	return elgg_get_entities_from_relationship($params);
+	
+	$category = get_entity($category_guid);
+	if (!$category) {
+		return false;
+	}
+	
+	$items = array();
+	$batch = hypeCategories()->model->getItemsInCategory($category, $params);
+	if ($batch instanceof ElggBatch || is_array($batch)) {
+		foreach ($batch as $b) {
+			$items[] = $b;
+		}
+		return $items;
+	}
+	return $batch;
 }
 
 /**
@@ -69,34 +66,23 @@ function get_filed_items($category_guid, $params = array()) {
  * @param array $params      Additional parameters to be passed to the getter function
  * @param bool  $as_guids    Return an array of GUIDs
  * @return ElggEntity[]|int[]|false Array of filed items
+ * @deprecated since version 3.1
  */
 function get_entity_categories($entity_guid, $params = array(), $as_guids = false) {
 
-	$defaults = array(
-		'types' => 'object',
-		'subtypes' => get_category_subtypes(),
-		'reltionship' => HYPECATEGORIES_RELATIONSHIP,
-		'inverse_relationship' => false,
-		'limit' => false
-	);
-
-	$params = array_merge($defaults, $params);
-
-	$params['relationship_guid'] = $entity_guid;
-
-	if ($as_guids) {
-		$params['callback'] = false;
+	$entity = get_entity($entity_guid);
+	if (!$entity) {
+		return false;
 	}
-
-	$categories = elgg_get_entities_from_relationship($params);
-
-	if ($as_guids && $categories) {
-		foreach ($categories as $key => $category) {
-			$categories[$key] = $category->guid;
+	$batch = hypeCategories()->model->getItemCategories($entity, $params, $as_guids);
+	if ($batch instanceof ElggBatch || is_array($batch)) {
+		$categories = array();
+		foreach ($batch as $b) {
+			$categories[] = $b;
 		}
+		return $categories;
 	}
-
-	return $categories;
+	return $batch;
 }
 
 /**
@@ -106,21 +92,14 @@ function get_entity_categories($entity_guid, $params = array(), $as_guids = fals
  * @param bool $as_guids    Return an array of guids instead of objects
  * @param bool $self        Include current category
  * @return array An array of categories or category guids
+ * @deprecated since version 3.1
  */
 function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
-
 	$entity = get_entity($entity_guid);
-
-	while (instanceof_category($entity)) {
-		$return[] = ($as_guids) ? $entity->guid : $entity;
-		$entity = $entity->getContainerEntity();
+	if (!$entity) {
+		return array();
 	}
-
-	if (!$self) {
-		unset($return[0]);
-	}
-
-	return (sizeof($return)) ? array_reverse($return) : array();
+	return hypeCategories()->model->getHierarchy($entity, $as_guids, $self);
 }
 
 /**
@@ -129,6 +108,7 @@ function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
  * @param ElggEntity $entity Site, group or category
  * @param array      $params An array of additional parameters
  * @return ElggMenuItem[] An array of menu items
+ * @deprecated since version 3.1
  */
 function add_tree_node($entity, $params = array()) {
 
@@ -178,7 +158,7 @@ function add_tree_node($entity, $params = array()) {
 		$categories = get_subcategories($entity->guid);
 	}
 
-	if (is_array($categories)) {
+	if (!empty($categories)) {
 		foreach ($categories as $category) {
 			$submenu = add_tree_node($category, $params);
 			foreach ($submenu as $submenu_item) {
@@ -187,18 +167,7 @@ function add_tree_node($entity, $params = array()) {
 		}
 	}
 
-	if ($entity->canEdit() && elgg_in_context('categories-manage')) {
-		$return[] = ElggMenuItem::factory(array(
-					'name' => 'placeholder',
-					'text' => elgg_view('framework/categories/placeholder', array(
-						'container' => $entity
-					)),
-					'href' => false,
-					'priority' => 999,
-					'parent_name' => $root_menu_item->getName(),
-					'data-guid' => $entity->guid
-		));
-	}
+
 
 	return $return;
 }
@@ -206,15 +175,10 @@ function add_tree_node($entity, $params = array()) {
 /**
  * Returns entity subtypes that represent categories
  * @return array
+ * @deprecated since version 3.1
  */
 function get_category_subtypes() {
-
-	$subtypes = elgg_get_config('taxonomy_tree_subtypes');
-	if (!is_array($subtypes)) {
-		$subtypes = array(HYPECATEGORIES_SUBTYPE);
-	}
-
-	return elgg_trigger_plugin_hook('get_subtypes', 'framework:categories', null, $subtypes);
+	return hypeCategories()->config->getCategorySubtypes();
 }
 
 /**
@@ -223,6 +187,7 @@ function get_category_subtypes() {
  * @param ElggEntity $entity   Entity to check
  * @param array      $subtypes Override subtypes to check against
  * @return bool
+ * @deprecated since version 3.1
  */
 function instanceof_category($entity, $subtypes = null) {
 	if (!is_array($subtypes)) {

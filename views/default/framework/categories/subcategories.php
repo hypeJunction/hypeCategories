@@ -1,9 +1,14 @@
 <?php
 
-namespace hypeJunction\Categories;
+use ElggEntity;
 
 $container = elgg_extract('container', $vars);
-$count = get_subcategories($container->guid, array('count' => true));
+
+if (!$container instanceof ElggEntity) {
+	return;
+}
+
+$count = hypeCategories()->model->getSubcategories($container, array('count' => true));
 
 if (!$count) {
 	return;

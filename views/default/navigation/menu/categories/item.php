@@ -1,37 +1,56 @@
 <?php
 
-namespace hypeJunction\Categories;
-
 $item = elgg_extract('item', $vars);
-$collapse = elgg_extract('collapse', $vars, false);
+if (!$item instanceof ElggMenuItem) {
+	return;
+}
 
-$item_class = ($collapse) ? 'elgg-menu-closed' : 'elgg-menu-open';
+$entity = $item->getData('entity');
+$collapse = (bool) $item->getData('collapse');
 
 $children = $item->getChildren();
+
+$item_class = array($item->getItemClass());
+
+$submenu = '';
 if ($children) {
-	$item_class = "$item_class elgg-menu-parent";
+	$item_class[] = "elgg-menu-parent";
+	$item_class[] = ($collapse) ? 'elgg-menu-closed' : 'elgg-menu-open';
+
 	$toggle = '<span class="elgg-child-menu-toggle"><span class="collapse ">&#9698;</span><span class="expand">&#9654;</span></span>';
+
+	if (!empty($children)) {
+		$submenu = elgg_view('navigation/menu/categories/section', array(
+			'items' => $children,
+			'class' => 'elgg-menu elgg-child-menu',
+			'collapse' => true
+		));
+	}
 } else {
+	$item_class[] = "elgg-menu-nochildren";
 	$toggle = '<span class="elgg-child-menu-indicator">&#9675;</span>';
-	$item_class = "$item_class elgg-menu-nochildren";
 }
 
-$item_class = "$item_class {$item->getItemClass()}";
+if (elgg_in_context('categories-manage')) {
+	if (!$submenu) {
+		$submenu = elgg_format_element('ul', array(
+			'class' => 'elgg-menu elgg-child-menu',
+		));
+	}
+	$toggle = '';
+}
+
 if ($item->getSelected()) {
-	$item_class = "$item_class elgg-state-selected";
-}
-if (isset($vars['item_class']) && $vars['item_class']) {
-	$item_class .= ' ' . $vars['item_class'];
+	$item_class[] = "elgg-state-selected";
 }
 
-echo "<li class=\"$item_class\">";
-echo $toggle . elgg_view_menu_item($item);
-
-if ($children) {
-	echo elgg_view('navigation/menu/categories/section', array(
-		'items' => $children,
-		'class' => 'elgg-menu elgg-child-menu',
-		'collapse' => true
-	));
+if (isset($vars['item_class'])) {
+	$item_class[] = $vars['item_class'];
 }
-echo '</li>';
+
+echo elgg_format_element('li', array(
+	'class' => $item_class,
+	'data-guid' => $entity->guid,
+	'data-href' => ($entity) ? $entity->getURL() : '',
+		), $toggle . elgg_view_menu_item($item) . $submenu);
+

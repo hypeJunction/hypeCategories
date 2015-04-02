@@ -1,11 +1,11 @@
 <?php
 
-namespace hypeJunction\Categories;
+use hypeJunction\Categories\Category;
 
-require_once __DIR__ . '/vendors/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $subtypes = array(
-	'hjcategory' => get_class(new Category),
+	Category::SUBTYPE => Category::CLASSNAME,
 );
 
 foreach ($subtypes as $subtype => $class) {

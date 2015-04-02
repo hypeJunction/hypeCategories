@@ -11,10 +11,8 @@
  * @uses $vars['item_class'] Optional. Additional classes to be passed to <li> elements
  */
 
-namespace hypeJunction\Categories;
-
 if (isset($vars['entity'])) {
-	$vars['categories'] = get_entity_categories($vars['entity']->guid);
+	$vars['categories'] = hypeCategories()->model->getItemCategories($vars['entity']);
 	unset($vars['entity']);
 }
 
@@ -65,18 +63,18 @@ $list_items = '<li>' . elgg_view_icon('categories', $icon_class) . '</li>';
 
 foreach ($vars['categories'] as $category) {
 
-	if (!instanceof_category($category)) {
+	if (!hypeCategories()->model->instanceOfCategory($category)) {
 		continue;
 	}
 
-	$children = get_subcategories($category->guid, array('count' => true));
+	$children = hypeCategories()->model->getSubcategories($category, array('count' => true));
 
 	if ($children > 0) {
 		continue;
 	}
 
 	$crumbs = array();
-	$hierarchy = get_hierarchy($category->guid, false, true);
+	$hierarchy = hypeCategories()->model->getHierarchy($category, false, true);
 	foreach ($hierarchy as $h) {
 		$crumbs[] = $h->getDisplayName();
 	}
