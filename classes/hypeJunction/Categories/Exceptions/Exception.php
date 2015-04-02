@@ -2,7 +2,9 @@
 
 namespace hypeJunction\Categories\Exceptions;
 
-class Exception extends \Exception{
+use Exception as PHPException;
+
+class Exception extends PHPException{
 
 	public function __construct($message, $code, $previous) {
 		parent::__construct($message, $code, $previous);

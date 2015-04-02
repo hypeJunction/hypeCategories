@@ -53,7 +53,7 @@ Context-based filtering of category subtypes can be achieved via ```'get_subtype
 
 ### Internationalization
 
-You can internationalize category names by adding translations to your language files. Translations should be namespaced with ```"category:$category_title"```.
+You can internationalize category names by adding translations to your language files. Translations should be namespaced with ```"category:$category_title"```. 
 
 ## Versioning
 

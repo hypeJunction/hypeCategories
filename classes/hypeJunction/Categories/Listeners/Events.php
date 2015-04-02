@@ -48,7 +48,7 @@ class Events {
 	 */
 	public function init() {
 		elgg_register_event_handler('pagesetup', 'system', array($this, 'pagesetup'));
-		elgg_register_event_handler('upgarde', 'system', array($this, 'upgrade'));
+		elgg_register_event_handler('upgrade', 'system', array($this, 'upgrade'));
 		elgg_register_event_handler('create', 'all', array($this, 'updateEntityCategories'));
 		elgg_register_event_handler('update', 'all', array($this, 'updateEntityCategories'));
 	}
@@ -59,14 +59,14 @@ class Events {
 	 */
 	public function pagesetup() {
 
-		elgg_register_menu_item('site', array(
+		$item1 = elgg_register_menu_item('site', array(
 			'name' => 'categories',
 			'text' => elgg_echo('categories'),
 			'href' => $this->router->normalize('all'),
 		));
 
 		if (elgg_is_admin_logged_in() && elgg_in_context('admin')) {
-			elgg_register_menu_item('page', array(
+			$item2 = elgg_register_menu_item('page', array(
 				'name' => 'categories',
 				'text' => elgg_echo('categories:site'),
 				'href' => $this->router->normalize('manage'),
@@ -75,6 +75,8 @@ class Events {
 				'section' => 'configure'
 			));
 		}
+
+		return $item1 && $item2;
 	}
 
 	/**
