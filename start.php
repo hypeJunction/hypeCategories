@@ -10,7 +10,7 @@
 require_once __DIR__ . '/lib/autoloader.php';
 
 if (hypeCategories()->config->get('legacy_mode')) {
-	require_once __DIR__ . '/functions.php';
+	require_once __DIR__ . '/lib/functions.php';
 	hypeCategories()->config->setLegacyConfig();
 }
 
