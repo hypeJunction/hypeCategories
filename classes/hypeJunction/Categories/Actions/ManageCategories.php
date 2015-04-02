@@ -90,7 +90,7 @@ final class ManageCategories extends Action {
 			}
 
 			if ($_FILES['categories']['error']['icon'][$key] == UPLOAD_ERR_OK) {
-				hypeFilestore()->icons->create($category, $_FILES['categories']['tmp_name']['icon'][$key]);
+				hypeFilestore()->iconFactory->create($category, $_FILES['categories']['tmp_name']['icon'][$key]);
 			}
 
 			$this->nodes[$node_id] = $category;

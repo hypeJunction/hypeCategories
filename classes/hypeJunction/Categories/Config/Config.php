@@ -24,6 +24,7 @@ class Config {
 		'input_multiple' => true,
 		'pagehandler_id' => 'categories',
 		'legacy_pagehandler_id' => 'category',
+		'ajax_sidebar' => false,
 	);
 
 	/**
