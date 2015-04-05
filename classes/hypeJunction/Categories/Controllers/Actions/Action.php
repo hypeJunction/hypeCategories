@@ -10,6 +10,7 @@ abstract class Action {
 	const ACCESS_PUBLIC = 'public';
 	const ACCESS_LOGGED_IN = 'logged_in';
 	const ACCESS_ADMIN = 'admin';
+
 	/**
 	 * @var ActionResult
 	 */
@@ -23,6 +24,12 @@ abstract class Action {
 	public function __construct(ActionResult $result = null) {
 		$this->result = ($result) ? : new ActionResult;
 	}
+
+	/**
+	 * Returns registered action name
+	 * @return string
+	 */
+	abstract function getName();
 
 	/**
 	 * Returns the result object
@@ -45,5 +52,4 @@ abstract class Action {
 	 * @return void
 	 */
 	abstract function execute();
-
 }

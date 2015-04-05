@@ -145,4 +145,11 @@ final class ManageCategories extends Action {
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getName() {
+		return get_input('action');
+	}
+
 }

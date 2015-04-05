@@ -41,4 +41,10 @@ final class SavePluginSettings extends Action {
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getName() {
+		return get_input('action');
+	}
 }

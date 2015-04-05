@@ -55,6 +55,7 @@ class Actions {
 	 */
 	public function execute(Action $action, $feedback = true) {
 
+		$name = $action->getName();
 		elgg_make_sticky_form($name);
 
 		$result = $action->getResult();
