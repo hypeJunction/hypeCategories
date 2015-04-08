@@ -54,7 +54,7 @@ define(['jquery', 'elgg', 'jquery.nestedSortable'], function($, elgg) {
 				$(this).attr('id', 'category-node-' + key);
 				$(this).find('[name="categories[hierarchy][]"]').val(key);
 			});
-			$('#category-hierarchy').val(JSON.stringify($('.elgg-menu-categories').nestedSortable('toHierarchy')));
+			$('#category-hierarchy').val(JSON.stringify($('.categories-manage .elgg-menu-categories').nestedSortable('toHierarchy')));
 		}
 	};
 
