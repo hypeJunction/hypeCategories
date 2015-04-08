@@ -48,7 +48,7 @@ class Navigation {
 			$temp = array(
 				'guid' => $entity->guid,
 				'text' => $entity->getDisplayName(),
-				'href' => $this->router->normalize(array('group', $group->guid)),
+				'href' => $this->router->normalize(array('group', $entity->guid)),
 			);
 		} else if ($entity instanceof ElggObject) {
 			$temp = array(
