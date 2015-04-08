@@ -20,7 +20,7 @@ function get_subcategories($container_guid = null, $params = array()) {
 		$container_guid = elgg_get_site_entity()->guid;
 	}
 
-	$batch = hypeCategories()->model->getSubategories($container_guid, $params);
+	$batch = hypeCategories()->model->getSubcategories($container_guid, $params);
 
 	if ($batch instanceof ElggBatch || is_array($batch)) {
 		$categories = array();
