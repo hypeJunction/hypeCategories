@@ -39,14 +39,6 @@ if (empty($vars['categories']) && !empty($vars['value'])) {
 if (empty($vars['categories'])) {
 	return;
 }
-if (!is_array($vars['categories'])) {
-	$vars['categories'] = array($vars['categories']);
-}
-$vars['categories'] = array_filter($vars['categories']);
-
-if (!count($vars['categories'])) {
-	return;
-}
 
 $list_class = "elgg-categories";
 if (isset($vars['list_class'])) {
@@ -58,8 +50,7 @@ if (isset($vars['item_class'])) {
 	$item_class = "$item_class {$vars['item_class']}";
 }
 
-$icon_class = elgg_extract('icon_class', $vars);
-$list_items = '<li>' . elgg_view_icon('categories', $icon_class) . '</li>';
+$list_items = array();
 
 foreach ($vars['categories'] as $category) {
 
@@ -79,20 +70,23 @@ foreach ($vars['categories'] as $category) {
 		$crumbs[] = $h->getDisplayName();
 	}
 
-	$list_items .= "<li class=\"$item_class\">";
-	$list_items .= elgg_view('output/url', array(
+	$list_items[] = elgg_format_element('li', array(
+		'class' => $item_class,
+	), elgg_view('output/url', array(
 		'href' => $category->getURL(),
 		'title' => implode(" &#8227; ", $crumbs),
 		'text' => $category->getDisplayName(),
-	));
-	$list_items .= '</li>';
+	)));
 }
 
-$list = <<<___HTML
-<ul class="$list_class">
-	$list_items
-</ul>
-___HTML;
+if (empty($list_items)) {
+	return;
+}
 
-echo $list;
+$icon = elgg_format_element('li', array(), elgg_view_icon('categories', $icon_class));
+$list = implode('', $list_items);
+
+echo elgg_format_element('ul', array(
+	'class' => $list_class,
+), $icon . $list);
 
