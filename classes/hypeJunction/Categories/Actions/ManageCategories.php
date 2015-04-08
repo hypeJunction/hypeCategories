@@ -6,7 +6,6 @@ use ElggObject;
 use hypeJunction\Categories\Controllers\Actions\Action;
 use hypeJunction\Categories\Exceptions\InvalidEntityException;
 use hypeJunction\Categories\Exceptions\PermissionsException;
-use hypeJunction\Filestore\IconHandler;
 
 /**
  * 'categories/manage' action
@@ -60,7 +59,7 @@ final class ManageCategories extends Action {
 			if (!$category) {
 				$class = get_subtype_class('object', $subtype) ? : get_class(new ElggObject);
 				$category = new $class();
-				$category->subtype = ($subtype) ? $subtype : $this->config->get('subtype');
+				$category->subtype = ($subtype) ? $subtype : hypeCategories()->config->get('subtype');
 				$category->owner_guid = elgg_get_logged_in_user_guid();
 				$category->container_guid = $this->root_guid;
 			}
