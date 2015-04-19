@@ -67,21 +67,6 @@ The focus of 3.1 is to improve performance. There are several changes that shoul
 1. Subcategory querying no longer uses LEFT JOIN for retrieving 'priority' metadata. If you are missing categories from your list,
 run a batch query and set priority on all your categories to 0 (this will place them at the end of the list)
 
-## Installing with Composer
-
-hypeCategories can be included in your Elgg project by ```require``` from the project's
-root ```composer.json```.
-
-Support for composer in Elgg is an experimental feature pioneered by [@Srokap](https://github.com/Srokap/ "Paweł Sroka").
-
-Provisional config to include hypeCategories into your project:
-```json
-{
-	"require": {
-		"hypejunction/hypecategories" : "@stable"
-	}
-}
-```
 
 ## Screenshots ##
 
