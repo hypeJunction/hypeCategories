@@ -18,6 +18,7 @@ require_once "$engine/lib/elgglib.php";
 require_once "$engine/lib/sessions.php";
 
 require_once dirname(dirname(__FILE__)) . '/lib/autoloader.php';
+elgg_register_classes((dirname(dirname(__FILE__))) . '/tests/phpunit/classes/');
 
 function elgg_get_config($name) {
 	global $CONFIG;
@@ -38,5 +39,3 @@ function get_entity($guid) {
 function elgg_entity_exists($guid = null) {
 	return ($guid && is_int($guid));
 }
-
-require_once dirname(__DIR__) . "/vendor/autoload.php";

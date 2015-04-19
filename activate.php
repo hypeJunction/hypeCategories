@@ -1,11 +1,9 @@
 <?php
 
-use hypeJunction\Categories\Category;
-
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/lib/autoloader.php';
 
 $subtypes = array(
-	Category::SUBTYPE => Category::CLASSNAME,
+	\hypeJunction\Categories\Category::SUBTYPE => \hypeJunction\Categories\Category::CLASSNAME,
 );
 
 foreach ($subtypes as $subtype => $class) {
