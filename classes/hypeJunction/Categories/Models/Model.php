@@ -35,6 +35,9 @@ class Model {
 	 * @return bool
 	 */
 	public function instanceOfCategory(ElggEntity $entity = null) {
+		if (!$entity instanceof ElggEntity) {
+			return false;
+		}
 		if (!in_array($entity->getSubtype(), $this->config->getCategorySubtypes())) {
 			return false;
 		}
