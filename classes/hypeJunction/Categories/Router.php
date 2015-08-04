@@ -70,7 +70,7 @@ class Router {
 				}
 				break;
 		}
-		
+
 		return false;
 	}
 
@@ -90,7 +90,12 @@ class Router {
 	 */
 	public function getEntityUrl(Category $entity) {
 		$friendly = elgg_get_friendly_title($entity->getDisplayName());
-		return $this->normalize(array('view', $entity->guid, $friendly));
+		$query = array();
+		$page_owner = elgg_get_page_owner_entity();
+		if ($page_owner instanceof \ElggGroup) {
+			$query['container_guid'] = $page_owner->guid;
+		}
+		return $this->normalize(array('view', $entity->guid, $friendly), $query);
 	}
 
 	/**

@@ -42,6 +42,7 @@ if (!$full) {
 
 	$types = get_input('type', elgg_get_config('taxonomy_types'));
 	$subtypes = get_input('subtype', elgg_get_config('taxonomy_subtypes'));
+	$container_guids = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 
 	if ($types && $subtypes) {
 		$options = array(
@@ -49,6 +50,7 @@ if (!$full) {
 			'pagination' => true,
 			'types' => $types,
 			'subtypes' => $subtypes,
+			'container_guids' => $container_guids,
 			'limit' => get_input('limit', 20),
 			'relationship' => HYPECATEGORIES_RELATIONSHIP,
 			'relationship_guid' => $entity->guid,

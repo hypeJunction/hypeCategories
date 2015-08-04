@@ -211,14 +211,14 @@ class HookHandlers {
 			return $return;
 		}
 
-		foreach ($grouped_entities as $entity) {
-			$count = $entity->getVolatileData('select:cnt');
+		foreach ($grouped_entities as $grouped_entity) {
+			$count = $grouped_entity->getVolatileData('select:cnt');
 			if (!$count) {
 				continue;
 			}
 
-			$type = $entity->getType();
-			$subtype = $entity->getSubtype();
+			$type = $grouped_entity->getType();
+			$subtype = $grouped_entity->getSubtype();
 
 			if (!$subtype) {
 				$text = elgg_echo("item:$type");
@@ -228,7 +228,7 @@ class HookHandlers {
 			}
 
 			$counter = elgg_format_element('span', array(
-				'class' => 'cateogires-category-badge',
+				'class' => 'categories-category-badge',
 					), $count);
 
 			$url = $entity->getURL();
