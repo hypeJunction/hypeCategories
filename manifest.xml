@@ -20,9 +20,9 @@
 		<version>1.9</version>
 	</requires>
 
-	<suggests>
+	<requires>
 		<type>plugin</type>
 		<name>hypeApps</name>
-	</suggests>
+	</requires>
 	
 </plugin_manifest>
