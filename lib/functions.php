@@ -20,7 +20,7 @@ function get_subcategories($container_guid = null, $params = array()) {
 		$container_guid = elgg_get_site_entity()->guid;
 	}
 
-	$batch = hypeCategories()->model->getSubcategories($container_guid, $params);
+	$batch = hypeCategories()->categories->getSubcategories($container_guid, $params);
 
 	if ($batch instanceof ElggBatch || is_array($batch)) {
 		$categories = array();
@@ -49,7 +49,7 @@ function get_filed_items($category_guid, $params = array()) {
 	}
 	
 	$items = array();
-	$batch = hypeCategories()->model->getItemsInCategory($category, $params);
+	$batch = hypeCategories()->categories->getItemsInCategory($category, $params);
 	if ($batch instanceof ElggBatch || is_array($batch)) {
 		foreach ($batch as $b) {
 			$items[] = $b;
@@ -74,7 +74,7 @@ function get_entity_categories($entity_guid, $params = array(), $as_guids = fals
 	if (!$entity) {
 		return false;
 	}
-	$batch = hypeCategories()->model->getItemCategories($entity, $params, $as_guids);
+	$batch = hypeCategories()->categories->getItemCategories($entity, $params, $as_guids);
 	if ($batch instanceof ElggBatch || is_array($batch)) {
 		$categories = array();
 		foreach ($batch as $b) {
@@ -99,7 +99,7 @@ function get_hierarchy($entity_guid, $as_guids = false, $self = false) {
 	if (!$entity) {
 		return array();
 	}
-	return hypeCategories()->model->getHierarchy($entity, $as_guids, $self);
+	return hypeCategories()->categories->getHierarchy($entity, $as_guids, $self);
 }
 
 /**

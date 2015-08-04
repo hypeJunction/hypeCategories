@@ -8,7 +8,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-if (hypeCategories()->model->instanceOfCategory($entity)) {
+if (hypeCategories()->categories->instanceOfCategory($entity)) {
 
 	$icon = '';
 	if ($entity->icontime) {
@@ -24,7 +24,7 @@ if (hypeCategories()->model->instanceOfCategory($entity)) {
 			// only count items added to the group container
 			$container_guid = $page_owner->guid;
 		}
-		$count = hypeCategories()->model->getItemsInCategory($entity, array(
+		$count = hypeCategories()->categories->getItemsInCategory($entity, array(
 			'count' => true,
 			'container_guids' => $container_guid,
 		));

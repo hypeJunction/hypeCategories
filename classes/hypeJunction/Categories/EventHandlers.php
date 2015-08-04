@@ -1,56 +1,34 @@
 <?php
 
-namespace hypeJunction\Categories\Listeners;
+namespace hypeJunction\Categories;
 
 use ElggEntity;
-use hypeJunction\Categories\Config\Config;
-use hypeJunction\Categories\Models\Model;
-use hypeJunction\Categories\Services\Router;
-use hypeJunction\Categories\Services\Upgrades;
+use hypeJunction\Categories\Config;
+use hypeJunction\Categories\Categories;
+use hypeJunction\Categories\Router;
 
 /**
  * Events service
  */
-class Events {
-
-	/**
-	 * Scripts to require on system upgrade
-	 * @var array
-	 */
-	private $upgradeScripts = array(
-		'activate.php',
-	);
+class EventHandlers {
 	
 	private $config;
 	private $router;
-	private $model;
-	private $upgrades;
+	private $categories;
 	private $queue;
 
 	/**
 	 * Constructor
-	 * @param Config   $config   Config
-	 * @param Router   $router   Router
-	 * @param Model $model Taxonomy
-	 * @param Upgrades $upgrades Upgrades
+	 * 
+	 * @param Config     $config     Config
+	 * @param Router     $router     Router
+	 * @param Categories $categories Categories lib
 	 */
-	public function __construct(Config $config, Router $router, Model $model, Upgrades $upgrades) {
+	public function __construct(Config $config, Router $router, Categories $categories) {
 		$this->config = $config;
 		$this->router = $router;
-		$this->model = $model;
-		$this->upgrades = $upgrades;
+		$this->categories = $categories;
 		$this->queue = array();
-	}
-
-	/**
-	 * Run tasks on system init
-	 * @return void
-	 */
-	public function init() {
-		elgg_register_event_handler('pagesetup', 'system', array($this, 'pagesetup'));
-		elgg_register_event_handler('upgrade', 'system', array($this, 'upgrade'));
-		elgg_register_event_handler('create', 'all', array($this, 'updateEntityCategories'));
-		elgg_register_event_handler('update', 'all', array($this, 'updateEntityCategories'));
 	}
 
 	/**
@@ -80,23 +58,6 @@ class Events {
 	}
 
 	/**
-	 * Runs upgrade scripts
-	 * @return bool
-	 */
-	protected function upgrade() {
-		if (elgg_is_admin_logged_in()) {
-			foreach ($this->upgradeScripts as $script) {
-				$path = $this->plugin->getPath() . $script;
-				if (file_exists($path)) {
-					require_once $path;
-				}
-			}
-			$this->upgrades->runUpgrades();
-		}
-		return true;
-	}
-
-	/**
 	 * Checks request parameters for categories input values on ElggEntity::save()
 	 * and updates entity categories
 	 *
@@ -117,9 +78,10 @@ class Events {
 			// No need to run this handler on multiple update events for this entity
 			return true;
 		}
+
 		$this->queue[] = $entity_guid;
 
-		if (!$this->model->isAllowed($entity)) {
+		if (!$this->categories->isAllowed($entity)) {
 			// Categories do not apply to this item
 			return true;
 		}
@@ -130,7 +92,7 @@ class Events {
 			return true;
 		}
 
-		$this->model->setItemCategories($entity, $categories);
+		$this->categories->setItemCategories($entity, $categories);
 		return true;
 	}
 

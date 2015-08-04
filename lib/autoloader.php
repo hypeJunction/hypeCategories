@@ -1,16 +1,21 @@
 <?php
 
-elgg_register_classes((dirname(dirname(__FILE__))) . '/classes/');
+if (!is_callable('hypeApps')) {
+	throw new Exception("hypeCategories requires hypeApps");
+}
+
+$path = dirname(dirname(dirname(dirname(__FILE__))));
+
+if (!file_exists("{$path}/vendor/autoload.php")) {
+	throw new Exception('hypeCategories can not resolve composer dependencies. Run composer install');
+}
+
+require_once "{$path}/vendor/autoload.php";
 
 /**
- * Plugin DI Container
- * @staticvar \hypeJunction\Categories\Di\PluginContainer $provider
- * @return \hypeJunction\Categories\Di\PluginContainer
+ * Plugin container
+ * @return \hypeJunction\Categories\Plugin
  */
 function hypeCategories() {
-	static $provider;
-	if (null === $provider) {
-		$provider = \hypeJunction\Categories\Di\PluginContainer::create();
-	}
-	return $provider;
+	return \hypeJunction\Categories\Plugin::factory();
 }

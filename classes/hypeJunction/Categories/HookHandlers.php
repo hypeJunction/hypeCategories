@@ -1,51 +1,31 @@
 <?php
 
-namespace hypeJunction\Categories\Listeners;
+namespace hypeJunction\Categories;
 
 use ElggEntity;
 use ElggGroup;
 use ElggMenuItem;
 use ElggObject;
 use ElggSite;
-use hypeJunction\Categories\Category;
-use hypeJunction\Categories\Config\Config;
-use hypeJunction\Categories\Models\Model;
-use hypeJunction\Categories\Models\TreeNode;
-use hypeJunction\Categories\Services\Router;
 
 /**
  * Plugin hooks service
  */
-class PluginHooks {
+class HookHandlers {
 
 	private $config;
 	private $router;
-	private $model;
+	private $categories;
 
 	/**
 	 * Constructor
 	 * @param Config $config
 	 * @param Router $router
 	 */
-	public function __construct(Config $config, Router $router, Model $model) {
+	public function __construct(Config $config, Router $router, Categories $categories) {
 		$this->config = $config;
 		$this->router = $router;
-		$this->model = $model;
-	}
-
-	/**
-	 * Perform tasks on system init
-	 * @return void
-	 */
-	public function init() {
-		elgg_register_plugin_hook_handler('entity:url', 'object', array($this, 'handleEntityUrls'));
-		elgg_register_plugin_hook_handler('entity:icon:url', 'object', array($this, 'handleEntityIconUrls'));
-		elgg_register_plugin_hook_handler('register', 'menu:categories', array($this, 'setupCategoriesMenu'));
-		elgg_register_plugin_hook_handler('register', 'menu:category-filter', array($this, 'setupCategoryFilterMenu'));
-
-		if ($this->config->allowsCategoriesInMenu()) {
-			elgg_register_plugin_hook_handler('register', 'menu:entity', array($this, 'setupEntityMenu'));
-		}
+		$this->categories = $categories;
 	}
 
 	/**
@@ -69,31 +49,6 @@ class PluginHooks {
 	}
 
 	/**
-	 * Update category icon URL
-	 *
-	 * @param string $hook		Equals 'entity:icon:url'
-	 * @param string $type		Equals 'object'
-	 * @param string $return	Current icon URL
-	 * @param array $params		Additional params
-	 * @return string			Updated icon URL
-	 */
-	public function handleEntityIconUrls($hook, $type, $return, $params) {
-
-		$entity = elgg_extract('entity', $params);
-		$size = elgg_extract('size', $params, 'medium');
-
-		if (!$entity instanceof Category) {
-			return $return;
-		}
-
-		if ($entity->icontime) {
-			return $this->router->normalize(array('icon', $entity->guid, $size));
-		}
-
-		return elgg_normalize_url('/mod/hypeCategories/graphics/node.svg');
-	}
-
-	/**
 	 * Adds categories to the entity menu
 	 *
 	 * @param str   $hook   Equals 'register'
@@ -110,7 +65,7 @@ class PluginHooks {
 			return $return;
 		}
 
-		$count = $this->model->getItemCategories($entity, array('count' => true));
+		$count = $this->categories->getItemCategories($entity, array('count' => true));
 		$entity->setVolatileData('categories_count', $count);
 
 		if ($count) {
@@ -239,13 +194,13 @@ class PluginHooks {
 
 		$entity = elgg_extract('entity', $params);
 
-		if (!hypeCategories()->model->instanceOfCategory($entity)) {
+		if (!hypeCategories()->categories->instanceOfCategory($entity)) {
 			return $return;
 		}
 
 		$stats = array();
 		$pairs = hypeCategories()->config->getEntityTypeSubtypePairs();
-		$grouped_entities = hypeCategories()->model->getItemsInCategory($entity, array(
+		$grouped_entities = hypeCategories()->categories->getItemsInCategory($entity, array(
 			'selects' => array('COUNT(*) as cnt'),
 			'types_subtype_pairs' => $pairs,
 			'group_by' => 'e.type, e.subtype',

@@ -2,5 +2,5 @@
 
 use hypeJunction\Categories\Actions\ManageCategories;
 
-$result = hypeCategories()->actions->execute(new ManageCategories);
+$result = hypeApps()->actions->execute(new ManageCategories());
 forward($result->getForwardURL());

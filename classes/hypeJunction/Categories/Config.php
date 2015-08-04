@@ -1,47 +1,30 @@
 <?php
 
-namespace hypeJunction\Categories\Config;
+namespace hypeJunction\Categories;
 
-use ElggPlugin;
 use hypeJunction\Categories\Category;
 
 /**
  * Config
  */
-class Config {
-
-	const PLUGIN_ID = 'hypeCategories';
-
-	private $plugin;
-	private $settings;
-	private $config = array(
-		'legacy_mode' => true,
-		'relationship' => 'filed_in',
-		'subtype' => Category::SUBTYPE,
-		'entity_menu' => false,
-		'group_categories' => false,
-		'group_tree_site' => false,
-		'input_multiple' => true,
-		'pagehandler_id' => 'categories',
-		'legacy_pagehandler_id' => 'category',
-		'ajax_sidebar' => false,
-	);
+class Config extends \hypeJunction\Config {
 
 	/**
-	 * Constructor
-	 * @param ElggPlugin $plugin ElggPlugin
+	 * {@inheritdoc}
 	 */
-	public function __construct(ElggPlugin $plugin) {
-		$this->plugin = $plugin;
-	}
-
-	/**
-	 * Config factory
-	 * @return Config
-	 */
-	public static function factory() {
-		$plugin = elgg_get_plugin_from_id(self::PLUGIN_ID);
-		return new Config($plugin);
+	public function getDefaults() {
+		return array(
+			'legacy_mode' => true,
+			'relationship' => 'filed_in',
+			'subtype' => Category::SUBTYPE,
+			'entity_menu' => false,
+			'group_categories' => false,
+			'group_tree_site' => false,
+			'input_multiple' => true,
+			'pagehandler_id' => 'categories',
+			'legacy_pagehandler_id' => 'category',
+			'ajax_sidebar' => false,
+		);
 	}
 
 	/**
@@ -59,45 +42,26 @@ class Config {
 		define('HYPECATEGORIES_INPUT_MULTIPLE', $this->get('input_multiple'));
 
 		// legacy config values
-		elgg_set_config('taxonomy_type_subtype_pairs', $pairs);
-		$pairs = $this->getEntityTypeSubtypePairs();
+		$pairs = $this->getEntityTypeSubtypePairs() ?: array();
 		$subtypes = array();
 		array_walk_recursive($pairs, function ($current) use (&$subtypes) {
 			$subtypes[] = $current;
 		});
 		elgg_set_config('taxonomy_types', array_keys($pairs));
 		elgg_set_config('taxonomy_subtypes', $subtypes);
-
-		elgg_set_config('taxonomy_tree_subtypes', array(Category::SUBTYPE));
-	}
-
-	/**
-	 * Returns all plugin settings
-	 * @return array
-	 */
-	public function all() {
-		if (!isset($this->settings)) {
-			$this->settings = array_merge($this->config, $this->plugin->getAllSettings());
+		
+		$tsp = array();
+		foreach ($pairs as $type => $subtypes) {
+			if (empty($subtypes)) {
+				$subtypes = array('default');
+			}
+			foreach ($subtypes as $subtype) {
+				$tsp[] = "$type:$subtype";
+			}
 		}
-		return $this->settings;
-	}
 
-	/**
-	 * Returns a plugin setting
-	 *
-	 * @param string $name Setting name
-	 * @return mixed
-	 */
-	public function get($name, $default = null) {
-		return elgg_extract($name, $this->all(), $default);
-	}
-
-	/**
-	 * Returns plugin path
-	 * @return string
-	 */
-	public function getPath() {
-		return $this->plugin->getPath();
+		elgg_set_config('taxonomy_type_subtype_pairs', $tsp);
+		elgg_set_config('taxonomy_tree_subtypes', array(Category::SUBTYPE));
 	}
 
 	/**
@@ -139,11 +103,13 @@ class Config {
 	public function getEntityTypeSubtypePairs() {
 
 		$setting = $this->get('type_subtype_pairs');
-		if (!$setting) {
+		if ($setting) {
+			$setting = unserialize($setting);
+		}
+		if (empty($setting)) {
 			return get_registered_entity_types();
 		}
-
-		$setting = unserialize($setting);
+		
 		$pairs = array();
 
 		foreach ($setting as $tsp) {

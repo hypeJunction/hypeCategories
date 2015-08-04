@@ -3,7 +3,7 @@
 
 	<name>hypeCategories</name>
 	<id>hypeCategories</id>
-	<version>3.1.0</version>
+	<version>4.0.0</version>
 
 	<description>Traverse Categories for Elgg</description>
 	<category>hypeJunction</category>
@@ -22,8 +22,7 @@
 
 	<suggests>
 		<type>plugin</type>
-		<name>hypeFilestore</name>
-		<version>3.1</version>
+		<name>hypeApps</name>
 	</suggests>
 	
 </plugin_manifest>

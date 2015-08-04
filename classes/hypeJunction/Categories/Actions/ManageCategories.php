@@ -2,31 +2,39 @@
 
 namespace hypeJunction\Categories\Actions;
 
+use ElggEntity;
 use ElggObject;
-use hypeJunction\Categories\Controllers\Actions\Action;
-use hypeJunction\Categories\Exceptions\InvalidEntityException;
-use hypeJunction\Categories\Exceptions\PermissionsException;
+use hypeJunction\Controllers\Action;
+use hypeJunction\Exceptions\InvalidEntityException;
+use hypeJunction\Exceptions\PermissionsException;
 
 /**
  * 'categories/manage' action
+ *
+ * @property int[]      $input_categories
+ * @property array      $hierarchy
+ * @property int        $root_guid
+ * @property ElggEntity $root
+ * @property Category[] $nodes
  */
 final class ManageCategories extends Action {
 
-	private $input_categories;
-	private $hierarchy;
-	private $root_guid;
-	private $root;
-	private $nodes;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setup() {
+		parent::setup();
+		$this->input_categories = get_input('categories');
+		$this->hierarchy = json_decode(get_input('hierarchy', json_encode(array())), true);
+		$this->root_guid = get_input('container_guid');
+		$this->root = get_entity($this->root_guid);
+		$this->nodes = array();
+	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function validate() {
-		$this->input_categories = get_input('categories');
-		$this->hierarchy = json_decode(get_input('hierarchy', json_encode(array())), true);
-		$this->root_guid = get_input('container_guid');
-		$this->root = get_entity($this->root_guid);
-
 		if (!$this->root) {
 			throw new InvalidEntityException("Entity with guid '$this->root_guid' does not exist");
 		}
@@ -45,10 +53,13 @@ final class ManageCategories extends Action {
 	 */
 	public function execute() {
 
+		$nodes = array();
 		$config = $this->input_categories;
 
 		foreach ($config['hierarchy'] as $key => $node_id) {
-
+			
+			$node_id = (int) $node_id;
+			
 			$guid = (int) $config['guid'][$key];
 			$title = $config['title'][$key];
 			$desc = $config['description'][$key];
@@ -65,13 +76,13 @@ final class ManageCategories extends Action {
 			}
 
 			if (!$category) {
-				$this->nodes[$node_id] = false;
+				$nodes[$node_id] = false;
 				continue;
 			}
 
 			if (!$title) {
 				$category->delete();
-				$this->nodes[$node_id] = false;
+				$nodes[$node_id] = false;
 				continue;
 			} else {
 				$category->title = $title;
@@ -84,21 +95,20 @@ final class ManageCategories extends Action {
 					$form_values[$param_name] = $entity_params[$key];
 				}
 				$category->setVolatileData('formValues', $form_values);
-
 				$category->save();
 			}
 
 			if ($_FILES['categories']['error']['icon'][$key] == UPLOAD_ERR_OK) {
-				if (is_callable('hypeFilestore')) {
-					hypeFilestore()->iconFactory->create($category, $_FILES['categories']['tmp_name']['icon'][$key]);
-				}
+				hypeApps()->iconFactory->create($category, $_FILES['categories']['tmp_name']['icon'][$key]);
 			}
 
-			$this->nodes[$node_id] = $category;
+			$nodes[$node_id] = $category;
 		}
 
+		$this->nodes = $nodes;
+
 		foreach ($this->hierarchy as $key => $root) {
-			$this->updateHierarchy($root['id'], $root['children']);
+			$this->updateHierarchy((int) $root['id'], $root['children']);
 		}
 
 		$this->result->addMessage(elgg_echo('categories:manage:success'));
@@ -111,7 +121,7 @@ final class ManageCategories extends Action {
 	 * @param array $children Children
 	 * @return void
 	 */
-	function updateHierarchy($node_id, $children) {
+	protected function updateHierarchy($node_id, $children) {
 
 		$category = $this->nodes[$node_id];
 
@@ -120,7 +130,7 @@ final class ManageCategories extends Action {
 		}
 
 		foreach ($children as $child) {
-			$child_node_id = $child['id'];
+			$child_node_id = (int) $child['id'];
 			$child_children = $child['children'];
 
 			$subcategory = $this->nodes[$child_node_id];
@@ -142,13 +152,6 @@ final class ManageCategories extends Action {
 
 			$this->updateHierarchy($child_node_id, $child_children);
 		}
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName() {
-		return get_input('action');
 	}
 
 }

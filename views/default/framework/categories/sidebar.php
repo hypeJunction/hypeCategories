@@ -17,7 +17,7 @@ if ($container instanceof ElggGroup) {
 	}
 }
 
-$count = hypeCategories()->model->getSubcategories($container, array('count' => true));
+$count = hypeCategories()->categories->getSubcategories($container, array('count' => true));
 
 if (!$count && !$container->canEdit()) {
 	return;

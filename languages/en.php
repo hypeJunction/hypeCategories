@@ -26,6 +26,7 @@ $general = array(
 	'categories:num_display' => 'Categories per page',
 	'categories:num_display:help' => 'Number of categories to display per page on categories/all page (set to 0 to show all)',
 	'categories:groupoption:enable' => 'Enable group categories',
+	'categories:no_results' => 'There are no categories to display',
 );
 
 $navigation = array(

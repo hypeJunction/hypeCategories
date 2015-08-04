@@ -5,7 +5,8 @@ if (!$container instanceof ElggEntity) {
 	return;
 }
 
-$options = hypeCategories()->model->getSubcategoriesQueryOptions($container);
+$options = hypeCategories()->categories->getSubcategoriesQueryOptions($container);
 $options['full_view'] = false;
+$options['no_results'] = elgg_echo('categories:no_results');
 
 echo elgg_list_entities($options);

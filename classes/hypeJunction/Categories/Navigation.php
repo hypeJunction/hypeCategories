@@ -1,32 +1,32 @@
 <?php
 
-namespace hypeJunction\Categories\Services;
+namespace hypeJunction\Categories;
 
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
 use ElggUser;
-use hypeJunction\Categories\Config\Config;
-use hypeJunction\Categories\Models\Model;
+use hypeJunction\Categories\Config;
+use hypeJunction\Categories\Categories;
 
 
 class Navigation {
 
 	private $config;
 	private $router;
-	private $model;
+	private $categories;
 
 	/**
 	 * Constructor
 	 *
 	 * @param Config   $config   Config
 	 * @param Router   $router   Router
-	 * @param Model $model Taxonomy
+	 * @param Categories $categories Categories lib
 	 */
-	public function __construct(Config $config, Router $router, Model $model) {
+	public function __construct(Config $config, Router $router, Categories $categories) {
 		$this->config = $config;
 		$this->router = $router;
-		$this->model = $model;
+		$this->categories = $categories;
 	}
 
 	protected function getBreadcrumbs(ElggEntity$entity = null, array $breadcrumbs = array()) {

@@ -21,7 +21,7 @@ if (!$full) {
 		'value' => elgg_get_excerpt($entity->description)
 	));
 
-	$items = hypeCategories()->model->getItemsInCategory($entity, array('limit' => $limit));
+	$items = hypeCategories()->categories->getItemsInCategory($entity, array('limit' => $limit));
 	$body .= elgg_view_entity_list($items, array(
 		'full_view' => false,
 		'no_results' => elgg_echo('categories:empty'),

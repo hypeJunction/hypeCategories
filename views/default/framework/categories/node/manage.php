@@ -2,7 +2,7 @@
 
 $entity = elgg_extract('entity', $vars);
 
-if (hypeCategories()->model->instanceOfCategory($entity)) {
+if (hypeCategories()->categories->instanceOfCategory($entity)) {
 	echo elgg_view_image_block('', elgg_view('forms/categories/edit', $vars), array(
 		'class' => 'categories-category-block'
 	));

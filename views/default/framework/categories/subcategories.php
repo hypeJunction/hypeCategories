@@ -8,7 +8,7 @@ if (!$container instanceof ElggEntity) {
 	return;
 }
 
-$count = hypeCategories()->model->getSubcategories($container, array('count' => true));
+$count = hypeCategories()->categories->getSubcategories($container, array('count' => true));
 
 if (!$count) {
 	return;

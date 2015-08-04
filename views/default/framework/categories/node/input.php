@@ -11,8 +11,8 @@ $name = elgg_extract('name', $input_params, 'categories');
 $value = elgg_extract('value', $input_params, array());
 $multiple = elgg_extract('multiple', $input_params, hypeCategories()->config->allowsMultipleInput());
 
-if (hypeCategories()->model->instanceOfCategory($entity)) {
-	$has_children = hypeCategories()->model->getSubcategories($entity, array('count' => true));
+if (hypeCategories()->categories->instanceOfCategory($entity)) {
+	$has_children = hypeCategories()->categories->getSubcategories($entity, array('count' => true));
 	$checkbox = elgg_format_element('input', array(
 		'type' => ($multiple === false) ? 'radio' : 'checkbox',
 		'name' => "{$name}[]",

@@ -3,7 +3,7 @@
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
-if (!hypeCategories()->model->instanceOfCategory($entity)) {
+if (!hypeCategories()->categories->instanceOfCategory($entity)) {
 	forward('', '404');
 }
 

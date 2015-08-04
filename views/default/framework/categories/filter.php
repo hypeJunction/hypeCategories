@@ -2,7 +2,7 @@
 
 $entity = elgg_extract('entity', $vars);
 
-if (!hypeCategories()->model->instanceOfCategory($entity)) {
+if (!hypeCategories()->categories->instanceOfCategory($entity)) {
 	return;
 }
 

@@ -1,10 +1,9 @@
 <?php
 
-namespace hypeJunction\Categories\Services;
+namespace hypeJunction\Categories;
 
 use hypeJunction\Categories\Category;
-use hypeJunction\Categories\Config\Config;
-use hypeJunction\Filestore\IconHandler;
+use hypeJunction\Categories\Config;
 
 /**
  * Routing and page handling service
@@ -22,24 +21,12 @@ class Router {
 	}
 
 	/**
-	 * Perform tasks on system init
-	 * @return void
-	 */
-	public function init() {
-		elgg_register_page_handler($this->getPageHandlerId(), array($this, 'handlePages'));
-		if ($legacy_pagehandler_id = $this->config->get('legacy_pagehandler_id')) {
-			elgg_register_page_handler($legacy_pagehandler_id, array($this, 'handlePages'));
-		}
-	}
-
-	/**
 	 * Categories page handler
 	 *
 	 * /categories/all/[<container_guid>]
 	 * /categories/manage/<container_guid>
 	 * /categories/view/<guid>
 	 * /categories/group/<group_guid>/<guid>
-	 * /categories/icon/<guid>/<size>
 	 *
 	 * @param array $page URL segments
 	 * @return bool
@@ -53,18 +40,18 @@ class Router {
 				if (isset($page[1])) {
 					set_input('container_guid', $page[1]);
 				}
-				$output = elgg_view('resources/categories/all');
-				break;
+				echo elgg_view('resources/categories/all');
+				return true;
 
 			case 'manage' :
 				set_input('container_guid', $page[1]);
-				$output = elgg_view('resources/categories/manage');
-				break;
+				echo elgg_view('resources/categories/manage');
+				return true;
 
 			case 'view' :
 				set_input('guid', $page[1]);
-				$output = elgg_view('resources/categories/view');
-				break;
+				echo elgg_view('resources/categories/view');
+				return true;
 
 			case 'group' :
 				if (isset($page[2])) {
@@ -74,26 +61,17 @@ class Router {
 				}
 				break;
 
-			case 'icon' :
-				IconHandler::outputRawIcon($page[1], $page[2]);
-				break;
-
 			case 'json' :
 				elgg_set_viewtype('json');
 				switch ($page[1]) {
 					case 'nodes' :
-						$output = elgg_view('resources/categories/nodes');
-						break;
+						echo elgg_view('resources/categories/nodes');
+						return true;
 				}
 				break;
 		}
-
-		if (!$output) {
-			return false;
-		}
-
-		echo $output;
-		return true;
+		
+		return false;
 	}
 
 	/**

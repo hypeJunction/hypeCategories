@@ -8,7 +8,9 @@ define(['jquery'], function ($) {
 	});
 
 	$(document).on('click.categories', '.elgg-child-menu-toggle + label', function (e) {
-		$(this).siblings('.elgg-child-menu-toggle').trigger('click');
+		if (!$(e.target).is('input')) {
+			$(this).siblings('.elgg-child-menu-toggle').trigger('click');
+		}
 	});
 
 });

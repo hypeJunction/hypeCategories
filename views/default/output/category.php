@@ -12,7 +12,7 @@
  */
 
 if (isset($vars['entity'])) {
-	$vars['categories'] = hypeCategories()->model->getItemCategories($vars['entity']);
+	$vars['categories'] = hypeCategories()->categories->getItemCategories($vars['entity']);
 	unset($vars['entity']);
 }
 
@@ -54,18 +54,18 @@ $list_items = array();
 
 foreach ($vars['categories'] as $category) {
 
-	if (!hypeCategories()->model->instanceOfCategory($category)) {
+	if (!hypeCategories()->categories->instanceOfCategory($category)) {
 		continue;
 	}
 
-	$children = hypeCategories()->model->getSubcategories($category, array('count' => true));
+	$children = hypeCategories()->categories->getSubcategories($category, array('count' => true));
 
 	if ($children > 0) {
 		continue;
 	}
 
 	$crumbs = array();
-	$hierarchy = hypeCategories()->model->getHierarchy($category, false, true);
+	$hierarchy = hypeCategories()->categories->getHierarchy($category, false, true);
 	foreach ($hierarchy as $h) {
 		$crumbs[] = $h->getDisplayName();
 	}

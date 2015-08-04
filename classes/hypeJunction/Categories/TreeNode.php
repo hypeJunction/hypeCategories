@@ -1,6 +1,6 @@
 <?php
 
-namespace hypeJunction\Categories\Models;
+namespace hypeJunction\Categories;
 
 use ElggEntity;
 use hypeJunction\Categories\Util\ItemCollection;
@@ -78,7 +78,7 @@ class TreeNode {
 		if (is_callable($callback)) {
 			$children = call_user_func($callback, $this->getEntity(), $this->options);
 		} else {
-			$children = hypeCategories()->model->getSubcategories($this->getEntity(), $this->options, true);
+			$children = hypeCategories()->categories->getSubcategories($this->getEntity(), $this->options, true);
 		}
 		
 		if (is_array($children)) {
@@ -103,7 +103,7 @@ class TreeNode {
 		if (is_callable($callback)) {
 			$children = call_user_func($callback, $this->getEntity(), $options);
 		} else {
-			$children = hypeCategories()->model->getSubcategories($this->getEntity(), $options);
+			$children = hypeCategories()->categories->getSubcategories($this->getEntity(), $options);
 		}
 		return (bool) $children;
 	}

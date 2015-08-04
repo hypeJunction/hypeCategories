@@ -24,7 +24,11 @@ $required = elgg_extract('required', $vars, true);
 
 $value = elgg_extract('value', $vars, false);
 if (elgg_instanceof($entity)) {
-	$value = get_entity_categories($entity->guid, array(), true);
+	$batch = hypeCategories()->categories->getItemCategories($entity->guid, array(), true);
+	$value = array();
+	foreach ($batch as $c) {
+		$value[] = $c->guid;
+	}
 }
 
 $page_owner = elgg_get_page_owner_entity();

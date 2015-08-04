@@ -1,6 +1,6 @@
 <?php
 
-use hypeJunction\Categories\Models\TreeNode;
+use hypeJunction\Categories\TreeNode;
 
 $container_guid = get_input('container_guid');
 $container = get_entity($container_guid);

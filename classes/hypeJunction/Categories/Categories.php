@@ -1,10 +1,10 @@
 <?php
 
-namespace hypeJunction\Categories\Models;
+namespace hypeJunction\Categories;
 
 use ElggBatch;
 use ElggEntity;
-use hypeJunction\Categories\Config\Config;
+use hypeJunction\Categories\Config;
 use hypeJunction\Categories\Util\ItemCollection;
 use stdClass;
 
@@ -12,7 +12,7 @@ use stdClass;
 /**
  * Convenince methods for retrieving classification information
  */
-class Model {
+class Categories {
 
 	const EGE = 'elgg_get_entities';
 	const EGE_METADATA = 'elgg_get_entities_from_metadata';
@@ -65,7 +65,7 @@ class Model {
 			return false;
 		}
 
-		return in_array($subtype, $allowed_pairs);
+		return in_array($subtype, $allowed_pairs[$type]);
 	}
 
 	/**
@@ -139,7 +139,7 @@ class Model {
 
 		$input_categories = ItemCollection::create($categories)->guids();
 		$future_categories = array();
-		$current_categories = $this->getItemCategories($entity, $options, true);
+		$current_categories_batch = $this->getItemCategories($entity, $options, true);
 
 		foreach ($input_categories as $guid) {
 			$category = get_entity($guid);
@@ -149,6 +149,11 @@ class Model {
 			$universal_categories[] = $category->getDisplayName();
 			$hierarchy = $this->getHierarchy($category, true, true);
 			$future_categories = array_merge($future_categories, $hierarchy);
+		}
+
+		$current_categories = array();
+		foreach ($current_categories_batch as $c) {
+			$current_categories[] = $c->guid;
 		}
 
 		// Storing categories metadata for compatibility with categories plugin

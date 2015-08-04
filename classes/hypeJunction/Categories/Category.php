@@ -52,7 +52,7 @@ class Category extends ElggObject {
 	 * @return ElggBatch
 	 */
 	public function getItems(array $options = array()) {
-		return hypeCategories()->model->getItemsInCategory($this, $options);
+		return hypeCategories()->categories->getItemsInCategory($this, $options);
 	}
 
 	/**
@@ -62,6 +62,6 @@ class Category extends ElggObject {
 	 * @return ElggBatch
 	 */
 	public function getSubcategories(array $options = array()) {
-		return hypeCategories()->model->getSubcategories($this, $options);
+		return hypeCategories()->categories->getSubcategories($this, $options);
 	}
 }
