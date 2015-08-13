@@ -3,14 +3,14 @@
 
 	<name>hypeCategories</name>
 	<id>hypeCategories</id>
-	<version>4.0.0</version>
+	<version type="dist">4.0.0</version>
 
 	<description>Traverse Categories for Elgg</description>
 	<category>hypeJunction</category>
 	<category>categories</category>
 	<category>content</category>
 
-	<author>Ismayil Khayredinov (ismayil.khayredinov@gmail.com)</author>
+	<author>Ismayil Khayredinov (info@hypejunction.com)</author>
 	<website>http://hypeJunction.com</website>
 	<copyright>2011-2014 (c) Ismayil Khayredinov</copyright>
 	<license>GNU Public License version 2</license>

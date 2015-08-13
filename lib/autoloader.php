@@ -1,16 +1,11 @@
 <?php
 
-if (!is_callable('hypeApps')) {
-	throw new Exception("hypeCategories requires hypeApps");
+$plugin_root = dirname(dirname(__FILE__));
+if (file_exists("{$plugin_root}/vendor/autoload.php")) {
+	// check if composer dependencies are distributed with the plugin
+	require_once "{$plugin_root}/vendor/autoload.php";
 }
 
-$path = dirname(dirname(dirname(dirname(__FILE__))));
-
-if (!file_exists("{$path}/vendor/autoload.php")) {
-	throw new Exception('hypeCategories can not resolve composer dependencies. Run composer install');
-}
-
-require_once "{$path}/vendor/autoload.php";
 
 /**
  * Plugin container
