@@ -1,14 +1,14 @@
 <?php
 
-$container = elgg_get_page_owner_entity();
-
-if (!$container) {
-	$container = elgg_get_site_entity();
+$context = hypeCategories()->config->getContextSettings();
+if (!$context) {
+	return;
 }
 
-if ($container instanceof ElggUser) {
-	// do not show on user owned pages
-	return;
+$container = elgg_get_page_owner_entity();
+
+if (!$container || $container instanceof ElggUser) {
+	$container = elgg_get_site_entity();
 }
 
 if ($container instanceof ElggGroup) {
@@ -23,7 +23,7 @@ if (!$count && !$container->canEdit()) {
 	return;
 }
 
-$title = elgg_echo('categories');
+$title = elgg_extract('title', $context) ? : elgg_echo('categories');
 
 $vars['container'] = $container;
 $body = elgg_view('framework/categories/tree', $vars);

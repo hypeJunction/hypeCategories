@@ -90,12 +90,77 @@ class Router {
 	 */
 	public function getEntityUrl(Category $entity) {
 		$friendly = elgg_get_friendly_title($entity->getDisplayName());
+
+		$context = $this->config->getContextSettings();
+		if (!empty($context['category_url'])) {
+			$url = $context['category_url'];
+			$params = array(
+				'{page_owner_guid}' => elgg_get_page_owner_guid(),
+				'{category_guid}' => $entity->guid,
+				'{category_name}' => $friendly,
+			);
+			foreach ($params as $key => $val) {
+				$url = preg_replace("/$key/i", $val, $url);
+			}
+			return $url;
+		}
+
+
 		$query = array();
 		$page_owner = elgg_get_page_owner_entity();
 		if ($page_owner instanceof \ElggGroup) {
 			$query['container_guid'] = $page_owner->guid;
 		}
 		return $this->normalize(array('view', $entity->guid, $friendly), $query);
+	}
+
+	/**
+	 * Route context specific category pages
+	 *
+	 * @param string $hook   "route"
+	 * @param string $type   "all"
+	 * @param mixed  $return Route params
+	 * @param array  $params Hook params
+	 * @return array
+	 */
+	public function routeCategoryContextPages($hook, $type, $return, $params) {
+
+		$identifier = elgg_extract('identifier', $return);
+		$segments = (array) elgg_extract('segments', $return);
+		array_unshift($segments, $identifier);
+
+		$route_url = implode('/', $segments) . '/';
+
+		$contexts = (array) $this->config->_context;
+		foreach ($contexts as $context => $settings) {
+			$category_url = elgg_extract('category_url', $settings);
+			if (!$category_url) {
+				continue;
+			}
+			$category_url = trim($category_url, '/') . '/';
+
+			$pattern = preg_replace('/{([^{}]*)}/i', '(?<$1>.*)', $category_url);
+			$pattern = str_replace('/', '\/', $pattern);
+
+			$matches = array();
+			preg_match("/$pattern/i", $route_url, $matches);
+
+			if (empty($matches['category_guid'])) {
+				continue;
+			}
+
+			set_input('container_guid', elgg_extract('page_owner_guid', $matches));
+			set_input('type_subtype_pairs', elgg_extract('type_subtype_pairs', $settings, $this->config->getEntityTypeSubtypePairs()));
+			set_input('_context', $context);
+			
+			return array(
+				'identifier' => $this->getPageHandlerId(),
+				'segments' => array(
+					'view',
+					elgg_extract('category_guid', $matches),
+				),
+			);
+		}
 	}
 
 	/**

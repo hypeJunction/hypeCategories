@@ -5,12 +5,30 @@ if (!$item instanceof ElggMenuItem) {
 	return;
 }
 
+$guid = get_input('guid');
+$context_entity = get_entity($guid);
+
 $entity = $item->getData('entity');
 $collapse = (bool) $item->getData('collapse');
 
-$children = $item->getChildren();
+$hierarchy = array();
+if ($context_entity instanceof \hypeJunction\Categories\Category) {
+	$hierarchy = hypeCategories()->categories->getHierarchy($context_entity, true, true);
+} else if ($current instanceof \ElggEntity) {
+	$categories = hypeCategories()->categories->getItemCategories($context_entity, array(), true);
+	foreach ($categories as $guid) {
+		$hierarchy[] = $guid;
+	}
+}
 
 $item_class = array($item->getItemClass());
+
+if (in_array($entity->guid, $hierarchy)) {
+	$collapse = false;
+	$item_class[] = 'elgg-menu-highlighted';
+}
+
+$children = $item->getChildren();
 
 $submenu = '';
 if ($children) {

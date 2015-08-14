@@ -39,12 +39,13 @@ if (!$full) {
 	));
 } else {
 
+	$types = (array) get_input('type', elgg_get_config('taxonomy_types'));
+	$subtypes = (array) get_input('subtype', elgg_get_config('taxonomy_subtypes'));
+	$type_subtype_pairs = get_input('type_subtype_pairs');
 
-	$types = get_input('type', elgg_get_config('taxonomy_types'));
-	$subtypes = get_input('subtype', elgg_get_config('taxonomy_subtypes'));
 	$container_guids = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 
-	if ($types && $subtypes) {
+	if (($types && $subtypes) || $type_subtype_pairs) {
 		$options = array(
 			'full_view' => false,
 			'pagination' => true,
@@ -58,6 +59,12 @@ if (!$full) {
 			'count' => true,
 			'size' => $size,
 		);
+
+		if (!empty($type_subtype_pairs)) {
+			unset($options['types']);
+			unset($options['subtypes']);
+			$options['type_subtype_pairs'] = $type_subtype_pairs;
+		}
 
 		$count = elgg_get_entities_from_relationship($options);
 	}

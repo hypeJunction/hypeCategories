@@ -9,3 +9,4 @@ robots.txt
 /releases/
 /vendor/
 composer.lock
+Gemfile.lock

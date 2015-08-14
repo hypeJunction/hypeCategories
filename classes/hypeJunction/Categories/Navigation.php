@@ -9,7 +9,6 @@ use ElggUser;
 use hypeJunction\Categories\Config;
 use hypeJunction\Categories\Categories;
 
-
 class Navigation {
 
 	private $config;
@@ -44,39 +43,47 @@ class Navigation {
 				'text' => $entity->getDisplayName(),
 				'href' => $this->router->normalize(array('owner', $entity->guid)),
 			);
+			array_unshift($breadcrumbs, $temp);
 		} else if ($entity instanceof ElggGroup) {
 			$temp = array(
 				'guid' => $entity->guid,
 				'text' => $entity->getDisplayName(),
 				'href' => $this->router->normalize(array('group', $entity->guid)),
 			);
+			array_unshift($breadcrumbs, $temp);
 		} else if ($entity instanceof ElggObject) {
 			$temp = array(
 				'guid' => $entity->guid,
 				'text' => $entity->getDisplayName(),
 				'href' => $entity->getURL(),
 			);
-		} else {
-			$temp = array(
-				'text' => elgg_echo('categories'),
-				'href' => $this->router->normalize('all'),
-			);
-		}
+			array_unshift($breadcrumbs, $temp);
 
-		array_unshift($breadcrumbs, $temp);
-
-		if ($entity instanceof ElggEntity) {
-			$container = $entity->getContainerEntity();
-			if ($container) {
-				$breadcrumbs = $this->getBreadcrumbs($container, $breadcrumbs);
+			if ($entity instanceof ElggObject) {
+				// Do not go up the tree once we have reached the user or group
+				$container = $entity->getContainerEntity();
+				if ($container) {
+					$breadcrumbs = $this->getBreadcrumbs($container, $breadcrumbs);
+				}
 			}
 		}
 
+		array_shift($breadcrumbs, array(
+			'text' => elgg_echo('categories'),
+			'href' => $this->router->normalize('all'),
+		));
+		
 		return $breadcrumbs;
 	}
 
 	public function pushBreadcrumbs(ElggEntity $entity) {
 		$breadcrumbs = $this->getBreadcrumbs($entity);
+		$settings = $this->config->getContextSettings();
+		if (!empty($settings['breadcrumbs']) && is_array($settings['breadcrumbs'])) {
+			$first = array_shift($breadcrumbs);
+			$breadcrumbs = array_merge($settings['breadcrumbs'], $breadcrumbs);
+			array_unshift($breadcrumbs, $first);
+		}
 		foreach ($breadcrumbs as $breadcrumb) {
 			$text = elgg_extract('text', $breadcrumb, '');
 			$href = elgg_extract('href', $breadcrumb);

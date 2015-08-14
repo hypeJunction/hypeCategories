@@ -6,6 +6,7 @@ use hypeJunction\Categories\Category;
 
 /**
  * Config
+ * @property-read array $_context
  */
 class Config extends \hypeJunction\Config {
 
@@ -28,6 +29,17 @@ class Config extends \hypeJunction\Config {
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function all() {
+		$settings = parent::all();
+		$path = $this->getPath();
+		$context = include("{$path}settings/default.php");
+		$settings['_context'] = elgg_trigger_plugin_hook('get_context_settings', 'framework:categories', null, $context);
+		return $settings;
+	}
+
+	/**
 	 * Initializes config values on system init
 	 * @return void
 	 */
@@ -42,14 +54,14 @@ class Config extends \hypeJunction\Config {
 		define('HYPECATEGORIES_INPUT_MULTIPLE', $this->get('input_multiple'));
 
 		// legacy config values
-		$pairs = $this->getEntityTypeSubtypePairs() ?: array();
+		$pairs = $this->getEntityTypeSubtypePairs() ? : array();
 		$subtypes = array();
 		array_walk_recursive($pairs, function ($current) use (&$subtypes) {
 			$subtypes[] = $current;
 		});
 		elgg_set_config('taxonomy_types', array_keys($pairs));
 		elgg_set_config('taxonomy_subtypes', $subtypes);
-		
+
 		$tsp = array();
 		foreach ($pairs as $type => $subtypes) {
 			if (empty($subtypes)) {
@@ -102,6 +114,11 @@ class Config extends \hypeJunction\Config {
 	 */
 	public function getEntityTypeSubtypePairs() {
 
+		$context = $this->getContextSettings();
+		if (!empty($context['type_subtype_pairs']) && is_array($context['type_subtype_pairs'])) {
+			return $context['type_subtype_pairs'];
+		}
+		
 		$setting = $this->get('type_subtype_pairs');
 		if ($setting) {
 			$setting = unserialize($setting);
@@ -109,7 +126,7 @@ class Config extends \hypeJunction\Config {
 		if (empty($setting)) {
 			return get_registered_entity_types();
 		}
-		
+
 		$pairs = array();
 
 		foreach ($setting as $tsp) {
@@ -119,6 +136,12 @@ class Config extends \hypeJunction\Config {
 			}
 			if ($subtype !== 'default') {
 				$pairs[$type][] = $subtype;
+			}
+		}
+
+		foreach ($pairs as $type => $subtypes) {
+			if (empty($subtypes)) {
+				$pairs[$type] = ELGG_ENTITIES_ANY_VALUE;
 			}
 		}
 
@@ -134,7 +157,39 @@ class Config extends \hypeJunction\Config {
 		if (!is_array($subtypes)) {
 			$subtypes = array(Category::SUBTYPE);
 		}
+		$context = $this->getContextSettings();
+		if (!empty($context['category_subtypes']) && is_array($context['subtypes'])) {
+			$subtypes = array_unique(array_merge($subtypes, $context['category_subtypes']));
+		}
 		return elgg_trigger_plugin_hook('get_subtypes', 'framework:categories', null, $subtypes);
+	}
+
+	/**
+	 * Matches current page URL against context settings and returns the config array
+	 * @return array|false
+	 */
+	public function getContextSettings() {
+		$contexts = (array) $this->_context;
+		if (empty($contexts)) {
+			return false;
+		}
+
+		$context = get_input('_context');
+		if ($context) {
+			return $contexts[$context];
+		}
+		
+		$url = current_page_url();
+		$site_url = elgg_get_site_url();
+
+		foreach ($contexts as $context => $settings) {
+			$pattern = "`^{$site_url}{$context}/*$`i";
+			if (preg_match($pattern, $url)) {
+				return $settings;
+			}
+		}
+
+		return false;
 	}
 
 }

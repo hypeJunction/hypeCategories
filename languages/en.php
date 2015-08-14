@@ -5,7 +5,8 @@ namespace hypeJunction\Categories;
 $general = array(
 	'item:object:hjcategory' => 'Categories',
 	'categories' => 'Categories',
-	'categories:category' => 'Category: %s',
+	//'categories:category' => 'Category: %s',
+	'categories:category' => '%s',
 	'categories:subcategories' => 'Subcategories',
 	'categories:latest_items' => 'Latest items',
 	'categories:manage' => 'Manage categories',
@@ -40,6 +41,14 @@ $navigation = array(
 			This setting will also restrict the scope of to the default event handler, since each action
 			can trigger multiple create and update events (creating a blog for example is accompanying with creating notifications, notices etc).
 			Please note that selecting or unselecting an item will not automatically include or remove a category input field to/from the form',
+	'categories:sidebar' => 'Site content by category',
+	'categories:sidebar:blogs' => 'Blogs by category',
+	'categories:sidebar:bookmarks' => 'Bookmarks by category',
+	'categories:sidebar:blogs' => 'Blogs by category',
+	'categories:sidebar:groups' => 'Groups by category',
+	'categories:sidebar:group' => 'Group content by category',
+	'categories:sidebar:files' => 'Files by category',
+	'categories:sidebar:pages' => 'Pages by category',
 );
 
 $forms = array(

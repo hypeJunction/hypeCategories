@@ -1,5 +1,11 @@
 <?php
 
+$context = hypeCategories()->config->getContextSettings();
+if ($context) {
+	// special config, no need to display the filter
+	return;
+}
+
 $entity = elgg_extract('entity', $vars);
 
 if (!hypeCategories()->categories->instanceOfCategory($entity)) {

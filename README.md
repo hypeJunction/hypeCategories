@@ -3,17 +3,26 @@ hypeCategories
 
 Categories and taxonomy for Elgg
 
-## Features ##
+## Features
 
 * Support for site-wide and internal group categories
 * User-friendly UI for adding and managing categories
 * Support for category icons
+* Context-aware category trees
+* Context-aware content filtering by category (e.g. Blogs by category on blogs pages)
+* Extendable API that allows adding new category subtypes
 
-## Configuration ##
+## Configuration
 
 * If you are working with a large taxonomy, you will most likely need to update your PHP runtime configuration.
 If, when managing categories, you loose entries or hierarchies, increase the value of ```max_input_vars```
 http://www.php.net/manual/en/info.configuration.php
+
+* Category configuration is context aware. You can specify which category subyptes to list,
+which categorizied entity subtypes to count/display, what category URL pattern to use for each specific context.
+To modify the default behavior, by filtering the config array using the `'get_context_settings', 'framework:categories'` hook.
+See ```mod/hypeCategories/settings/default.php``` for a sample config. Place more general rules below more specific rules,
+as the plugin will use the settings from the first rule that matches the current page URL.
 
 ## Usage
 
@@ -55,10 +64,6 @@ Context-based filtering of category subtypes can be achieved via ```'get_subtype
 
 You can internationalize category names by adding translations to your language files. Translations should be namespaced with ```"category:$category_title"```. 
 
-## Versioning
-
-The master branch has been switched to Elgg 1.9.+ development.
-Legacy 1.8 code is in elgg1.8 branch.
 
 ## Upgrading to 3.1
 

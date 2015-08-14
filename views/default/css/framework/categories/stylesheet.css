@@ -1,7 +1,6 @@
-@charset "UTF-8";
-[class~="categories"], [class~="categories"] * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+[class~="categories"], [class~="categories"] * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-[class*="categories-icon-"] { background: none; display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; background: none; display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color: #666; font-size: 22px; line-height: 22px; text-align: center; vertical-align: middle; cursor: pointer; }
+[class*="categories-icon-"] { background: none; display: inline-block; font-family: 'FontAwesome'; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; background: none; display: inline-block; font-family: 'FontAwesome'; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color: #666; font-size: 22px; line-height: 22px; text-align: center; vertical-align: middle; cursor: pointer; }
 [class*="categories-icon-"].icon-small { font-size: 16px; line-height: 16px; text-align: center; vertical-align: middle; }
 [class*="categories-icon-"].icon-small + span { line-height: 16px; }
 [class*="categories-icon-"] + span { margin-left: 5px; display: inline-block; vertical-align: middle; line-height: 26px; }
@@ -14,25 +13,26 @@
 .elgg-menu-categories .elgg-menu-closed.elgg-menu-parent { margin-left: auto; }
 .elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .collapse { display: block; }
 .elgg-menu-categories .elgg-menu-open > .elgg-child-menu-toggle > .expand { display: none; }
+.elgg-menu-categories .elgg-menu-highlighted > a { font-weight: bold; }
 .elgg-menu-categories img { width: 16px; height: 16px; width: auto; display: inline-block; vertical-align: middle; margin-right: 4px; }
-.elgg-menu-categories .elgg-child-menu-toggle { margin: 0; cursor: pointer; color: #666; font-size: 11px; display: inline-block; vertical-align: bottom; margin-left: 15px; }
+.elgg-menu-categories .elgg-child-menu-toggle, .elgg-menu-categories .elgg-child-menu-indicator { margin: 0; cursor: pointer; color: #666; font-size: 10px; display: inline-block; vertical-align: middle; padding: 0; width: 15px; text-align: center; }
 
 .categories-icon-preview { width: 22px; height: 22px; margin: 0 5px; cursor: default; }
 
 .categories-icon-move { cursor: move; }
-.categories-icon-move:before { content: ""; }
+.categories-icon-move:before { content: "\f047"; }
 
-.categories-icon-edit:before { content: ""; }
+.categories-icon-edit:before { content: "\f040"; }
 
-.categories-icon-plus:before { content: ""; }
+.categories-icon-plus:before { content: "\f055"; }
 
-.categories-icon-minus:before { content: ""; }
+.categories-icon-minus:before { content: "\f056"; }
 
-.categories-icon-upload:before { color: #ccc; content: ""; }
+.categories-icon-upload:before { color: #ccc; content: "\f0ee"; }
 
-.categories-icon-checked:before { content: ""; }
+.categories-icon-checked:before { content: "\f058"; }
 
-.categories-icon-info:before { content: ""; }
+.categories-icon-info:before { content: "\f05a"; }
 
 .categories-input input[type="checkbox"], .categories-input input[type="radio"] { display: inline-block; margin: 0 8px 0 0; vertical-align: middle; line-height: 18px; }
 .categories-input label { font-size: 100%; font-weight: normal; display: initial; vertical-align: middle; line-height: 18px; }
@@ -45,7 +45,7 @@
 .categories-manage .categories-icon-upload img { max-width: 100%; }
 .categories-manage .elgg-menu-categories ul li .categories-icon-plus { display: none; }
 .categories-manage .elgg-menu-categories ul li:last-child .categories-icon-plus { display: inline-block; }
-.categories-manage .categories-draggable-placeholder { border: 2px dashed #e8e8e8; height: auto; min-height: 200px; margin-left: 22px; }
+.categories-manage .categories-draggable-placeholder { border: 2px dashed #e8e8e8; height: auto; min-height: 40px; }
 .categories-manage .elgg-child-menu-toggle, .categories-manage .elgg-child-menu-indicator { display: none; }
 .categories-manage .elgg-menu-categories .elgg-menu-closed .elgg-child-menu { display: block; }
 .categories-manage .categories-icon-move { margin: 10px; }
@@ -54,7 +54,7 @@
 
 .categories-category-full > .elgg-image { max-width: 100px; margin-right: 20px; }
 
-.categories-category-badge { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #F4B400; color: white; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; font-style: normal; }
+.categories-category-badge { font-size: 11px; padding: 2px 5px; margin-left: 5px; background: #cccccc; color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; font-style: normal; }
 
 .elgg-categories { *zoom: 1; word-break: break-word; margin: 3px 0; font-size: 85%; line-height: 18px; }
 .elgg-categories:before, .elgg-categories:after { content: " "; display: table; }
@@ -65,7 +65,7 @@
 .elgg-categories > li:first-child:after, .elgg-categories > li:last-child:after { content: ""; }
 .elgg-categories > li a { font-style: normal; }
 
-.elgg-icon.elgg-icon-categories { background: none; display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-.elgg-icon.elgg-icon-categories:before { content: ""; }
+.elgg-icon.elgg-icon-categories { background: none; display: inline-block; font-family: 'FontAwesome'; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.elgg-icon.elgg-icon-categories:before { content: "\f0e8"; }
 
 .categories-tree-input-node { display: none; }
