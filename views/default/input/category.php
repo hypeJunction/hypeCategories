@@ -22,12 +22,11 @@ if (isset($vars['name_override'])) {
 $multiple = elgg_extract('multiple', $vars, hypeCategories()->config->allowsMultipleInput());
 $required = elgg_extract('required', $vars, true);
 
-$value = elgg_extract('value', $vars, false);
+$value = (array) elgg_extract('value', $vars, array());
 if (elgg_instanceof($entity)) {
-	$batch = hypeCategories()->categories->getItemCategories($entity->guid, array(), true);
-	$value = array();
-	foreach ($batch as $c) {
-		$value[] = $c->guid;
+	$batch = hypeCategories()->categories->getItemCategories($entity, array(), true);
+	foreach ($batch as $guid) {
+		$value[] = $guid;
 	}
 }
 

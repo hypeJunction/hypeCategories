@@ -13,6 +13,9 @@ define(['jquery'], function ($) {
 		}
 	});
 
+	$(document).on('change', '.categories-tree-node input[type="checkbox"]', function(e) {
+		$(this).closest('li').find('[name="' + $(this).attr('name') + '"]').prop('checked', $(this).prop('checked'));
+	});
 });
 
 
