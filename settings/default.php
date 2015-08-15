@@ -97,10 +97,14 @@ return array(
 		'sidebar' => elgg_echo('categories:sidebar:group'),
 		'category_url' => 'groups/profile/{page_owner_guid}/categories/{category_guid}/{category_name}',
 	),
-		//All other pages except /profile and /settings and /activity handlers
-		//	'all' => array(
-		//		'regex' => '((?!profile|settings|activity).{1,})($|\/)(.*)',
-		//		'sidebar' => elgg_echo('categories:sidebar'),
-		//		'category_url' => '/categories/view/{category_guid}/{category_name}',
-		//	)
+	// Categories
+	'categories' => array(
+		'regex' => 'categories\/.*',
+	),
+	//All other pages except /profile and /settings and /activity handlers
+	//	'all' => array(
+	//		'regex' => '((?!profile|settings|activity).{1,})($|\/)(.*)',
+	//		'sidebar' => elgg_echo('categories:sidebar'),
+	//		'category_url' => '/categories/view/{category_guid}/{category_name}',
+	//	)
 );
