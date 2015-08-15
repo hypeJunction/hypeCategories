@@ -1,7 +1,7 @@
 {
 	"name": "hypejunction/hypecategories",
 	"type": "elgg-plugin",
-	"version": "4.0.1-0",
+	"version": "4.1.0",
 	"description": "Categories for Elgg",
 	"homepage": "http://hypejunction.com",
 	"keywords": [

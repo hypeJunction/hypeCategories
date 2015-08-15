@@ -3,7 +3,7 @@
 
 	<name>hypeCategories</name>
 	<id>hypeCategories</id>
-	<version type="dist">4.0.1-0</version>
+	<version type="dist">4.1.0</version>
 
 	<description>Traverse Categories for Elgg</description>
 	<category>hypeJunction</category>
