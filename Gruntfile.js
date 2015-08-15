@@ -40,6 +40,8 @@ module.exports = function (grunt) {
 					'!package.json',
 					'!phpunit.xml',
 					'!Gruntfile.js',
+					'!Gemfile',
+					'!Gemfile.lock'
 				],
 				dest: 'build/',
 				expand: true
