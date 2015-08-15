@@ -79,6 +79,11 @@ class EventHandlers {
 			return true;
 		}
 
+		$context = hypeCategories()->config->getContextSettings($_SERVER["HTTP_REFERER"]);
+		if ($context) {
+			set_input('_context', $context['_context']);
+		}
+		
 		$this->queue[] = $entity_guid;
 
 		if (!$this->categories->isAllowed($entity)) {

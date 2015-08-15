@@ -13,8 +13,19 @@ define(['jquery'], function ($) {
 		}
 	});
 
-	$(document).on('change', '.categories-tree-node input[type="checkbox"]', function(e) {
-		$(this).closest('li').find('[name="' + $(this).attr('name') + '"]').prop('checked', $(this).prop('checked'));
+	$(document).on('change', '.categories-tree-node input[type="checkbox"]', function (e) {
+		var $elem = $(this);
+		var name = $(this).attr('name');
+		var $parent = $elem.closest('.elgg-menu-parent,.elgg-menu-nochildren');
+		var $parents = $elem.parentsUntil('.elgg-menu-categories');
+		if ($elem.prop('checked') === true) {
+			$parents
+					.children('.categories-tree-node')
+					.children('[name="' + name + '"]')
+					.prop('checked', true);
+		} else {
+			$parent.find('[name="' + name + '"]').prop('checked', false);
+		}
 	});
 });
 

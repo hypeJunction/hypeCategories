@@ -9,7 +9,6 @@
  * @uses $vars['multiple'] If set to true, input type will be set to checkbox, otherwise radio
  * @uses $vars['required'] For now, this will be ignored as HTML spec does not provide clear guidelines
  */
-
 elgg_push_context('categories-input');
 
 $entity = elgg_extract('entity', $vars, false);
@@ -19,21 +18,23 @@ if (isset($vars['name_override'])) {
 	$name = elgg_extract('name_override', $vars);
 }
 
+$label = elgg_extract('label', $vars, elgg_echo('categories'));
 $multiple = elgg_extract('multiple', $vars, hypeCategories()->config->allowsMultipleInput());
 $required = elgg_extract('required', $vars, true);
 
+$container = elgg_get_page_owner_entity();
+
 $value = (array) elgg_extract('value', $vars, array());
-if (elgg_instanceof($entity)) {
+if ($entity instanceof ElggEntity) {
 	$batch = hypeCategories()->categories->getItemCategories($entity, array(), true);
 	foreach ($batch as $guid) {
 		$value[] = $guid;
 	}
+	$container = $entity->getContainerEntity();
 }
 
-$page_owner = elgg_get_page_owner_entity();
-
-if (!elgg_instanceof($page_owner, 'group') || !hypeCategories()->config->allowsGroupCategories()) {
-	$page_owner = elgg_get_site_entity();
+if (!elgg_instanceof($container, 'group') || !hypeCategories()->config->allowsGroupCategories()) {
+	$container = elgg_get_site_entity();
 }
 
 echo elgg_view('input/hidden', array(
@@ -42,9 +43,10 @@ echo elgg_view('input/hidden', array(
 	'required' => $required
 ));
 
+echo $label ? elgg_format_element('label', [], $label) : '';
 echo '<div class="categories-input">';
 echo elgg_view_menu('categories', array(
-	'entity' => $page_owner,
+	'entity' => $container,
 	'sort_by' => 'priority',
 	'input' => array(
 		'name' => $name,

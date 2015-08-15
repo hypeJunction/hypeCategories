@@ -24,6 +24,10 @@ To modify the default behavior, by filtering the config array using the `'get_co
 See ```mod/hypeCategories/settings/default.php``` for a sample config. Place more general rules below more specific rules,
 as the plugin will use the settings from the first rule that matches the current page URL.
 
+* The plugin uses regex patterns to match page URLs to category contexts, as seen in the settings file.
+If you don't want to modify the forms to include category input, you can do so, by injecting it via JS. Add the 'forms' parameter
+for a given context, and specify the page URL and the CSS selector to inject the input after.
+
 ## Usage
 
 ### Adding category input

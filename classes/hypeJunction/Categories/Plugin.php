@@ -87,7 +87,7 @@ final class Plugin extends \hypeJunction\Plugin {
 		elgg_register_plugin_hook_handler('register', 'menu:categories', array($this->hooks, 'setupCategoriesMenu'));
 		elgg_register_plugin_hook_handler('register', 'menu:category-filter', array($this->hooks, 'setupCategoryFilterMenu'));
 		elgg_register_plugin_hook_handler('route', 'all', array($this->router, 'routeCategoryContextPages'));
-		
+
 		if ($this->config->allowsCategoriesInMenu()) {
 			elgg_register_plugin_hook_handler('register', 'menu:entity', array($this->hooks, 'setupEntityMenu'));
 		}
@@ -124,6 +124,9 @@ final class Plugin extends \hypeJunction\Plugin {
 		if ($this->config->allowsGroupCategories()) {
 			add_group_tool_option('categories', elgg_echo('categories:groupoption:enable'), true);
 		}
+
+		elgg_extend_view('page/elements/footer', 'framework/categories/input');
+		
 	}
 
 }

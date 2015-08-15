@@ -5,6 +5,11 @@ if (!$context) {
 	return;
 }
 
+$sidebar = elgg_extract('sidebar', $context, true);
+if (!$sidebar) {
+	return;
+}
+
 $container = elgg_get_page_owner_entity();
 
 if (!$container || $container instanceof ElggUser) {
@@ -23,7 +28,7 @@ if (!$count && !$container->canEdit()) {
 	return;
 }
 
-$title = elgg_extract('title', $context) ? : elgg_echo('categories');
+$title = is_string($sidebar) ? $sidebar : elgg_echo('categories');
 
 $vars['container'] = $container;
 $body = elgg_view('framework/categories/tree', $vars);

@@ -118,24 +118,25 @@ class Config extends \hypeJunction\Config {
 		if (!empty($context['type_subtype_pairs']) && is_array($context['type_subtype_pairs'])) {
 			return $context['type_subtype_pairs'];
 		}
-		
+
 		$setting = $this->get('type_subtype_pairs');
 		if ($setting) {
 			$setting = unserialize($setting);
 		}
+
 		if (empty($setting)) {
-			return get_registered_entity_types();
-		}
+			$pairs = get_registered_entity_types();
+		} else {
+			$pairs = array();
 
-		$pairs = array();
-
-		foreach ($setting as $tsp) {
-			list($type, $subtype) = explode(':', $tsp);
-			if (!isset($pairs[$type])) {
-				$pairs[$type] = array();
-			}
-			if ($subtype !== 'default') {
-				$pairs[$type][] = $subtype;
+			foreach ($setting as $tsp) {
+				list($type, $subtype) = explode(':', $tsp);
+				if (!isset($pairs[$type])) {
+					$pairs[$type] = array();
+				}
+				if ($subtype && $subtype !== 'default') {
+					$pairs[$type][] = $subtype;
+				}
 			}
 		}
 
@@ -166,24 +167,34 @@ class Config extends \hypeJunction\Config {
 
 	/**
 	 * Matches current page URL against context settings and returns the config array
+	 *
+	 * @param string $match_url URL to match context against. Defaults to current page url
 	 * @return array|false
 	 */
-	public function getContextSettings() {
+	public function getContextSettings($match_url = null) {
 		$contexts = (array) $this->_context;
 		if (empty($contexts)) {
 			return false;
+		}
+
+		foreach ($contexts as $context => $settings) {
+			$settings['_context'] = $context;
 		}
 
 		$context = get_input('_context');
 		if ($context) {
 			return $contexts[$context];
 		}
-		
-		$url = current_page_url();
+
+		$url = $match_url ? : current_page_url();
 		$site_url = elgg_get_site_url();
 
 		foreach ($contexts as $context => $settings) {
-			$pattern = "`^{$site_url}{$context}/*$`i";
+			$regex = elgg_extract('regex', $settings);
+			if (!$regex) {
+				continue;
+			}
+			$pattern = "`^{$site_url}{$regex}/*$`i";
 			if (preg_match($pattern, $url)) {
 				return $settings;
 			}

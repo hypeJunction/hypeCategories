@@ -65,6 +65,10 @@ class Categories {
 			return false;
 		}
 
+		if (empty($allowed_pairs[$type])) {
+			return true;
+		}
+		
 		return in_array($subtype, $allowed_pairs[$type]);
 	}
 
@@ -153,7 +157,7 @@ class Categories {
 
 		$current_categories = array();
 		foreach ($current_categories_batch as $c) {
-			$current_categories[] = $c->guid;
+			$current_categories[] = $c;
 		}
 
 		// Storing categories metadata for compatibility with categories plugin
