@@ -56,13 +56,34 @@ $output = elgg_view('output/category', array(
 
 ### Custom category subtypes
 
-To add custom category subtypes to the workflow globally, update 'taxonomy_tree_subtypes' config value.
+You can add custom category subtypes, which can help achieve more granularity, e.g. you may want to have multiple trees that vary
+based on context.
 
-For example, you may want to have multiple taxonomies for categorizing content by topic, by context etc. The easiest way to achieve that, is by using different
-category subtypes, e.g. topic, cluster, grouping etc, or blog_categories, bookmark_categories etc.
+```php
 
-Context-based filtering of category subtypes can be achieved via ```'get_subtypes', 'framework:categories'``` hook.
+// Create a new e class that extends hypeJunction\Categories\Category
+class CustomCategory extends \hypeJunction\Categories\Category {
 
+}
+
+// Register your new subtype
+if (!update_subtype('object', 'custom_category_subtype', 'CustomCategory')) {
+	add_subtype('object', 'custom_category_subtype', 'CustomCategory');
+}
+
+// Hook into 'get_subtypes' to add your custom subtype globally, so that these appear in management interface
+elgg_register_plugin_hook_handler('get_subtype', 'framework:categories', function($hook, $type, $return, $params) {
+	$return[] = 'custom_category_subtype';
+	return $return;
+});
+
+// Add your new subtype for a specific context
+elgg_register_plugin_hook_handler('get_context_settings', 'framework:categories', function($hook, $type, $return, $params) {
+
+	$return['blogs']['category_subtypes'] = array('hjcategory', 'custom_category_subtype');
+	return $return;
+});
+```
 
 ### Internationalization
 
