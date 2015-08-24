@@ -123,7 +123,7 @@ class HookHandlers {
 
 		if (!$entity instanceof ElggSite) {
 			if (!elgg_in_context('categories-manage')) {
-				if (($entity instanceof ElggGroup && $this->config->allowsGroupCategories()) || $entity instanceof ElggObject) {
+				if (($entity instanceof ElggGroup && $this->config->allowsGroupCategories())) {
 					// Add site wide categories if we are in a group context with group categories enabled
 					// or we are in an object context
 					$site = elgg_get_site_entity();
