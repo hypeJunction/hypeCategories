@@ -11,7 +11,8 @@ use hypeJunction\Categories\Config;
 class Router {
 
 	protected $config;
-
+	public $real_page_url;
+	
 	/**
 	 * Constructor
 	 * @param Config $config
@@ -161,6 +162,34 @@ class Router {
 				),
 			);
 		}
+	}
+
+	/**
+	 * Stores final page URL
+	 *
+	 * @param string $hook   "route"
+	 * @param string $type   "all"
+	 * @param mixed  $return Route params
+	 * @param array  $params Hook params
+	 * @return array
+	 */
+	public function storeFinalRoute($hook, $type, $return, $params) {
+
+		$identifier = elgg_extract('identifier', $return);
+		$segments = (array) elgg_extract('segments', $return);
+		array_unshift($segments, $identifier);
+
+		$route_url = implode('/', $segments) . '/';
+
+		$this->real_page_url = $route_url;
+	}
+
+	/**
+	 * Returns real page URL after routing
+	 * @return string|null
+	 */
+	public function getRealPageURL() {
+		return $this->real_page_url;
 	}
 
 	/**

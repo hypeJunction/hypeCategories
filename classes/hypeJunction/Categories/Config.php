@@ -186,8 +186,13 @@ class Config extends \hypeJunction\Config {
 			return $contexts[$context];
 		}
 
-		$url = $match_url ? : current_page_url();
+		$url = $match_url ? : hypeCategories()->router->getRealPageURL();
+		if (!$url) {
+			$url = current_page_url();
+		}
 
+		var_dump($url);
+		
 		foreach ($contexts as $context => $settings) {
 			$regex = elgg_extract('regex', $settings);
 			if (!$regex) {
