@@ -14,7 +14,7 @@ $collapse = (bool) $item->getData('collapse');
 $hierarchy = array();
 if ($context_entity instanceof \hypeJunction\Categories\Category) {
 	$hierarchy = hypeCategories()->categories->getHierarchy($context_entity, true, true);
-} else if ($current instanceof \ElggEntity) {
+} else if ($context_entity instanceof \ElggEntity) {
 	$categories = hypeCategories()->categories->getItemCategories($context_entity, array(), true);
 	foreach ($categories as $guid) {
 		$hierarchy[] = $guid;
