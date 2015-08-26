@@ -129,8 +129,8 @@ class Router {
 		$identifier = elgg_extract('identifier', $return);
 		$segments = (array) elgg_extract('segments', $return);
 		array_unshift($segments, $identifier);
-		$segments[] = '/';
-
+		array_unshift($segments, '');
+		
 		$route_url = implode('/', $segments);
 
 		$contexts = (array) $this->config->_context;
@@ -139,9 +139,7 @@ class Router {
 			if (!$category_url) {
 				continue;
 			}
-
-			$category_url = trim($category_url, '/');
-
+			
 			$pattern = preg_replace('/{([^{}]*)}/i', '(?<$1>.*)', $category_url);
 			$pattern = str_replace('/', '\/', $pattern);
 
@@ -180,9 +178,8 @@ class Router {
 		$identifier = elgg_extract('identifier', $return);
 		$segments = (array) elgg_extract('segments', $return);
 		array_unshift($segments, $identifier);
-		array_unshift($segments, elgg_get_site_url());
 
-		$route_url = implode('/', $segments);
+		$route_url = elgg_get_site_url() . implode('/', $segments);
 
 		$this->real_page_url = $route_url;
 	}

@@ -190,8 +190,8 @@ class Config extends \hypeJunction\Config {
 		if (!$url) {
 			$url = current_page_url();
 		}
-
-		$url = trim(parse_url($url, PHP_URL_PATH), '/');
+		
+		$url = parse_url($url, PHP_URL_PATH);
 		
 		foreach ($contexts as $context => $settings) {
 			$regex = elgg_extract('regex', $settings);
