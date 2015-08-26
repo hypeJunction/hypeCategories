@@ -159,7 +159,7 @@ class Config extends \hypeJunction\Config {
 			$subtypes = array(Category::SUBTYPE);
 		}
 		$context = $this->getContextSettings();
-		if (!empty($context['category_subtypes']) && is_array($context['subtypes'])) {
+		if (!empty($context['category_subtypes']) && is_array($context['category_subtypes'])) {
 			$subtypes = array_unique(array_merge($subtypes, $context['category_subtypes']));
 		}
 		return elgg_trigger_plugin_hook('get_subtypes', 'framework:categories', null, $subtypes);
