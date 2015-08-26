@@ -187,15 +187,13 @@ class Config extends \hypeJunction\Config {
 		}
 
 		$url = $match_url ? : current_page_url();
-		$site_url = elgg_get_site_url();
 
 		foreach ($contexts as $context => $settings) {
 			$regex = elgg_extract('regex', $settings);
 			if (!$regex) {
 				continue;
 			}
-			$pattern = "`^{$site_url}{$regex}/*$`i";
-			if (preg_match($pattern, $url)) {
+			if (preg_match("/{$regex}/i", $url)) {
 				return $settings;
 			}
 		}
