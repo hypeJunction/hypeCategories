@@ -10,7 +10,8 @@ use hypeJunction\Categories\Category;
  */
 class Config extends \hypeJunction\Config {
 
-	private $contextCache = array();
+	private $contextConfig;
+	private $contextMatchesCache = array();
 
 	/**
 	 * {@inheritdoc}
@@ -28,24 +29,6 @@ class Config extends \hypeJunction\Config {
 			'legacy_pagehandler_id' => 'category',
 			'ajax_sidebar' => false,
 		);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function all() {
-		if (isset($this->settings)) {
-			return $this->settings;
-		}
-
-		parent::all();
-		if (!isset($this->settings['_context'])) {
-			$path = $this->getPath();
-			$context = include("{$path}settings/default.php");
-			$this->settings['_context'] = elgg_trigger_plugin_hook('get_context_settings', 'framework:categories', null, $context);
-		}
-
-		return $this->settings;
 	}
 
 	/**
@@ -175,13 +158,27 @@ class Config extends \hypeJunction\Config {
 	}
 
 	/**
+	 * Load context configuration
+	 * @return array
+	 */
+	public function loadContextConfig() {
+		if (!isset($this->contextConfig)) {
+			$path = $this->getPath();
+			$context = include("{$path}settings/default.php");
+			$this->contextConfig = elgg_trigger_plugin_hook('get_context_settings', 'framework:categories', null, $context);
+		}
+		return $this->contextConfig;
+	}
+
+	/**
 	 * Matches current page URL against context settings and returns the config array
 	 *
 	 * @param string $match_url URL to match context against. Defaults to current page url
 	 * @return array|false
 	 */
 	public function getContextSettings($match_url = null) {
-		$contexts = (array) $this->_context;
+
+		$contexts = (array) $this->loadContextConfig();
 		if (empty($contexts)) {
 			return false;
 		}
@@ -202,8 +199,8 @@ class Config extends \hypeJunction\Config {
 
 		$url = parse_url($url, PHP_URL_PATH);
 
-		if (isset($this->contextCache[$url])) {
-			return $this->contextCache[$url];
+		if (isset($this->contextMatchesCache[$url])) {
+			return $this->contextMatchesCache[$url];
 		}
 
 		foreach ($contexts as $context => $settings) {
@@ -212,7 +209,7 @@ class Config extends \hypeJunction\Config {
 				continue;
 			}
 			if (preg_match("/{$regex}/i", $url)) {
-				$this->contextCache[$url] = $settings;
+				$this->contextMatchesCache[$url] = $settings;
 				return $settings;
 			}
 		}

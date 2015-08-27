@@ -12,7 +12,7 @@ class Router {
 
 	protected $config;
 	public $real_page_url;
-	
+
 	/**
 	 * Constructor
 	 * @param Config $config
@@ -85,7 +85,7 @@ class Router {
 
 	/**
 	 * Returns normalized category URL
-	 * 
+	 *
 	 * @param Category $entity Category
 	 * @return string
 	 */
@@ -130,16 +130,16 @@ class Router {
 		$segments = (array) elgg_extract('segments', $return);
 		array_unshift($segments, $identifier);
 		array_unshift($segments, '');
-		
+
 		$route_url = implode('/', $segments);
 
-		$contexts = (array) $this->config->_context;
+		$contexts = (array) $this->config->loadContextConfig();
 		foreach ($contexts as $context => $settings) {
 			$category_url = elgg_extract('category_url', $settings);
 			if (!$category_url) {
 				continue;
 			}
-			
+
 			$pattern = preg_replace('/{([^{}]*)}/i', '(?<$1>.*)', $category_url);
 			$pattern = str_replace('/', '\/', $pattern);
 
@@ -153,7 +153,7 @@ class Router {
 			set_input('container_guid', elgg_extract('page_owner_guid', $matches));
 			set_input('type_subtype_pairs', elgg_extract('type_subtype_pairs', $settings, $this->config->getEntityTypeSubtypePairs()));
 			set_input('_context', $context);
-			
+
 			return array(
 				'identifier' => $this->getPageHandlerId(),
 				'segments' => array(
