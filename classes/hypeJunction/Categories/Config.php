@@ -10,6 +10,8 @@ use hypeJunction\Categories\Category;
  */
 class Config extends \hypeJunction\Config {
 
+	private $contextCache = array();
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -32,11 +34,18 @@ class Config extends \hypeJunction\Config {
 	 * {@inheritdoc}
 	 */
 	public function all() {
-		$settings = parent::all();
-		$path = $this->getPath();
-		$context = include("{$path}settings/default.php");
-		$settings['_context'] = elgg_trigger_plugin_hook('get_context_settings', 'framework:categories', null, $context);
-		return $settings;
+		if (isset($this->settings)) {
+			return $this->settings;
+		}
+
+		parent::all();
+		if (!isset($this->settings['_context'])) {
+			$path = $this->getPath();
+			$context = include("{$path}settings/default.php");
+			$this->settings['_context'] = elgg_trigger_plugin_hook('get_context_settings', 'framework:categories', null, $context);
+		}
+
+		return $this->settings;
 	}
 
 	/**
@@ -188,15 +197,20 @@ class Config extends \hypeJunction\Config {
 		if (!$url) {
 			$url = current_page_url();
 		}
-		
+
 		$url = parse_url($url, PHP_URL_PATH);
-		
+
+		if (isset($this->contextCache[$url])) {
+			return $this->contextCache[$url];
+		}
+
 		foreach ($contexts as $context => $settings) {
 			$regex = elgg_extract('regex', $settings);
 			if (!$regex) {
 				continue;
 			}
 			if (preg_match("/{$regex}/i", $url)) {
+				$this->contextCache[$url] = $settings;
 				return $settings;
 			}
 		}
