@@ -168,7 +168,9 @@ class Config extends \hypeJunction\Config {
 			$subtypes = array(Category::SUBTYPE);
 		}
 		$context = $this->getContextSettings();
-		$subtypes = elgg_extract('category_subtypes', $context, $subtypes, false);
+		if (is_array($context)) {
+			$subtypes = elgg_extract('category_subtypes', $context, $subtypes, false);
+		}
 		return elgg_trigger_plugin_hook('get_subtypes', 'framework:categories', null, $subtypes);
 	}
 
