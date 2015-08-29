@@ -184,7 +184,7 @@ class Config extends \hypeJunction\Config {
 		}
 
 		foreach ($contexts as $context => $settings) {
-			$settings['_context'] = $context;
+			$contexts[$context]['_context'] = $context;
 		}
 
 		$context = get_input('_context');
