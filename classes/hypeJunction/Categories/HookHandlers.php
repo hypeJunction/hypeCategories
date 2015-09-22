@@ -93,6 +93,7 @@ class HookHandlers {
 	 *                       'limit'  Number of subcategories to display
 	 *                       'icons'  Show icons
 	 *                       'collapse' Collapse by default
+	 *                       'hide_empty' Hide categories with no items from the tree
 	 *
 	 * @return array
 	 */
@@ -107,12 +108,14 @@ class HookHandlers {
 		}
 
 		unset($params['name']);
+
 		$defaults = array(
 			'depth' => false,
 			'icons' => true,
 			'collapse' => true,
 			'limit' => false,
 			'badge' => true,
+			'hide_empty' => false,
 		);
 		$params = array_merge($defaults, $params);
 
@@ -147,11 +150,16 @@ class HookHandlers {
 					continue;
 				}
 
+				$item_count = (int) elgg_extract('item_count', $node_opts);
+				if ($params['hide_empty'] && !$item_count) {
+					continue;
+				}
+				
 				$has_children = elgg_extract('has_children', $node_opts);
 				$item_params = array_merge($params, array(
 					'entity' => $node,
 					'has_children' => $has_children,
-					'item_count' => elgg_extract('item_count', $node_opts),
+					'item_count' => $item_count,
 				));
 				
 				$return[] = ElggMenuItem::factory(array(
