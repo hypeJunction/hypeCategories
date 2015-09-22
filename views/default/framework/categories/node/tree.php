@@ -18,16 +18,7 @@ if (hypeCategories()->categories->instanceOfCategory($entity)) {
 	}
 	$counter = '';
 	if ($badge) {
-		$container_guid = ELGG_ENTITIES_ANY_VALUE;
-		$page_owner = elgg_get_page_owner_entity();
-		if ($page_owner instanceof ElggGroup) {
-			// only count items added to the group container
-			$container_guid = $page_owner->guid;
-		}
-		$count = hypeCategories()->categories->getItemsInCategory($entity, array(
-			'count' => true,
-			'container_guids' => $container_guid,
-		));
+		$count = (int) elgg_extract('item_count', $vars);
 		$counter = elgg_format_element('span', array(
 			'class' => 'categories-category-badge',
 				), $count);

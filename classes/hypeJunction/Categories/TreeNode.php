@@ -109,6 +109,23 @@ class TreeNode {
 	}
 
 	/**
+	 * Count items filed in the category
+	 * @return int
+	 */
+	public function countItems() {
+		$container_guid = ELGG_ENTITIES_ANY_VALUE;
+		$page_owner = elgg_get_page_owner_entity();
+		if ($page_owner instanceof ElggGroup) {
+			// only count items added to the group container
+			$container_guid = $page_owner->guid;
+		}
+		return hypeCategories()->categories->getItemsInCategory($this->getEntity(), array(
+			'count' => true,
+			'container_guids' => $container_guid,
+		));
+	}
+
+	/**
 	 * Returns the depth of this node
 	 * @return int
 	 */
@@ -135,6 +152,7 @@ class TreeNode {
 				'node_guid' => $this->getGUID(),
 				'parent_guid' => $this->getParent()->getGUID(),
 				'has_children' => $this->hasChildren(),
+				'item_count' => $this->countItems(),
 			)
 		);
 

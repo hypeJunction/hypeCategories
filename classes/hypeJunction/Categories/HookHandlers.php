@@ -151,6 +151,7 @@ class HookHandlers {
 				$item_params = array_merge($params, array(
 					'entity' => $node,
 					'has_children' => $has_children,
+					'item_count' => elgg_extract('item_count', $node_opts),
 				));
 				
 				$return[] = ElggMenuItem::factory(array(
