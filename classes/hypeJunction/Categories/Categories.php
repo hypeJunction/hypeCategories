@@ -65,7 +65,9 @@ class Categories {
 			return false;
 		}
 
-		return in_array($subtype, $allowed_pairs[$type]);
+		$return = $subtype ? in_array($subtype, $allowed_pairs[$type]) : true;
+
+		return $return;
 	}
 
 	/**
